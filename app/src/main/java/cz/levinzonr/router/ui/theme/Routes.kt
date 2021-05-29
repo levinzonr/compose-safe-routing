@@ -15,8 +15,11 @@ class Details {
     @RouteArg("id")
     val id: String = ""
 
+    @RouteArg("another")
+    val anotherId : Boolean = false
+
     @RouteArg("nextd")
-    val nextId: Int = 0
+    val nextId: Float = 24.24f
 }
 
 @Route("settings")

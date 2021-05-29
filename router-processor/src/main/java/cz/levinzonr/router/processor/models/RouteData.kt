@@ -13,5 +13,4 @@ data class RouteData(
             "\"${path}${arguments.joinToString(prefix = "/", separator = "/",) { "$${it.name}" } }\""
         }
     }
-
 }

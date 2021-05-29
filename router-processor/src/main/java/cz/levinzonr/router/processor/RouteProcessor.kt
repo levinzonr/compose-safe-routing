@@ -6,6 +6,7 @@ import cz.levinzonr.router.processor.models.RouteData
 import cz.levinzonr.router.annotations.Route
 import cz.levinzonr.router.annotations.RouteArg
 import cz.levinzonr.router.processor.codegen.RoutesBuilder
+import cz.levinzonr.router.processor.extensions.type
 import cz.levinzonr.router.processor.models.ModelData
 import java.io.File
 import java.lang.Exception
@@ -22,8 +23,6 @@ import javax.tools.Diagnostic
 
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 class RouteProcessor : AbstractProcessor() {
-
-    var i = 0
 
     companion object {
         const val KAPT_KOTLIN_GENERATED_OPTION_NAME = "kapt.kotlin.generated"
@@ -83,14 +82,6 @@ class RouteProcessor : AbstractProcessor() {
         } catch (e: Exception) {
             processingEnv.messager.printMessage(Diagnostic.Kind.ERROR, e.localizedMessage)
             throw e
-        }
-    }
-
-    private fun TypeMirror.type() : String {
-        return if (kind.isPrimitive) {
-            Int::class.javaObjectType.canonicalName
-        } else {
-             toString()
         }
     }
 
