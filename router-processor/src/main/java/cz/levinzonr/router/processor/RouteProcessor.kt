@@ -5,6 +5,7 @@ import cz.levinzonr.router.processor.models.ArgumentData
 import cz.levinzonr.router.processor.models.RouteData
 import cz.levinzonr.router.annotations.Route
 import cz.levinzonr.router.annotations.RouteArg
+import cz.levinzonr.router.processor.codegen.RouteArgsBuilder
 import cz.levinzonr.router.processor.codegen.RoutesBuilder
 import cz.levinzonr.router.processor.extensions.toKotlinClass
 import cz.levinzonr.router.processor.models.ModelData
@@ -47,11 +48,16 @@ class RouteProcessor : AbstractProcessor() {
             return false
         }
 
+        data.routes.filter { it.arguments.isNotEmpty() }.forEach {
+            val spec = RouteArgsBuilder(it).build()
+            FileSpec.get(data.packageName + "." + Constants.FILE_ARGS_DIR, spec)
+                .writeTo(File(buildDir))
+        }
+
         processingEnv.messager.printMessage(Diagnostic.Kind.NOTE, "data: $data")
         return try {
-            FileSpec.builder(data.packageName, Constants.FILE_ACTIONS)
-                .addType(RoutesBuilder(data.routes).build())
-                .build()
+            val spec = RoutesBuilder(data.routes).build()
+            FileSpec.get(data.packageName, spec)
                 .writeTo(File(buildDir))
             true
         } catch (e: Exception) {
