@@ -5,6 +5,7 @@ import cz.levinzonr.router.processor.codegen.RouteArgsBuilder
 import cz.levinzonr.router.processor.subprocessors.DataProcessor
 import cz.levinzonr.router.processor.subprocessors.RoutesActionsProcessor
 import cz.levinzonr.router.processor.subprocessors.RoutesArgsProcessor
+import cz.levinzonr.router.processor.subprocessors.RoutesProcessor
 import java.io.File
 import javax.annotation.processing.AbstractProcessor
 import javax.annotation.processing.RoundEnvironment
@@ -36,11 +37,14 @@ class RouteProcessor : AbstractProcessor() {
             val data = DataProcessor.process(processingEnv, roundEnv) ?: return false
 
             log("Data obtained, start actions processing")
-            RoutesActionsProcessor.process(File(buildDir), data)
+            RoutesActionsProcessor.process(data ,File(buildDir))
 
             log("Star args processing")
-            RoutesArgsProcessor.process(File(buildDir), data)
+            RoutesArgsProcessor.process(data, File(buildDir))
 
+
+            log("Start routes processings")
+            RoutesProcessor.process(data, File(buildDir))
 
             return true
 

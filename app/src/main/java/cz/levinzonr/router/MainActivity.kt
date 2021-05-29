@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import cz.levinzonr.router.screens.DetailsScreen
 import cz.levinzonr.router.screens.ProfileScreen
+import cz.levinzonr.router.screens.Routes
 import cz.levinzonr.router.screens.RoutesActions
 import cz.levinzonr.router.ui.theme.RouterTheme
 
@@ -25,10 +26,10 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     val controller = rememberNavController()
                     NavHost(navController = controller, startDestination = "profile") {
-                        composable("profile") {
+                        composable(Routes.profile) {
                             ProfileScreen { controller.navigate(RoutesActions.toDetails("newId"))}
                         }
-                        composable("details/{id}") {
+                        composable(Routes.details) {
                             DetailsScreen()
                         }
                     }

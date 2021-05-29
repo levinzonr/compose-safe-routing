@@ -6,11 +6,12 @@ data class RouteData(
     val arguments: List<ArgumentData>
 ) {
 
-    fun buildPathWithArguments() : String {
+    fun buildPathWithArguments(argumentBuilder: (String) -> String = { "$${it}" }) : String {
         return if (arguments.isEmpty()) {
-            "\"$path\""
+           path
         } else {
-            "\"${path}${arguments.joinToString(prefix = "/", separator = "/",) { "$${it.name}" } }\""
+            "${path}${arguments.joinToString(prefix = "/", separator = "/",) { argumentBuilder.invoke(it.name) } }"
         }
     }
+
 }
