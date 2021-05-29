@@ -1,22 +1,18 @@
 package cz.levinzonr.router.processor
 
-import com.squareup.kotlinpoet.FileSpec
-import cz.levinzonr.router.processor.models.ArgumentData
-import cz.levinzonr.router.processor.models.RouteData
 import cz.levinzonr.router.annotations.Route
-import cz.levinzonr.router.annotations.RouteArg
 import cz.levinzonr.router.processor.codegen.RouteArgsBuilder
-import cz.levinzonr.router.processor.codegen.RoutesBuilder
-import cz.levinzonr.router.processor.extensions.toKotlinClass
-import cz.levinzonr.router.processor.models.ModelData
+import cz.levinzonr.router.processor.subprocessors.DataProcessor
+import cz.levinzonr.router.processor.subprocessors.RoutesActionsProcessor
+import cz.levinzonr.router.processor.subprocessors.RoutesArgsProcessor
 import java.io.File
-import java.lang.Exception
 import javax.annotation.processing.AbstractProcessor
 import javax.annotation.processing.RoundEnvironment
 import javax.annotation.processing.SupportedSourceVersion
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
 import javax.tools.Diagnostic
+import kotlin.Exception
 
 
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
@@ -35,57 +31,28 @@ class RouteProcessor : AbstractProcessor() {
         annotations: MutableSet<out TypeElement>?,
         roundEnv: RoundEnvironment?
     ): Boolean {
+        try {
+            val buildDir = processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME] ?: return false
+            val data = DataProcessor.process(processingEnv, roundEnv) ?: return false
 
-        val buildDir = processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME] ?: return false
+            log("Data obtained, start actions processing")
+            RoutesActionsProcessor.process(File(buildDir), data)
 
-        val data = try {
-            getRouteDataFrom(roundEnv) ?: return false
+            log("Star args processing")
+            RoutesArgsProcessor.process(File(buildDir), data)
+
+
+            return true
+
         } catch (e: Exception) {
-            processingEnv.messager.printMessage(
-                Diagnostic.Kind.ERROR,
-                "Error Getting data: ${e.message}"
-            )
+            log(e.message, Diagnostic.Kind.ERROR)
             return false
         }
 
-        data.routes.filter { it.arguments.isNotEmpty() }.forEach {
-            val spec = RouteArgsBuilder(it).build()
-            FileSpec.get(data.packageName + "." + Constants.FILE_ARGS_DIR, spec)
-                .writeTo(File(buildDir))
-        }
-
-        processingEnv.messager.printMessage(Diagnostic.Kind.NOTE, "data: $data")
-        return try {
-            val spec = RoutesBuilder(data.routes).build()
-            FileSpec.get(data.packageName, spec)
-                .writeTo(File(buildDir))
-            true
-        } catch (e: Exception) {
-            processingEnv.messager.printMessage(Diagnostic.Kind.ERROR, "Error writing to file: ${e.message}")
-            false
-        }
     }
 
 
-    private fun getRouteDataFrom(environment: RoundEnvironment?): ModelData? {
-        try {
-            var packageName: String = ""
-            val routes = environment?.getElementsAnnotatedWith(Route::class.java)?.map { element ->
-                packageName = processingEnv.elementUtils.getPackageOf(element).toString()
-                val annotation = element.getAnnotation(Route::class.java)
-                val arguments = element.enclosedElements.mapNotNull {
-                    val argAnnotation =
-                        it.getAnnotation(RouteArg::class.java) ?: return@mapNotNull null
-                    ArgumentData(argAnnotation.name, it.asType().toKotlinClass())
-                }
-                RouteData(element.simpleName.toString(), annotation.path, arguments)
-            }?.takeIf { it.isNotEmpty() } ?: return null
-
-            return ModelData(packageName, routes)
-        } catch (e: Exception) {
-            processingEnv.messager.printMessage(Diagnostic.Kind.ERROR, e.localizedMessage)
-            throw e
-        }
+    private fun log(message: String?, kind: Diagnostic.Kind = Diagnostic.Kind.NOTE) {
+        processingEnv.messager.printMessage(kind, message)
     }
-
 }
