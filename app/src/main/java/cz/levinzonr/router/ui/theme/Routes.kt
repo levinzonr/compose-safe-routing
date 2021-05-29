@@ -15,7 +15,7 @@ class Details {
     @RouteArg("id")
     val id: String = ""
 
-    @RouteArg("nextd", Int::class)
+    @RouteArg("nextd")
     val nextId: Int = 0
 }
 

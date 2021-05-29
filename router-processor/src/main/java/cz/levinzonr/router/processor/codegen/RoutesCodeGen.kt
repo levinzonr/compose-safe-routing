@@ -20,15 +20,12 @@ class RoutesBuilder(
             builder.addParameter(it.name, Class.forName(it.type).kotlin)
         }
 
-
-
-        builder.addStatement("return \"$path\"")
-/*
         if (arguments.isEmpty()) {
+            builder.addStatement("return \"$path\"")
         } else {
-            val path =  "${path}${arguments.joinToString(prefix = "/", separator = "/",) {"\${${it.name}}"} }"
-            builder.addStatement("return $path")
-        }*/
+            val path =  "${path}${arguments.joinToString(prefix = "/", separator = "/",) { "$${it.name}" } }"
+            builder.addStatement("return \"$path\"")
+        }
 
         return builder.returns(returnType = String::class).build()
     }
