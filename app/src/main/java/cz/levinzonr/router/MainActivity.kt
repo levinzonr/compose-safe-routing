@@ -8,9 +8,13 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import cz.levinzonr.router.annotations.Route
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import cz.levinzonr.router.screens.DetailsScreen
+import cz.levinzonr.router.screens.ProfileScreen
+import cz.levinzonr.router.screens.RoutesActions
 import cz.levinzonr.router.ui.theme.RouterTheme
-import cz.levinzonr.router.ui.theme.RoutesActions
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +23,15 @@ class MainActivity : ComponentActivity() {
             RouterTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                    val controller = rememberNavController()
+                    NavHost(navController = controller, startDestination = "profile") {
+                        composable("profile") {
+                            ProfileScreen { controller.navigate(RoutesActions.toDetails("newId"))}
+                        }
+                        composable("details/{id}") {
+                            DetailsScreen()
+                        }
+                    }
                 }
             }
         }
