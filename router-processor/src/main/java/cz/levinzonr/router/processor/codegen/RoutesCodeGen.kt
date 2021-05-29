@@ -22,7 +22,7 @@ class RoutesBuilder(
 
     private fun RouteData.toFunSpec() : FunSpec {
         val builder = FunSpec.builder("${Constants.ACTIONS_PREFIX}${path.capitalize()}")
-        arguments.forEach { builder.addParameter(it.name, Class.forName(it.type).kotlin) }
+        arguments.forEach { builder.addParameter(it.name, it.type) }
         builder.addStatement("return ${buildPathWithArguments()}")
         return builder.returns(returnType = String::class).build()
     }

@@ -8,7 +8,9 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import cz.levinzonr.router.annotations.Route
 import cz.levinzonr.router.ui.theme.RouterTheme
+import cz.levinzonr.router.ui.theme.RoutesActions
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

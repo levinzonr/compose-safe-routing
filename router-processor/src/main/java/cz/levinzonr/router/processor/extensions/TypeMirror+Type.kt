@@ -2,10 +2,11 @@ package cz.levinzonr.router.processor.extensions
 
 import java.lang.IllegalArgumentException
 import javax.lang.model.type.TypeMirror
+import kotlin.reflect.KClass
 
 
-fun TypeMirror.type() : String {
-    return if (kind.isPrimitive) {
+fun TypeMirror.toKotlinClass() : KClass<*> {
+    val classname = if (kind.isPrimitive) {
         when(toString()) {
             Long::class.javaPrimitiveType?.canonicalName -> Long::class.javaObjectType.canonicalName
             Int::class.javaPrimitiveType?.canonicalName -> Int::class.javaObjectType.canonicalName
@@ -17,5 +18,7 @@ fun TypeMirror.type() : String {
     } else {
         toString()
     }
+
+    return Class.forName(classname).kotlin
 }
 

@@ -6,18 +6,15 @@ import cz.levinzonr.router.processor.models.RouteData
 import cz.levinzonr.router.annotations.Route
 import cz.levinzonr.router.annotations.RouteArg
 import cz.levinzonr.router.processor.codegen.RoutesBuilder
-import cz.levinzonr.router.processor.extensions.type
+import cz.levinzonr.router.processor.extensions.toKotlinClass
 import cz.levinzonr.router.processor.models.ModelData
 import java.io.File
 import java.lang.Exception
-import java.lang.IllegalStateException
-import java.nio.file.Files
 import javax.annotation.processing.AbstractProcessor
 import javax.annotation.processing.RoundEnvironment
 import javax.annotation.processing.SupportedSourceVersion
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
-import javax.lang.model.type.TypeMirror
 import javax.tools.Diagnostic
 
 
@@ -73,7 +70,7 @@ class RouteProcessor : AbstractProcessor() {
                 val arguments = element.enclosedElements.mapNotNull {
                     val argAnnotation =
                         it.getAnnotation(RouteArg::class.java) ?: return@mapNotNull null
-                    ArgumentData(argAnnotation.name, it.asType().type())
+                    ArgumentData(argAnnotation.name, it.asType().toKotlinClass())
                 }
                 RouteData(element.simpleName.toString(), annotation.path, arguments)
             }?.takeIf { it.isNotEmpty() } ?: return null
