@@ -15,8 +15,3 @@ data class RouteData(
     }
 
 }
-
-data class ArgumentData(
-    val name: String,
-    val type: String
-)
