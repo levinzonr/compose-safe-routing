@@ -53,7 +53,7 @@ class RouteProcessor : AbstractProcessor() {
 
         processingEnv.messager.printMessage(Diagnostic.Kind.NOTE, "data: $data")
         return try {
-            FileSpec.builder(data.packageName, "Routes")
+            FileSpec.builder(data.packageName, Constants.FILE_ACTIONS)
                 .addType(RoutesBuilder(data.routes).build())
                 .build()
                 .writeTo(File(buildDir))

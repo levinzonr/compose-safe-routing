@@ -4,9 +4,9 @@ import cz.levinzonr.router.annotations.Route
 import cz.levinzonr.router.annotations.RouteArg
 
 
-@Route("simple")
+@Route("profile")
 object SimpleRoute
-@Route("another")
+@Route("settings")
 object SimpleRoutes
 
 @Route("details")
