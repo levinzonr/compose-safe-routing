@@ -1,5 +1,7 @@
 package cz.levinzonr.router.processor.models
 
+import cz.levinzonr.router.processor.Constants
+
 data class RouteData(
     val name: String,
     val path: String,
@@ -14,4 +16,5 @@ data class RouteData(
         }
     }
 
+    val argumentsName: String get() = "${path.capitalize()}${Constants.FILE_ARGS_POSTFIX}"
 }

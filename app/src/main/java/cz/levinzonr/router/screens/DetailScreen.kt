@@ -5,6 +5,6 @@ import androidx.compose.ui.graphics.Color
 import cz.levinzonr.router.components.Placeholder
 
 @Composable
-fun DetailsScreen() {
-    Placeholder(color = Color.Green, title = "Details")
+fun DetailsScreen(id: String) {
+    Placeholder(color = Color.Green, title = "Details $id")
 }

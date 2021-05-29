@@ -13,9 +13,7 @@ class RouteArgsBuilder(
     private val data: RouteData
 ) {
     fun build() : TypeSpec {
-        val filename = "${data.name.capitalize()}${Constants.FILE_ARGS_POSTFIX}"
-
-        return TypeSpec.classBuilder(filename)
+        return TypeSpec.classBuilder(data.argumentsName)
             .initConstructor(data.arguments)
             .addArguments(data.arguments)
             .addModifiers(KModifier.DATA)

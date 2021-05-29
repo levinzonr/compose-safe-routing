@@ -15,6 +15,7 @@ import cz.levinzonr.router.screens.DetailsScreen
 import cz.levinzonr.router.screens.ProfileScreen
 import cz.levinzonr.router.screens.Routes
 import cz.levinzonr.router.screens.RoutesActions
+import cz.levinzonr.router.screens.args.getDetailsRouteArgs
 import cz.levinzonr.router.ui.theme.RouterTheme
 
 class MainActivity : ComponentActivity() {
@@ -30,7 +31,7 @@ class MainActivity : ComponentActivity() {
                             ProfileScreen { controller.navigate(RoutesActions.toDetails("newId"))}
                         }
                         composable(Routes.details) {
-                            DetailsScreen()
+                            DetailsScreen(it.getDetailsRouteArgs().id)
                         }
                     }
                 }
