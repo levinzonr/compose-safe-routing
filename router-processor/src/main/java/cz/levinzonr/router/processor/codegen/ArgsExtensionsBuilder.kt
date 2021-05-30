@@ -16,6 +16,7 @@ class ArgsExtensionsBuilder(val dirName: String, val data: RouteData) {
         addSavedStateHandle(destinationDir)
     }
 
+
     private fun addSavedStateHandle(file: File) {
         FileSpec.builder(dirName, "${Constants.CLASSNAME_SAVED_STATE_HANDLE}+${data.argumentsName}")
             .addImport(Constants.PACKAGE_LIFECYCLE, Constants.CLASSNAME_SAVED_STATE_HANDLE)
@@ -25,7 +26,7 @@ class ArgsExtensionsBuilder(val dirName: String, val data: RouteData) {
                     .returns(ClassName(dirName, data.argumentsName))
                     .addCodeBlocks(
                         data.arguments.map {
-                            CodeBlock.of("val ${it.name} = requireNotNull(get<%T>(%S))", it.type, it.name)
+                            CodeBlock.of("val ${it.name} = requireNotNull(get<%T>(%S))",  it.type, it.name)
                         }
                     )
                     .addCode("return ${data.argumentsName.capitalize()}(${data.arguments.joinToString { it.name }})")

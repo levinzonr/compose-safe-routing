@@ -17,6 +17,7 @@ import cz.levinzonr.router.screens.DetailsScreen
 import cz.levinzonr.router.screens.ProfileScreen
 import cz.levinzonr.router.screens.Routes
 import cz.levinzonr.router.screens.RoutesActions
+import cz.levinzonr.router.screens.args.DetailsRouteArgs
 import cz.levinzonr.router.screens.args.getDetailsRouteArgs
 import cz.levinzonr.router.ui.theme.RouterTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,10 +34,10 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController = controller, startDestination = Routes.profile) {
                         composable(Routes.profile) {
                             ProfileScreen {
-                                controller.navigate(RoutesActions.toDetails("ID", 213f, true, 21.0, 12L))
+                                controller.navigate(RoutesActions.toDetails("ID", 213f, true,  12L))
                             }
                         }
-                        composable(Routes.details) {
+                        composable(Routes.details, arguments = DetailsRouteArgs.navArgs) {
                             DetailsScreen(args = it.getDetailsRouteArgs(), hiltViewModel())
                         }
 

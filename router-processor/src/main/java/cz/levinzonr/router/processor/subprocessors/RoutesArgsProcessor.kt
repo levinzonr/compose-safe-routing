@@ -20,7 +20,11 @@ object RoutesArgsProcessor : FileGenProcessor {
             data.routes.filter { it.arguments.isNotEmpty() }.forEach {
                 val spec = RouteArgsBuilder(it).build()
                 val dirName = data.packageName + "." + Constants.FILE_ARGS_DIR
-                FileSpec.get(dirName, spec)
+                FileSpec.builder(dirName, spec.name!!)
+                    .addImport(Constants.PACKAGE_NAVIGATION + ".compose", "navArgument")
+                    .addImport(Constants.PACKAGE_NAVIGATION,"NavType")
+                    .addType(spec)
+                    .build()
                     .writeTo(destinationDir)
 
 
@@ -28,7 +32,7 @@ object RoutesArgsProcessor : FileGenProcessor {
 
             }
         } catch (e: Exception) {
-            throw IllegalStateException("Error processing args data: e.pr")
+            throw IllegalStateException("Error processing args data: ${e.stackTraceToString()}")
         }
     }
 
