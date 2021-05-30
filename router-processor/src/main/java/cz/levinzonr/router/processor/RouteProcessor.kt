@@ -36,7 +36,7 @@ class RouteProcessor : AbstractProcessor() {
             val buildDir = processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME] ?: return false
             val data = DataProcessor.process(processingEnv, roundEnv) ?: return false
 
-            log("Data obtained, start actions processing")
+            log("Data obtained, start actions processing, $data")
             RoutesActionsProcessor.process(data ,File(buildDir))
 
             log("Star args processing")

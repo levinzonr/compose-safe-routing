@@ -22,7 +22,7 @@ class RoutesBuilder(val data: ModelData) {
 
     private fun RouteData.toPropertySpec() : PropertySpec {
         val path = buildPathWithArguments { "{$it}" }
-        return PropertySpec.builder(this.path, type = String::class)
+        return PropertySpec.builder(this.name, type = String::class)
             .addModifiers(KModifier.CONST)
             .initializer("%S", path)
             .build()

@@ -21,7 +21,7 @@ class RoutesActionsBuilder(
     }
 
     private fun RouteData.toFunSpec() : FunSpec {
-        val builder = FunSpec.builder("${Constants.ACTIONS_PREFIX}${path.capitalize()}")
+        val builder = FunSpec.builder("${Constants.ACTIONS_PREFIX}${name.capitalize()}")
         arguments.forEach { builder.addParameter(it.name, it.type) }
         builder.addStatement("return \"${buildPathWithArguments()}\"")
         return builder.returns(returnType = String::class).build()

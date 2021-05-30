@@ -1,6 +1,6 @@
 package cz.levinzonr.router.annotations
 
 
-@Target(AnnotationTarget.CLASS)
+@Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.SOURCE)
-annotation class Route(val path: String)
+annotation class Route(val name: String, val arguments: Array<RouteArg> = [])
