@@ -6,8 +6,11 @@ import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.TypeName
 import cz.levinzonr.router.processor.Constants
+import cz.levinzonr.router.processor.codegen.ArgsExtensionsBuilder
 import cz.levinzonr.router.processor.codegen.RouteArgsBuilder
+import cz.levinzonr.router.processor.models.ArgumentData
 import cz.levinzonr.router.processor.models.ModelData
+import cz.levinzonr.router.processor.models.RouteData
 import java.io.File
 
 object RoutesArgsProcessor : FileGenProcessor {
@@ -21,26 +24,12 @@ object RoutesArgsProcessor : FileGenProcessor {
                     .writeTo(destinationDir)
 
 
-                FileSpec.builder(dirName, "NavBackStackEntry+${it.argumentsName}")
-                    .addImport("androidx.navigation", "NavBackStackEntry")
-                    .addFunction(
-                        FunSpec.builder("get${it.argumentsName}")
-                            .receiver(ClassName("androidx.navigation", "NavBackStackEntry"))
-                            .returns(ClassName(dirName, it.argumentsName))
-                            .addCode(CodeBlock.of(
-                               it.arguments.joinToString("\n") {
-                                    "val ${it.name} = requireNotNull(arguments).getString(\"${it.name}\")"
-                                } + "\n" +
-                                        "return ${it.argumentsName}(${it.arguments.joinToString {it.name}}!!)")
-                            )
-                            .build()
-
-                    )
-                    .build().writeTo(destinationDir)
+                ArgsExtensionsBuilder(dirName, it).build(destinationDir)
 
             }
         } catch (e: Exception) {
             throw IllegalStateException("Error processing args data: e.pr")
         }
     }
+
 }

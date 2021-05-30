@@ -28,10 +28,10 @@ class MainActivity : ComponentActivity() {
                     val controller = rememberNavController()
                     NavHost(navController = controller, startDestination = "profile") {
                         composable(Routes.profile) {
-                            ProfileScreen { controller.navigate(RoutesActions.toDetails("newId"))}
+                            ProfileScreen { controller.navigate("")}
                         }
                         composable(Routes.details) {
-                            DetailsScreen(it.getDetailsRouteArgs().id)
+                            DetailsScreen(it.getDetailsRouteArgs())
                         }
                     }
                 }
