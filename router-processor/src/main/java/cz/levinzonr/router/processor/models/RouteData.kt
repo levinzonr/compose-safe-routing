@@ -17,4 +17,6 @@ data class RouteData(
     }
 
     val argumentsName: String get() = "${path.capitalize()}${Constants.FILE_ARGS_POSTFIX}"
+
+    val argumentsConstructor : String get() = "$argumentsName(${arguments.joinToString { it.name }})"
 }

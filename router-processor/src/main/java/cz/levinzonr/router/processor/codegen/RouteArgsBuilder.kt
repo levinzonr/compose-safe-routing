@@ -14,6 +14,7 @@ import cz.levinzonr.router.processor.models.ArgumentData
 import cz.levinzonr.router.processor.models.RouteData
 
 class RouteArgsBuilder(
+    private val packageName: String,
     private val data: RouteData
 ) {
     fun build() : TypeSpec {
@@ -26,6 +27,51 @@ class RouteArgsBuilder(
     }
 
     private fun buildNamedArgsCompanion(data: RouteData) : TypeSpec {
+
+        val code = CodeBlock.builder()
+        data.arguments.forEach {
+            code.addStatement("val ${it.name} = requireNotNull(arguments.get)")
+        }
+
+        return TypeSpec.companionObjectBuilder()
+            .addProperty(buildNavArgsProperty())
+            .addFunction(buildNavBackStackEntryInitilizer())
+            .addFunction(buildSavedStateHandleInitlizer())
+            .build()
+    }
+
+    private fun buildNavBackStackEntryInitilizer() : FunSpec {
+        val code = CodeBlock.builder()
+
+        data.arguments.forEach {
+            code.addStatement("val ${it.name} = requireNotNull(args.arguments?.get%T(%S))", it.type, it.name)
+        }
+
+        code.addStatement("return ${data.argumentsConstructor}")
+        return FunSpec.builder("fromNavBackStackEntry")
+            .returns(ClassName(packageName, data.argumentsName))
+            .addParameter("args", Constants.CLASS_BACK_STACK_ENTRY)
+            .addCode(code.build())
+            .build()
+    }
+
+    private fun buildSavedStateHandleInitlizer() : FunSpec {
+        val code = CodeBlock.builder()
+
+        data.arguments.forEach {
+            code.addStatement("val ${it.name} = requireNotNull(args.get<%T>(%S))", it.type, it.name)
+        }
+
+        code.addStatement("return ${data.argumentsConstructor}")
+        return FunSpec.builder("fromSavedStatedHandle")
+            .returns(ClassName(packageName, data.argumentsName))
+            .addParameter("args", Constants.CLASS_SAVED_STATE_HANDLE)
+            .addCode(code.build())
+            .build()
+    }
+
+
+    private fun buildNavArgsProperty() :PropertySpec {
         val list = ClassName("kotlin.collections", "List")
         val navArgClass = ClassName(Constants.PACKAGE_NAVIGATION + ".compose", "NamedNavArgument")
 
@@ -39,11 +85,10 @@ class RouteArgsBuilder(
 
         code.unindent().addStatement(")")
 
-        val propertySpec = PropertySpec.builder("navArgs", list.parameterizedBy(navArgClass))
+        return PropertySpec.builder("navArgs", list.parameterizedBy(navArgClass))
             .initializer(code.build())
+            .build()
 
-        return TypeSpec.companionObjectBuilder()
-            .addProperty(propertySpec.build()).build()
     }
 
     private fun TypeSpec.Builder.addArguments(args: List<ArgumentData>) : TypeSpec.Builder {

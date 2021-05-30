@@ -18,7 +18,6 @@ import cz.levinzonr.router.screens.ProfileScreen
 import cz.levinzonr.router.screens.Routes
 import cz.levinzonr.router.screens.RoutesActions
 import cz.levinzonr.router.screens.args.DetailsRouteArgs
-import cz.levinzonr.router.screens.args.getDetailsRouteArgs
 import cz.levinzonr.router.ui.theme.RouterTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,7 +37,7 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                         composable(Routes.details, arguments = DetailsRouteArgs.navArgs) {
-                            DetailsScreen(args = it.getDetailsRouteArgs(), hiltViewModel())
+                            DetailsScreen(args = DetailsRouteArgs.fromNavBackStackEntry(it), hiltViewModel())
                         }
 
                     }
