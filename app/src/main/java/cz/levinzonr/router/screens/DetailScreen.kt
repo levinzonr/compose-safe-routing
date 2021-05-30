@@ -6,6 +6,6 @@ import cz.levinzonr.router.components.Placeholder
 import cz.levinzonr.router.screens.args.DetailsRouteArgs
 
 @Composable
-fun DetailsScreen(args: DetailsRouteArgs) {
+fun DetailsScreen(args: DetailsRouteArgs, viewModel: DetailsViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
     Placeholder(color = Color.Green, title = "Details $args")
 }

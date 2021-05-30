@@ -8,6 +8,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -18,7 +19,9 @@ import cz.levinzonr.router.screens.Routes
 import cz.levinzonr.router.screens.RoutesActions
 import cz.levinzonr.router.screens.args.getDetailsRouteArgs
 import cz.levinzonr.router.ui.theme.RouterTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +37,7 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                         composable(Routes.details) {
-                            DetailsScreen(args = it.getDetailsRouteArgs())
+                            DetailsScreen(args = it.getDetailsRouteArgs(), hiltViewModel())
                         }
 
                     }
