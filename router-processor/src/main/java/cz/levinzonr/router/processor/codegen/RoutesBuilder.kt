@@ -1,5 +1,6 @@
 package cz.levinzonr.router.processor.codegen
 
+import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import cz.levinzonr.router.processor.Constants
@@ -22,6 +23,7 @@ class RoutesBuilder(val data: ModelData) {
     private fun RouteData.toPropertySpec() : PropertySpec {
         val path = buildPathWithArguments { "{$it}" }
         return PropertySpec.builder(this.path, type = String::class)
+            .addModifiers(KModifier.CONST)
             .initializer("%S", path)
             .build()
     }

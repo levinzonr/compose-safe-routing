@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import cz.levinzonr.router.annotations.RouteArg
 import cz.levinzonr.router.screens.DetailsScreen
 import cz.levinzonr.router.screens.ProfileScreen
 import cz.levinzonr.router.screens.Routes
@@ -26,13 +27,16 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     val controller = rememberNavController()
-                    NavHost(navController = controller, startDestination = "profile") {
+                    NavHost(navController = controller, startDestination = Routes.profile) {
                         composable(Routes.profile) {
-                            ProfileScreen { controller.navigate("")}
+                            ProfileScreen {
+                                controller.navigate(RoutesActions.toDetails("ID", 213f, true, 21.0, 12L))
+                            }
                         }
                         composable(Routes.details) {
-                            DetailsScreen(it.getDetailsRouteArgs())
+                            DetailsScreen(args = it.getDetailsRouteArgs())
                         }
+
                     }
                 }
             }
