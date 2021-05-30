@@ -19,7 +19,3 @@ data class DetailsRoute(
     @field:RouteArg("c") val c: Double,
     @field:RouteArg("d") val d: Long,
 )
-
-fun SavedStateHandle.args() {
-
-}
