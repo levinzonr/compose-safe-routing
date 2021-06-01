@@ -13,3 +13,16 @@ java {
     sourceCompatibility = JavaVersion.VERSION_1_7
     targetCompatibility = JavaVersion.VERSION_1_7
 }
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            version = "1.0.1"
+            groupId = 'cz.levinzonr.safe-routing'
+            artifactId = 'compiler'
+            from components.java
+
+        }
+    }
+}

@@ -12,9 +12,9 @@ java {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            version = "1.0.0"
+            version = "1.0.1"
             groupId = 'cz.levinzonr.safe-routing'
-            artifactId = 'compiler'
+            artifactId = 'core'
             from components.java
 
         }
