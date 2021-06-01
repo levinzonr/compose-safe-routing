@@ -9,12 +9,7 @@ import cz.levinzonr.router.screens.args.DetailsRouteArgs
 
 
 @Composable
-@Route("details", arguments = [
-    RouteArg("id", String::class),
-    RouteArg("a", Float::class),
-    RouteArg("bboold", Boolean::class),
-    RouteArg("lonaa", Long::class)
-])
+@Route("details", arguments = [RouteArg("id", String::class)])
 fun DetailsScreen(args: DetailsRouteArgs, viewModel: DetailsViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
     Placeholder(color = Color.Green, title = "Details $args")
 }

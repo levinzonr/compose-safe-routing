@@ -46,4 +46,50 @@ fun DetailsScreen() {
 
 ### Output
 After you build your project with these annotations applied several files will be generated for you. First one is `Routes`, in which you can access all paths available.
-Another one is `RouteActions` where you can build these paths as a valid destination with all arguments applied
+Another one is `RouteActions` where you can build these paths as a valid destination with all arguments applied. With the examples above this file would look like this
+
+Additionally, an argument wrapper would be generated for each route, so you can easily access it from either `NavBackStackEntry` or from `SavedStateHandle` in your `ViewModel`
+
+
+**Routes.kt**
+```kotlin
+object Routes {
+  const val profile: String = "profile"
+
+  const val details: String = "details/{id}/{a}/{bboold}/{lonaa}"
+}
+```
+
+**RoutesActions.kt**
+```kotlin
+object RoutesActions {
+  fun toProfile(): String = "profile"
+
+  fun toDetails(id: String): String = "details/$id"
+}
+```
+
+**Details Route Args**
+```kotlin
+data class DetailsRouteArgs(
+  val id: String
+) {
+  companion object {
+    val navArgs: List<NamedNavArgument> = listOf(
+      navArgument("id") { type = NavType.StringType },
+    )
+
+
+    fun fromNavBackStackEntry(args: NavBackStackEntry): DetailsRouteArgs {
+      val id = requireNotNull(args.arguments?.getString("id"))
+      return DetailsRouteArgs(id)
+    }
+
+    fun fromSavedStatedHandle(args: SavedStateHandle): DetailsRouteArgs {
+      val id = requireNotNull(args.get<String>("id"))
+      return DetailsRouteArgs(id)
+    }
+  }
+}
+```
+
