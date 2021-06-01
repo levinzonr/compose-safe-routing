@@ -58,7 +58,7 @@ Additionally, an argument wrapper would be generated for each route, so you can 
 object Routes {
   const val profile: String = "profile"
 
-  const val details: String = "details/{id}/{a}/{bboold}/{lonaa}"
+  const val details: String = "details/{id}"
 }
 ```
 
