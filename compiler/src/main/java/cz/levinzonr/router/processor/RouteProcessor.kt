@@ -1,7 +1,6 @@
 package cz.levinzonr.router.processor
 
-import cz.levinzonr.router.annotations.Route
-import cz.levinzonr.router.processor.codegen.RouteArgsBuilder
+import cz.levinzonr.router.core.Route
 import cz.levinzonr.router.processor.subprocessors.DataProcessor
 import cz.levinzonr.router.processor.subprocessors.RoutesActionsProcessor
 import cz.levinzonr.router.processor.subprocessors.RoutesArgsProcessor

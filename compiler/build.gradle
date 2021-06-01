@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation project(":router-annotations")
+    implementation project(':core')
     implementation("com.squareup:kotlinpoet:1.4.4")
 
 }

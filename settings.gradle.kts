@@ -8,5 +8,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "router"
 include(":app")
-include(":router-annotations")
-include(":router-processor")
+include(":core")
+include(":compiler")

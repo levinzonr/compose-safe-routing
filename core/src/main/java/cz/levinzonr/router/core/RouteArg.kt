@@ -1,4 +1,4 @@
-package cz.levinzonr.router.annotations
+package cz.levinzonr.router.core
 
 import kotlin.reflect.KClass
 

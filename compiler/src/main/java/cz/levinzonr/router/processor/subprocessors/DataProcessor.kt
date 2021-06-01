@@ -1,16 +1,14 @@
 package cz.levinzonr.router.processor.subprocessors
 
-import cz.levinzonr.router.annotations.Route
-import cz.levinzonr.router.annotations.RouteArg
+import cz.levinzonr.router.core.Route
+import cz.levinzonr.router.core.RouteArg
 import cz.levinzonr.router.processor.extensions.toKotlinClass
 import cz.levinzonr.router.processor.models.ArgumentData
 import cz.levinzonr.router.processor.models.ModelData
 import cz.levinzonr.router.processor.models.RouteData
 import javax.annotation.processing.ProcessingEnvironment
 import javax.annotation.processing.RoundEnvironment
-import javax.lang.model.element.Element
 import javax.lang.model.type.MirroredTypeException
-import kotlin.reflect.KClass
 
 object DataProcessor {
 

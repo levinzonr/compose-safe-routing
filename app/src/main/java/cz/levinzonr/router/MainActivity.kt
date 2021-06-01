@@ -12,7 +12,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import cz.levinzonr.router.annotations.RouteArg
 import cz.levinzonr.router.screens.DetailsScreen
 import cz.levinzonr.router.screens.ProfileScreen
 import cz.levinzonr.router.screens.Routes
