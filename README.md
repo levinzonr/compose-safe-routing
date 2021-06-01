@@ -5,12 +5,14 @@
 ## Installation
 
 ```kotlin
-   kapt("com.github.levinzonr.compose-safe-routing:compiler:0.3.1")
-implementation("com.github.levinzonr.compose-safe-routing:core:0.3.1")
+dependencies { 
+    kapt("com.github.levinzonr.compose-safe-routing:compiler:0.3.1")
+    implementation("com.github.levinzonr.compose-safe-routing:core:0.3.1")
+}
 ```
 
 ```groovy
-    dependencies {
+dependencies {
     kapt 'com.github.levinzonr.compose-safe-routing:compiler:0.3.1'
     implementation 'com.github.levinzonr.compose-safe-routing:core:0.3.1'
 }
