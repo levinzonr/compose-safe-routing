@@ -6,6 +6,7 @@ import com.squareup.kotlinpoet.TypeSpec
 import cz.levinzonr.router.processor.Constants
 import cz.levinzonr.router.processor.models.ModelData
 import cz.levinzonr.router.processor.models.RouteData
+import cz.levinzonr.router.processor.pathbuilder.fullPathBuilder
 
 class RoutesBuilder(val data: ModelData) {
 
@@ -21,10 +22,14 @@ class RoutesBuilder(val data: ModelData) {
     }
 
     private fun RouteData.toPropertySpec() : PropertySpec {
-        val path = buildPathWithArguments { "{$it}" }
+        val path = fullPathBuilder(
+            args = arguments,
+            navBuilder = { "{${it.name}}" },
+            optionalBuilder = { "${it.name}={${it.name}}" }
+        )
         return PropertySpec.builder(this.name, type = String::class)
             .addModifiers(KModifier.CONST)
-            .initializer("%S", path)
+            .initializer("%S", "$name$path")
             .build()
     }
 }

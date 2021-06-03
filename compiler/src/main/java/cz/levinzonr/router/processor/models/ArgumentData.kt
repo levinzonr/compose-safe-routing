@@ -2,10 +2,8 @@ package cz.levinzonr.router.processor.models
 
 import kotlin.reflect.KClass
 
-data class ArgumentData<T>(
+data class ArgumentData(
     val name: String,
     val type: KClass<*>,
-    val optionalData: OptionalData<T>? = null
+    val optionalData: OptionalArgData<*>? = null
 )
-
-data class OptionalData<T>(val defaultValue: T)
