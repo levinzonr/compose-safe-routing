@@ -91,22 +91,22 @@ class RouteArgsBuilder(
 
     }
 
-    private fun TypeSpec.Builder.addArguments(args: List<ArgumentData>) : TypeSpec.Builder {
+    private fun TypeSpec.Builder.addArguments(args: List<ArgumentData<*>>) : TypeSpec.Builder {
         addProperties(args.map { it.toPropertySpec() })
         return this
     }
 
-    private fun TypeSpec.Builder.initConstructor(args: List<ArgumentData>) : TypeSpec.Builder {
+    private fun TypeSpec.Builder.initConstructor(args: List<ArgumentData<*>>) : TypeSpec.Builder {
         val params = args.map { it.toParameterSpec() }
         primaryConstructor(FunSpec.constructorBuilder().addParameters(params).build())
         return this
     }
 
-    private fun ArgumentData.toPropertySpec() : PropertySpec {
+    private fun ArgumentData<*>.toPropertySpec() : PropertySpec {
         return PropertySpec.builder(name, type).initializer(name).build()
     }
 
-    private fun ArgumentData.toParameterSpec() : ParameterSpec {
+    private fun ArgumentData<*>.toParameterSpec() : ParameterSpec {
         return ParameterSpec.builder(name, type).build()
     }
 }

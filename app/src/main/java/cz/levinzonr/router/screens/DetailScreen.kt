@@ -11,9 +11,9 @@ import cz.levinzonr.router.screens.args.DetailsRouteArgs
 
 @Composable
 @Route("details", args = [
-    RouteArg("id", RouteArgType.StringNonNull, false),
-    RouteArg("anotherId", RouteArgType.StringNonNull, false),
-    RouteArg("number", RouteArgType.ArgInt, false)
+    RouteArg("id", RouteArgType.ArgStringNonNull, false),
+    RouteArg("anotherId", RouteArgType.ArgStringNonNull, false),
+    RouteArg("number", RouteArgType.ArgInt, true, defaultValue = "1")
 ])
 fun DetailsScreen(args: DetailsRouteArgs, viewModel: DetailsViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
     Placeholder(color = Color.Green, title = "Details $args")

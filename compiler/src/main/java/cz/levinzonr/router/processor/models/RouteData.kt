@@ -4,7 +4,7 @@ import cz.levinzonr.router.processor.Constants
 
 data class RouteData(
     val name: String,
-    val arguments: List<ArgumentData>
+    val arguments: List<ArgumentData<*>>
 ) {
 
     fun buildPathWithArguments(argumentBuilder: (String) -> String = { "$${it}" }) : String {
