@@ -1,6 +1,15 @@
 package cz.levinzonr.router.core
 
-import kotlin.reflect.KClass
 
+@Retention(AnnotationRetention.SOURCE)
+annotation class RouteArg(
+    val name: String,
+    val type: RouteArgType = RouteArgType.StringType,
+    val isOptional: Boolean = false,
+    val defaultValue: String = VALUE_NULL
+) {
+    companion object {
+        const val VALUE_NULL = "@null"
+    }
+}
 
-annotation class RouteArg(val name: String, val type: KClass<*>)

@@ -8,6 +8,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.os.bundleOf
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -32,7 +33,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController = controller, startDestination = Routes.profile) {
                         composable(Routes.profile) {
                             ProfileScreen {
-                                controller.navigate(RoutesActions.toDetails("ID"))
+                                controller.navigate(RoutesActions.toDetails("ID", "anoterId", "hasdadas"))
                             }
                         }
                         composable(Routes.details, arguments = DetailsRouteArgs.navArgs) {

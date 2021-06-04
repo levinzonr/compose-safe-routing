@@ -1,13 +1,7 @@
 package cz.levinzonr.router.processor.codegen
 
-import com.squareup.kotlinpoet.ClassName
-import com.squareup.kotlinpoet.CodeBlock
-import com.squareup.kotlinpoet.FunSpec
-import com.squareup.kotlinpoet.KModifier
-import com.squareup.kotlinpoet.ParameterSpec
+import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
-import com.squareup.kotlinpoet.PropertySpec
-import com.squareup.kotlinpoet.TypeSpec
 import cz.levinzonr.router.processor.Constants
 import cz.levinzonr.router.processor.extensions.toNavType
 import cz.levinzonr.router.processor.models.ArgumentData
@@ -44,7 +38,12 @@ class RouteArgsBuilder(
         val code = CodeBlock.builder()
 
         data.arguments.forEach {
-            code.addStatement("val ${it.name} = requireNotNull(args.arguments?.get%T(%S))", it.type, it.name)
+            if (it.isNullable) {
+                code.addStatement("val ${it.name} = args.arguments?.get%T(%S)", it.type, it.name)
+            } else {
+                code.addStatement("val ${it.name} = requireNotNull(args.arguments?.get%T(%S))", it.type, it.name)
+
+            }
         }
 
         code.addStatement("return ${data.argumentsConstructor}")
@@ -59,7 +58,11 @@ class RouteArgsBuilder(
         val code = CodeBlock.builder()
 
         data.arguments.forEach {
-            code.addStatement("val ${it.name} = requireNotNull(args.get<%T>(%S))", it.type, it.name)
+            if (it.isNullable) {
+                code.addStatement("val ${it.name} = args.get<%T>(%S)", it.type, it.name)
+            } else {
+                code.addStatement("val ${it.name} = requireNotNull(args.get<%T>(%S))", it.type, it.name)
+            }
         }
 
         code.addStatement("return ${data.argumentsConstructor}")
@@ -80,7 +83,15 @@ class RouteArgsBuilder(
             .indent()
 
         data.arguments.forEach {
-            code.addStatement("navArgument(%S) { type = ${it.type.toNavType()} },", it.name)
+            code.addStatement("navArgument(%S) {", it.name)
+            code.indent().addStatement("type = ${it.type.toNavType()} ")
+            code.addStatement("nullable = ${it.isNullable}")
+            it.optionalData?.let {
+                code.addStatement("defaultValue = %L", it.value)
+            }
+            code.unindent()
+            code.addStatement("},\n")
+
         }
 
         code.unindent().addStatement(")")
@@ -103,10 +114,10 @@ class RouteArgsBuilder(
     }
 
     private fun ArgumentData.toPropertySpec() : PropertySpec {
-        return PropertySpec.builder(name, type).initializer(name).build()
+        return PropertySpec.builder(name, type.asTypeName().copy(nullable = isNullable)).initializer(name).build()
     }
 
     private fun ArgumentData.toParameterSpec() : ParameterSpec {
-        return ParameterSpec.builder(name, type).build()
+        return ParameterSpec.builder(name, type.asTypeName().copy(nullable = isNullable)).build()
     }
 }
