@@ -31,34 +31,34 @@ object DataProcessor {
 
     private fun RouteArg.toArgumentData() : ArgumentData {
         val optional = if (isOptional) buildOptionData(type, defaultValue) else null
-        return ArgumentData(name, type.clazz, optional, type == RouteArgType.ArgStringNullable)
+        return ArgumentData(name, type.clazz, optional, type == RouteArgType.StringNullableType)
     }
 
 
     private fun buildOptionData(type: RouteArgType, value: String) : OptionalArgData<*> {
         when(type) {
-            RouteArgType.ArgStringNonNull -> {
+            RouteArgType.StringType -> {
                 require(value != RouteArg.VALUE_NULL)
                 return OptionalArgData.OptionalString(value)
             }
-            RouteArgType.ArgStringNullable -> {
+            RouteArgType.StringNullableType -> {
                 val value = if (value == RouteArg.VALUE_NULL) null else value
                 return OptionalArgData.OptionalString(value)
             }
-            RouteArgType.ArgInt -> {
+            RouteArgType.IntType -> {
                 val intValue = requireNotNull(value.toIntOrNull()) { "Provided arg value ($value) is not matching type $type"}
                 return OptionalArgData.OptionalInt(intValue)
             }
-            RouteArgType.ArgFloat -> {
+            RouteArgType.FloatType -> {
                 val floatValue = requireNotNull(value.toFloatOrNull()) { "Provided arg value ($value) is not matching type $type"}
                 return OptionalArgData.OptionalFloat(floatValue)
 
             }
-            RouteArgType.ArgLong -> {
+            RouteArgType.LongType -> {
                 val longValue = requireNotNull(value.toLongOrNull()) { "Provided arg value ($value) is not matching type $type"}
                 return OptionalArgData.OptionalLong(longValue)
             }
-            RouteArgType.ArgBool -> {
+            RouteArgType.BooleanType -> {
                 val boolValue = requireNotNull(value.toBoolean()) { "Provided arg value ($value) is not matching type $type"}
                 return OptionalArgData.OptionalBool(boolValue)
             }
