@@ -3,6 +3,7 @@ package cz.levinzonr.router.processor.codegen
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import cz.levinzonr.router.processor.Constants
+import cz.levinzonr.router.processor.extensions.asList
 import cz.levinzonr.router.processor.extensions.toNavType
 import cz.levinzonr.router.processor.models.ArgumentData
 import cz.levinzonr.router.processor.models.RouteData
@@ -75,8 +76,7 @@ class RouteArgsBuilder(
 
 
     private fun buildNavArgsProperty() :PropertySpec {
-        val list = ClassName("kotlin.collections", "List")
-        val navArgClass = ClassName(Constants.PACKAGE_NAVIGATION + ".compose", "NamedNavArgument")
+        val navArgClass = Constants.CLASS_NAMED_ARG
 
         val code = CodeBlock.builder()
             .addStatement("listOf(")
@@ -96,7 +96,7 @@ class RouteArgsBuilder(
 
         code.unindent().addStatement(")")
 
-        return PropertySpec.builder("navArgs", list.parameterizedBy(navArgClass))
+        return PropertySpec.builder("navArgs", navArgClass.asList())
             .initializer(code.build())
             .build()
 

@@ -7,6 +7,10 @@ object Constants {
     const val FILE_ACTIONS = "RoutesActions"
     const val FILE_ARGS_POSTFIX = "RouteArgs"
     const val FILE_ROUTES = "Routes"
+    const val FILE_ROUTE_SPEC = "RouteSpec"
+
+    const val ROUTE_SPEC_NAME = "path"
+    const val ROUTE_SPEC_ARGS = "navArgs"
 
     const val FILE_ARG_EXTENSIONS_PREFIX = "NavBackStackEntry+"
     const val FILE_ARGS_DIR = "args"
@@ -20,10 +24,14 @@ object Constants {
     const val PACKAGE_NAV_COMPOSE = "$PACKAGE_NAVIGATION.compose"
     const val CLASS_NAV_TYPE = "NavType"
     const val CLASS_NAV_ARG = "navArgument"
+    const val CLASSNAME_NAMED_ARG = "NamedNavArgument"
+
+
 
     const val PACKAGE_LIFECYCLE = "androidx.lifecycle"
     const val CLASSNAME_SAVED_STATE_HANDLE = "SavedStateHandle"
     val CLASS_SAVED_STATE_HANDLE = ClassName(PACKAGE_LIFECYCLE, CLASSNAME_SAVED_STATE_HANDLE)
+    val CLASS_NAMED_ARG = ClassName(PACKAGE_NAV_COMPOSE, CLASSNAME_NAMED_ARG)
 }
 
 
