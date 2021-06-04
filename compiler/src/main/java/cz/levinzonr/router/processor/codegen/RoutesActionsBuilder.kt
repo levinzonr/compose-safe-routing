@@ -1,9 +1,6 @@
 package cz.levinzonr.router.processor.codegen
 
-import com.squareup.kotlinpoet.CodeBlock
-import com.squareup.kotlinpoet.FunSpec
-import com.squareup.kotlinpoet.ParameterSpec
-import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.*
 import cz.levinzonr.router.processor.Constants
 import cz.levinzonr.router.processor.models.ArgumentData
 import cz.levinzonr.router.processor.models.OptionalArgData
@@ -44,7 +41,7 @@ class RoutesActionsBuilder(
     }
 
     private fun ArgumentData.toParamSpec() : ParameterSpec {
-        val builder = ParameterSpec.builder(name, type)
+        val builder = ParameterSpec.builder(name, type.asTypeName().copy(isNullable))
         optionalData?.let { builder.defaultValue("%L", it.value) }
         return builder.build()
     }

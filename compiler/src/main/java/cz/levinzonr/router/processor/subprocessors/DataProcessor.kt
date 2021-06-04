@@ -31,7 +31,7 @@ object DataProcessor {
 
     private fun RouteArg.toArgumentData() : ArgumentData {
         val optional = if (isOptional) buildOptionData(type, defaultValue) else null
-        return ArgumentData(name, type.clazz, optional)
+        return ArgumentData(name, type.clazz, optional, type == RouteArgType.ArgStringNullable)
     }
 
 
