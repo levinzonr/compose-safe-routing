@@ -16,6 +16,11 @@ object Constants {
     const val CLASSNAME_NAV_BACK_STACK_ENTRY = "NavBackStackEntry"
     val CLASS_BACK_STACK_ENTRY = ClassName(PACKAGE_NAVIGATION, CLASSNAME_NAV_BACK_STACK_ENTRY)
 
+
+    const val PACKAGE_NAV_COMPOSE = "$PACKAGE_NAVIGATION.compose"
+    const val CLASS_NAV_TYPE = "NavType"
+    const val CLASS_NAV_ARG = "navArgument"
+
     const val PACKAGE_LIFECYCLE = "androidx.lifecycle"
     const val CLASSNAME_SAVED_STATE_HANDLE = "SavedStateHandle"
     val CLASS_SAVED_STATE_HANDLE = ClassName(PACKAGE_LIFECYCLE, CLASSNAME_SAVED_STATE_HANDLE)

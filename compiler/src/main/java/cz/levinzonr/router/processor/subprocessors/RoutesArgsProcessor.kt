@@ -14,8 +14,8 @@ object RoutesArgsProcessor : FileGenProcessor {
             data.routes.filter { it.arguments.isNotEmpty() }.forEach {
                 val spec = RouteArgsBuilder(packageName, it).build()
                 FileSpec.builder(packageName, spec.name!!)
-                    .addImport(Constants.PACKAGE_NAVIGATION + ".compose", "navArgument")
-                    .addImport(Constants.PACKAGE_NAVIGATION,"NavType")
+                    .addImport(Constants.PACKAGE_NAV_COMPOSE, Constants.CLASS_NAV_ARG)
+                    .addImport(Constants.PACKAGE_NAVIGATION,Constants.CLASS_NAV_TYPE)
                     .addType(spec)
                     .build()
                     .writeTo(destinationDir)
