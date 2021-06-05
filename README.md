@@ -4,6 +4,12 @@
 
 A small code generating library, inspired by SafeArgs for android, that generates helper code that can be used for Jetpack Compose Navigation Component.
 
+## Features
+ - Removes code duplication when describing your routes and its arguments through out the application
+ - Helpers functions that will allow to obtain passed arguments easily
+ - Safety during navigation: `RoutesActions.kt` always contains arguments your destination needs
+ - Mandatory & Optional parameters
+
 ## Installation
 
 in your project level `build.gradle`
