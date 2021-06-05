@@ -1,9 +1,9 @@
 package cz.levinzonr.router.processor.codegen
 
 import com.squareup.kotlinpoet.*
-import cz.levinzonr.router.processor.Constants
+import cz.levinzonr.router.processor.constants.Constants
+import cz.levinzonr.router.processor.constants.KDoc
 import cz.levinzonr.router.processor.extensions.asList
-import cz.levinzonr.router.processor.extensions.toNavType
 import cz.levinzonr.router.processor.models.ModelData
 import cz.levinzonr.router.processor.models.RouteData
 import cz.levinzonr.router.processor.pathbuilder.fullPathBuilder
@@ -15,6 +15,7 @@ internal class RoutesBuilder(val data: ModelData) {
     fun build(): TypeSpec {
         return TypeSpec.objectBuilder(Constants.FILE_ROUTES)
             .addPaths(data.routes)
+            .addKdoc(KDoc.ROUTES_SPEC)
             .build()
     }
 
@@ -27,6 +28,7 @@ internal class RoutesBuilder(val data: ModelData) {
                 .build()
 
             val prop = PropertySpec.builder(it.name, routSpec)
+                .addKdoc(KDoc.ROUTE_SPEC_OBJ, it.name)
                 .initializer("%L", implementation)
             addProperty(prop.build())
         }

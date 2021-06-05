@@ -1,4 +1,4 @@
-package cz.levinzonr.router.processor
+package cz.levinzonr.router.processor.constants
 
 import com.squareup.kotlinpoet.ClassName
 

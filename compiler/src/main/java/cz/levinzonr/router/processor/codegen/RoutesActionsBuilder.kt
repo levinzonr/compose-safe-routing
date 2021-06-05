@@ -1,18 +1,18 @@
 package cz.levinzonr.router.processor.codegen
 
 import com.squareup.kotlinpoet.*
-import cz.levinzonr.router.processor.Constants
+import cz.levinzonr.router.processor.constants.Constants
+import cz.levinzonr.router.processor.constants.KDoc
 import cz.levinzonr.router.processor.models.ArgumentData
-import cz.levinzonr.router.processor.models.OptionalArgData
 import cz.levinzonr.router.processor.models.RouteData
 import cz.levinzonr.router.processor.pathbuilder.fullPathBuilder
-import cz.levinzonr.router.processor.pathbuilder.pathBuilder
 
 internal class RoutesActionsBuilder(
     private val data: List<RouteData>
 ) {
     fun build() : TypeSpec {
         return TypeSpec.objectBuilder(Constants.FILE_ACTIONS)
+            .addKdoc(KDoc.ROUTES_ACTIONS)
             .addActions(data)
             .build()
     }
@@ -37,7 +37,9 @@ internal class RoutesActionsBuilder(
             optionalBuilder = {"${it.name}=$${it.name}"}
         )
         builder.addStatement("return \"$name$path\"")
-        return builder.returns(returnType = String::class).build()
+        return builder
+            .addKdoc(KDoc.ROUTES_ACTIONS_FUN, name)
+            .returns(returnType = String::class).build()
     }
 
     private fun ArgumentData.toParamSpec() : ParameterSpec {
