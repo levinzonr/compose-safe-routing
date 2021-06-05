@@ -8,7 +8,7 @@ import cz.levinzonr.router.processor.models.ModelData
 import cz.levinzonr.router.processor.models.RouteData
 import cz.levinzonr.router.processor.pathbuilder.fullPathBuilder
 
-class RoutesBuilder(val data: ModelData) {
+internal class RoutesBuilder(val data: ModelData) {
 
     private val routSpec = ClassName(data.packageName, Constants.FILE_ROUTE_SPEC)
 

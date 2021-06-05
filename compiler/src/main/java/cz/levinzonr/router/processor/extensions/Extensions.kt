@@ -4,7 +4,7 @@ import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.ParameterizedTypeName
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 
-fun ClassName.asList() : ParameterizedTypeName {
+internal fun ClassName.asList() : ParameterizedTypeName {
     val list = ClassName("kotlin.collections", "List")
     return list.parameterizedBy(this)
 }

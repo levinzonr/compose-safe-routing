@@ -16,7 +16,7 @@ import kotlin.Exception
 
 
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
-class RouteProcessor : AbstractProcessor() {
+internal class RouteProcessor : AbstractProcessor() {
 
     companion object {
         const val KAPT_KOTLIN_GENERATED_OPTION_NAME = "kapt.kotlin.generated"

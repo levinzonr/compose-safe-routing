@@ -8,7 +8,7 @@ import cz.levinzonr.router.processor.models.RouteData
 import cz.levinzonr.router.processor.pathbuilder.fullPathBuilder
 import cz.levinzonr.router.processor.pathbuilder.pathBuilder
 
-class RoutesActionsBuilder(
+internal class RoutesActionsBuilder(
     private val data: List<RouteData>
 ) {
     fun build() : TypeSpec {

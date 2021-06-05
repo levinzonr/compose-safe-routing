@@ -10,7 +10,7 @@ import cz.levinzonr.router.processor.models.RouteData
 import javax.annotation.processing.ProcessingEnvironment
 import javax.annotation.processing.RoundEnvironment
 
-object DataProcessor {
+internal object DataProcessor {
 
     fun process(processingEnv: ProcessingEnvironment, environment: RoundEnvironment?) : ModelData? {
         try {

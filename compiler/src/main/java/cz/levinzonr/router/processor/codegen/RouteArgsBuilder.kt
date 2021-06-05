@@ -8,7 +8,7 @@ import cz.levinzonr.router.processor.extensions.toNavType
 import cz.levinzonr.router.processor.models.ArgumentData
 import cz.levinzonr.router.processor.models.RouteData
 
-class RouteArgsBuilder(
+internal class RouteArgsBuilder(
     private val packageName: String,
     private val data: RouteData
 ) {

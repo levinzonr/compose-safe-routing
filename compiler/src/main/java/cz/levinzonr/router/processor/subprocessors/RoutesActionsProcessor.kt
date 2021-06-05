@@ -5,7 +5,7 @@ import cz.levinzonr.router.processor.codegen.RoutesActionsBuilder
 import cz.levinzonr.router.processor.models.ModelData
 import java.io.File
 
-object RoutesActionsProcessor : FileGenProcessor {
+internal object RoutesActionsProcessor : FileGenProcessor {
 
     override fun process(data: ModelData, destinationDir: File) {
         try {

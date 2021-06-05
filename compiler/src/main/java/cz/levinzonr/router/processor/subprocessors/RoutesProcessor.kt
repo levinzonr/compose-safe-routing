@@ -9,7 +9,7 @@ import cz.levinzonr.router.processor.extensions.importNavType
 import cz.levinzonr.router.processor.models.ModelData
 import java.io.File
 
-object RoutesProcessor : FileGenProcessor {
+internal object RoutesProcessor : FileGenProcessor {
     override fun process(data: ModelData, destinationDir: File) {
         try {
 
