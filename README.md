@@ -2,6 +2,8 @@
 
 # Compose Safe Routing
 
+A small code generating library, inspired by SafeArgs for android, that generates helper code that can be used for Jetpack Compose Navigation Component.
+
 ## Installation
 
 in your project level `build.gradle`
