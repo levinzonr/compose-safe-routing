@@ -1,8 +1,8 @@
-package cz.levinzonr.router.processor
+package cz.levinzonr.router.processor.constants
 
 import com.squareup.kotlinpoet.ClassName
 
-object Constants {
+internal object Constants {
     const val FILE_ARGS_EXTENSIONS = "args-extensions"
     const val FILE_ACTIONS = "RoutesActions"
     const val FILE_ARGS_POSTFIX = "RouteArgs"

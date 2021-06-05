@@ -1,14 +1,14 @@
 package cz.levinzonr.router.processor.codegen
 
 import com.squareup.kotlinpoet.*
-import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
-import cz.levinzonr.router.processor.Constants
+import cz.levinzonr.router.processor.constants.Constants
+import cz.levinzonr.router.processor.constants.KDoc
 import cz.levinzonr.router.processor.extensions.asList
 import cz.levinzonr.router.processor.extensions.toNavType
 import cz.levinzonr.router.processor.models.ArgumentData
 import cz.levinzonr.router.processor.models.RouteData
 
-class RouteArgsBuilder(
+internal class RouteArgsBuilder(
     private val packageName: String,
     private val data: RouteData
 ) {
@@ -16,6 +16,7 @@ class RouteArgsBuilder(
         return TypeSpec.classBuilder(data.argumentsName)
             .initConstructor(data.arguments)
             .addArguments(data.arguments)
+            .addKdoc(KDoc.ROUTE_ARG, data.name)
             .addType(buildNamedArgsCompanion(data))
             .addModifiers(KModifier.DATA)
             .build()
@@ -51,6 +52,7 @@ class RouteArgsBuilder(
         return FunSpec.builder("fromNavBackStackEntry")
             .returns(ClassName(packageName, data.argumentsName))
             .addParameter("args", Constants.CLASS_BACK_STACK_ENTRY)
+            .addKdoc("A Helper function to obtain an instance of ${data.argumentsName} from NavBackStackEntry")
             .addCode(code.build())
             .build()
     }
@@ -69,6 +71,7 @@ class RouteArgsBuilder(
         code.addStatement("return ${data.argumentsConstructor}")
         return FunSpec.builder("fromSavedStatedHandle")
             .returns(ClassName(packageName, data.argumentsName))
+            .addKdoc("A Helper function to obtain an instance of ${data.argumentsName} from SavedStateHandle")
             .addParameter("args", Constants.CLASS_SAVED_STATE_HANDLE)
             .addCode(code.build())
             .build()
@@ -98,6 +101,7 @@ class RouteArgsBuilder(
 
         return PropertySpec.builder("navArgs", navArgClass.asList())
             .initializer(code.build())
+            .addKdoc("NamedNavArgs representation for ${data.argumentsName}")
             .build()
 
     }

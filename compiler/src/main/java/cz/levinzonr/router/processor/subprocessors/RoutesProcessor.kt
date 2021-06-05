@@ -1,7 +1,7 @@
 package cz.levinzonr.router.processor.subprocessors
 
 import com.squareup.kotlinpoet.FileSpec
-import cz.levinzonr.router.processor.Constants
+import cz.levinzonr.router.processor.constants.Constants
 import cz.levinzonr.router.processor.codegen.RouteSpecInterfaceBuilder
 import cz.levinzonr.router.processor.codegen.RoutesBuilder
 import cz.levinzonr.router.processor.extensions.importNavArgument
@@ -9,7 +9,7 @@ import cz.levinzonr.router.processor.extensions.importNavType
 import cz.levinzonr.router.processor.models.ModelData
 import java.io.File
 
-object RoutesProcessor : FileGenProcessor {
+internal object RoutesProcessor : FileGenProcessor {
     override fun process(data: ModelData, destinationDir: File) {
         try {
 

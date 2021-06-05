@@ -1,8 +1,8 @@
 package cz.levinzonr.router.processor.models
 
-import cz.levinzonr.router.processor.Constants
+import cz.levinzonr.router.processor.constants.Constants
 
-data class RouteData(
+internal data class RouteData(
     val name: String,
     val arguments: List<ArgumentData>
 ) {

@@ -4,7 +4,7 @@ import com.squareup.kotlinpoet.ClassName
 import kotlin.reflect.KClass
 
 
-fun KClass<*>.toNavType() : String {
+internal fun KClass<*>.toNavType() : String {
     return when {
         this == Int::class -> "NavType.IntType"
         this == String::class -> "NavType.StringType"
