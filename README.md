@@ -7,11 +7,11 @@
 in your project level `build.gradle`
 ```gradle
 allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}	
+}
 ```
 And then in you app level `build.gradle`
 ```kotlin
