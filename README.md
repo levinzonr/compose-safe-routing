@@ -24,8 +24,8 @@ allprojects {
 And then in you app level `build.gradle`
 ```kotlin
 dependencies { 
-    kapt("com.github.levinzonr.compose-safe-routing:compiler:1.0.0")
-    implementation("com.github.levinzonr.compose-safe-routing:core:1.0.0")
+    kapt("com.github.levinzonr.compose-safe-routing:compiler:1.0.1")
+    implementation("com.github.levinzonr.compose-safe-routing:core:1.0.1")
 }
 ```
 
