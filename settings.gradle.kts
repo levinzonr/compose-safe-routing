@@ -10,3 +10,4 @@ rootProject.name = "router"
 include(":app")
 include(":core")
 include(":compiler")
+include(":compose")
