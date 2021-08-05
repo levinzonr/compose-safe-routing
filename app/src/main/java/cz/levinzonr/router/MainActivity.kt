@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController = controller, startDestination = Routes.profile.path) {
                         composable(Routes.profile.path) {
                             ProfileScreen {
-                                controller.navigate(RoutesActions.toDetails("ID", "anoterId", "hasdadas"))
+                                controller.navigate(RoutesActions.toDetails("ID", 0))
                             }
                         }
                         composable(Routes.details.path, Routes.details.navArgs) {
