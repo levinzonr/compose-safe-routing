@@ -10,7 +10,7 @@ import cz.levinzonr.router.processor.pathbuilder.fullPathBuilder
 
 internal class RoutesBuilder(val data: ModelData) {
 
-    private val routSpec = ClassName(data.packageName, Constants.FILE_ROUTE_SPEC)
+    private val routSpec = ClassName("cz.levinzonr.saferoute.compose", Constants.FILE_ROUTE_SPEC)
 
     fun build(): TypeSpec {
         return TypeSpec.objectBuilder(Constants.FILE_ROUTES)

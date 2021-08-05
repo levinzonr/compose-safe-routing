@@ -1,4 +1,4 @@
-package cz.levinzonr.compose
+package cz.levinzonr.saferoute.compose
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("cz.levinzonr.compose.test", appContext.packageName)
+        assertEquals("cz.levinzonr.saferoute.compose.test", appContext.packageName)
     }
 }

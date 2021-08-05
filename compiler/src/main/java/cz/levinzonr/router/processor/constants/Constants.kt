@@ -9,7 +9,7 @@ internal object Constants {
     const val FILE_ROUTES = "Routes"
     const val FILE_ROUTE_SPEC = "RouteSpec"
 
-    const val ROUTE_SPEC_NAME = "path"
+    const val ROUTE_SPEC_NAME = "route"
     const val ROUTE_SPEC_ARGS = "navArgs"
 
     const val FILE_ARG_EXTENSIONS_PREFIX = "NavBackStackEntry+"
