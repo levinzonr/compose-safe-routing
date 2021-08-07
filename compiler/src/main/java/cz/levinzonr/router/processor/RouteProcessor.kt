@@ -45,6 +45,7 @@ internal class RouteProcessor : AbstractProcessor() {
             log("Start routes processings")
             RoutesProcessor.process(data, File(buildDir))
 
+            log("Routes processings complete")
             return true
 
         } catch (e: Exception) {

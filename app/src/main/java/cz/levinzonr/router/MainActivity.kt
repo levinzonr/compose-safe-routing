@@ -8,10 +8,8 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.os.bundleOf
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import cz.levinzonr.router.screens.DetailsScreen
 import cz.levinzonr.router.screens.ProfileScreen
@@ -19,6 +17,7 @@ import cz.levinzonr.router.screens.Routes
 import cz.levinzonr.router.screens.RoutesActions
 import cz.levinzonr.router.screens.args.DetailsRouteArgs
 import cz.levinzonr.router.ui.theme.RouterTheme
+import cz.levinzonr.saferoute.compose.composable
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,12 +30,12 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     val controller = rememberNavController()
                     NavHost(navController = controller, startDestination = Routes.profile.route) {
-                        composable(Routes.profile.route) {
+                        composable(Routes.profile) {
                             ProfileScreen {
                                 controller.navigate(RoutesActions.toDetails("ID", 0))
                             }
                         }
-                        composable(Routes.details.route, Routes.details.navArgs) {
+                        composable(Routes.details) {
                             DetailsScreen(args = DetailsRouteArgs.fromNavBackStackEntry(it), hiltViewModel())
                         }
 
