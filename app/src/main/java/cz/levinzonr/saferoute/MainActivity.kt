@@ -9,8 +9,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import cz.levinzonr.saferoute.core.NavHost
 import cz.levinzonr.saferoute.screens.DetailsScreen
 import cz.levinzonr.saferoute.screens.ProfileScreen
 import cz.levinzonr.saferoute.screens.Routes
@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     val controller = rememberNavController()
-                    NavHost(navController = controller, startDestination = Routes.Profile.route) {
+                    NavHost(navController = controller, spec = Routes.Profile) {
                         composable(Routes.Profile) {
                             ProfileScreen {
                                 controller.navigate(RoutesActions.toDetails("ID", 0))
@@ -38,7 +38,6 @@ class MainActivity : ComponentActivity() {
                         composable(Routes.Details) {
                             DetailsScreen(args = DetailsRouteArgs.fromNavBackStackEntry(it), hiltViewModel())
                         }
-
                     }
                 }
             }
