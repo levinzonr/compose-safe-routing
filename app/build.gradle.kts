@@ -50,7 +50,7 @@ android {
 
 dependencies {
     val hilt_version = "2.37"
-    implementation(project(":compose"))
+    implementation(project(":core"))
     "kapt"(project(":compiler"))
 
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")

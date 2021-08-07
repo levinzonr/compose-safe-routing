@@ -1,9 +1,0 @@
-package cz.levinzonr.router.processor.models
-
-internal sealed class OptionalArgData<T>(val value: T){
-    class OptionalInt(value: Int) : OptionalArgData<Int>(value = value)
-    class OptionalFloat(value: Float) : OptionalArgData<Float>(value = value)
-    class OptionalBool(value: Boolean) : OptionalArgData<Boolean>(value = value)
-    class OptionalLong(value: Long) : OptionalArgData<Long>(value = value)
-    class OptionalString(value: String?) : OptionalArgData<String?>(value = value)
-}

@@ -8,6 +8,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "router"
 include(":app")
-include(":core")
+include(":annotations")
 include(":compiler")
-include(":compose")
+include(":core")
