@@ -27,7 +27,7 @@ internal class RoutesBuilder(val data: ModelData) {
                 .addProperty(it.toArgsPropertySpec())
                 .build()
 
-            val prop = PropertySpec.builder(it.name, routSpec)
+            val prop = PropertySpec.builder(it.name.capitalize(), routSpec)
                 .addKdoc(KDoc.ROUTE_SPEC_OBJ, it.name)
                 .initializer("%L", implementation)
             addProperty(prop.build())

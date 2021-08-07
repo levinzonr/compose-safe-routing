@@ -29,13 +29,13 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     val controller = rememberNavController()
-                    NavHost(navController = controller, startDestination = Routes.profile.route) {
-                        composable(Routes.profile) {
+                    NavHost(navController = controller, startDestination = Routes.Profile.route) {
+                        composable(Routes.Profile) {
                             ProfileScreen {
                                 controller.navigate(RoutesActions.toDetails("ID", 0))
                             }
                         }
-                        composable(Routes.details) {
+                        composable(Routes.Details) {
                             DetailsScreen(args = DetailsRouteArgs.fromNavBackStackEntry(it), hiltViewModel())
                         }
 
