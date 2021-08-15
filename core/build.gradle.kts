@@ -51,6 +51,7 @@ afterEvaluate {
                 groupId = "cz.levinzonr.saferouter"
                 artifactId = "core"
                 version = "1.5"
+                artifact("$buildDir/libs/annotations.jar")
             }
         }
     }
