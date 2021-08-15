@@ -18,6 +18,8 @@ import cz.levinzonr.saferoute.screens.RoutesActions
 import cz.levinzonr.saferoute.screens.args.DetailsRouteArgs
 import cz.levinzonr.saferoute.ui.theme.RouterTheme
 import cz.levinzonr.saferoute.core.composable
+import cz.levinzonr.saferoute.core.fromBackStackEntry
+import cz.levinzonr.saferoute.screens.args.DetailsRouteArgsFactory
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,7 +38,7 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                         composable(Routes.Details) {
-                            DetailsScreen(args = DetailsRouteArgs.fromNavBackStackEntry(it), hiltViewModel())
+                            DetailsScreen(args = DetailsRouteArgsFactory.fromBackStackEntry(it), hiltViewModel())
                         }
                     }
                 }

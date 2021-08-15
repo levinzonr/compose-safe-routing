@@ -20,3 +20,4 @@ fun NavGraphBuilder.navigation(
     startSpec: RouteSpec,
     content: NavGraphBuilder.() -> Unit
 ) = navigation(route, startSpec.route, content)
+

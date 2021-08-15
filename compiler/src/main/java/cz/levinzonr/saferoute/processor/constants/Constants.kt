@@ -32,6 +32,12 @@ internal object Constants {
     const val CLASSNAME_SAVED_STATE_HANDLE = "SavedStateHandle"
     val CLASS_SAVED_STATE_HANDLE = ClassName(PACKAGE_LIFECYCLE, CLASSNAME_SAVED_STATE_HANDLE)
     val CLASS_NAMED_ARG = ClassName(PACKAGE_NAV_COMPOSE, CLASSNAME_NAMED_ARG)
+
+}
+
+object ClassNames {
+    val Bundle = ClassName("android.os", "Bundle")
+    val SavedStateHandle = ClassName(Constants.PACKAGE_LIFECYCLE, Constants.CLASSNAME_SAVED_STATE_HANDLE)
 }
 
 

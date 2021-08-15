@@ -31,52 +31,8 @@ internal class RouteArgsBuilder(
 
         return TypeSpec.companionObjectBuilder()
             .addProperty(buildNavArgsProperty())
-            .addFunction(buildNavBackStackEntryInitilizer())
-            .addFunction(buildSavedStateHandleInitlizer())
             .build()
     }
-
-    private fun buildNavBackStackEntryInitilizer() : FunSpec {
-        val code = CodeBlock.builder()
-
-        data.arguments.forEach {
-            if (it.isNullable) {
-                code.addStatement("val ${it.name} = args.arguments?.get%T(%S)", it.type, it.name)
-            } else {
-                code.addStatement("val ${it.name} = requireNotNull(args.arguments?.get%T(%S))", it.type, it.name)
-
-            }
-        }
-
-        code.addStatement("return ${data.argumentsConstructor}")
-        return FunSpec.builder("fromNavBackStackEntry")
-            .returns(ClassName(packageName, data.argumentsName))
-            .addParameter("args", Constants.CLASS_BACK_STACK_ENTRY)
-            .addKdoc("A Helper function to obtain an instance of ${data.argumentsName} from NavBackStackEntry")
-            .addCode(code.build())
-            .build()
-    }
-
-    private fun buildSavedStateHandleInitlizer() : FunSpec {
-        val code = CodeBlock.builder()
-
-        data.arguments.forEach {
-            if (it.isNullable) {
-                code.addStatement("val ${it.name} = args.get<%T>(%S)", it.type, it.name)
-            } else {
-                code.addStatement("val ${it.name} = requireNotNull(args.get<%T>(%S))", it.type, it.name)
-            }
-        }
-
-        code.addStatement("return ${data.argumentsConstructor}")
-        return FunSpec.builder("fromSavedStatedHandle")
-            .returns(ClassName(packageName, data.argumentsName))
-            .addKdoc("A Helper function to obtain an instance of ${data.argumentsName} from SavedStateHandle")
-            .addParameter("args", Constants.CLASS_SAVED_STATE_HANDLE)
-            .addCode(code.build())
-            .build()
-    }
-
 
     private fun buildNavArgsProperty() :PropertySpec {
         val navArgClass = Constants.CLASS_NAMED_ARG
