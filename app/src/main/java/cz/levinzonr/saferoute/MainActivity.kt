@@ -18,6 +18,7 @@ import cz.levinzonr.saferoute.screens.RoutesActions
 import cz.levinzonr.saferoute.screens.args.DetailsRouteArgs
 import cz.levinzonr.saferoute.ui.theme.RouterTheme
 import cz.levinzonr.saferoute.core.composable
+import cz.levinzonr.saferoute.core.composableWithArgs
 import cz.levinzonr.saferoute.core.fromBackStackEntry
 import cz.levinzonr.saferoute.screens.args.DetailsRouteArgsFactory
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,13 +33,13 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     val controller = rememberNavController()
                     NavHost(navController = controller, spec = Routes.Profile) {
-                        composable(Routes.Profile) {
+                        composableWithArgs(Routes.Profile) { _, _ ->
                             ProfileScreen {
                                 controller.navigate(RoutesActions.toDetails("ID", 0))
                             }
                         }
-                        composable(Routes.Details) {
-                            DetailsScreen(args = DetailsRouteArgsFactory.fromBackStackEntry(it), hiltViewModel())
+                        composableWithArgs(Routes.Details) { _, args ->
+                            DetailsScreen(args = args, hiltViewModel())
                         }
                     }
                 }

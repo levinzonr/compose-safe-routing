@@ -36,6 +36,9 @@ internal object Constants {
 }
 
 object ClassNames {
+    val RouteArgsFactory = ClassName("cz.levinzonr.saferoute.core", "RouteArgsFactory")
+    val RouteSpec = ClassName("cz.levinzonr.saferoute.core", Constants.FILE_ROUTE_SPEC)
+    val EmptyArgsFactory = ClassName("cz.levinzonr.saferoute.core.util", "EmptyArgsFactory")
     val Bundle = ClassName("android.os", "Bundle")
     val SavedStateHandle = ClassName(Constants.PACKAGE_LIFECYCLE, Constants.CLASSNAME_SAVED_STATE_HANDLE)
 }

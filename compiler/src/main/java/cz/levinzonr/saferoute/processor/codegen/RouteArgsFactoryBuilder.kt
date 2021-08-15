@@ -13,7 +13,7 @@ internal class RouteArgsFactoryBuilder(
     fun build() : TypeSpec {
         return TypeSpec.objectBuilder("${data.argumentsName}Factory")
             .addSuperinterface(
-                ClassName("cz.levinzonr.saferoute.core", "RouteArgFactory")
+                ClassNames.RouteArgsFactory
                     .parameterizedBy(ClassName(packageName, data.argumentsName))
             )
             .addFunction(buildNavBackStackEntryInitilizer())

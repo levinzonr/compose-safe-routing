@@ -7,7 +7,8 @@ import androidx.navigation.compose.NamedNavArgument
  * @path - full route path with arguments
  * @navArgs - list of the NamedNavArguments for this route, corresponds with @path
  */
-interface RouteSpec {
+interface RouteSpec<A> {
     val route: String
     val navArgs: List<NamedNavArgument>
+    val argsFactory: RouteArgsFactory<A>
 }

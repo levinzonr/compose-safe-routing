@@ -3,6 +3,7 @@ package cz.levinzonr.saferoute.processor.subprocessors
 import cz.levinzonr.saferoute.annotations.Route
 import cz.levinzonr.saferoute.annotations.RouteArg
 import cz.levinzonr.saferoute.annotations.RouteArgType
+import cz.levinzonr.saferoute.processor.constants.Constants
 import cz.levinzonr.saferoute.processor.models.ArgumentData
 import cz.levinzonr.saferoute.processor.models.ModelData
 import cz.levinzonr.saferoute.processor.models.OptionalArgData
@@ -20,7 +21,7 @@ internal object DataProcessor {
                 packageName = processingEnv.elementUtils.getPackageOf(element).toString()
                 val annotation = element.getAnnotation(Route::class.java)
                 val arguments = annotation.args.map { it.toArgumentData()  }
-                RouteData(annotation.name, arguments)
+                RouteData(annotation.name, arguments, packageName + "." + Constants.FILE_ARGS_DIR)
             }?.takeIf { it.isNotEmpty() } ?: return null
 
             return ModelData(packageName, routes)

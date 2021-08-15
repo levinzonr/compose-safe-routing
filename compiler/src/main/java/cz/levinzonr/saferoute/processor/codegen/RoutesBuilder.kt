@@ -1,6 +1,8 @@
 package cz.levinzonr.saferoute.processor.codegen
 
 import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import cz.levinzonr.saferoute.processor.constants.ClassNames
 import cz.levinzonr.saferoute.processor.constants.Constants
 import cz.levinzonr.saferoute.processor.constants.KDoc
 import cz.levinzonr.saferoute.processor.extensions.asList
@@ -10,7 +12,6 @@ import cz.levinzonr.saferoute.processor.pathbuilder.fullPathBuilder
 
 internal class RoutesBuilder(val data: ModelData) {
 
-    private val routSpec = ClassName("cz.levinzonr.saferoute.core", Constants.FILE_ROUTE_SPEC)
 
     fun build(): TypeSpec {
         return TypeSpec.objectBuilder(Constants.FILE_ROUTES)
@@ -21,13 +22,15 @@ internal class RoutesBuilder(val data: ModelData) {
 
     private fun TypeSpec.Builder.addPaths(routes: List<RouteData>) : TypeSpec.Builder {
         routes.map {
+
             val implementation = TypeSpec.anonymousClassBuilder()
-                .addSuperinterface(routSpec)
+                .addSuperinterface(ClassNames.RouteSpec.parameterizedBy(it.className))
                 .addProperty(it.toNamePropertySpec())
+                .addProperty(it.toArgsFactoryPropertySpec())
                 .addProperty(it.toArgsPropertySpec())
                 .build()
 
-            val prop = PropertySpec.builder(it.name.capitalize(), routSpec)
+            val prop = PropertySpec.builder(it.name.capitalize(), ClassNames.RouteSpec.parameterizedBy(it.className))
                 .addKdoc(KDoc.ROUTE_SPEC_OBJ, it.name)
                 .initializer("%L", implementation)
             addProperty(prop.build())
@@ -53,6 +56,14 @@ internal class RoutesBuilder(val data: ModelData) {
         return PropertySpec.builder(Constants.ROUTE_SPEC_NAME, type = String::class)
             .addModifiers(KModifier.OVERRIDE)
             .initializer("%S", "$name$path")
+            .build()
+    }
+
+
+    private fun RouteData.toArgsFactoryPropertySpec() : PropertySpec {
+        return PropertySpec.builder("argsFactory", type = ClassNames.RouteArgsFactory.parameterizedBy(className))
+            .addModifiers(KModifier.OVERRIDE)
+            .initializer("%T", argsFactoryName)
             .build()
     }
 }

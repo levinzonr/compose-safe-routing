@@ -8,7 +8,7 @@ import androidx.navigation.NavHostController
 @Composable
 fun NavHost(
     navController: NavHostController,
-    spec: RouteSpec,
+    spec: RouteSpec<*>,
     modifier: Modifier = Modifier,
     route: String? = null,
     builder: NavGraphBuilder.() -> Unit
