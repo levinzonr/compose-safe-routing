@@ -11,11 +11,8 @@ internal class RouteArgsFactoryBuilder(
     private val data: RouteData
 ) {
     fun build() : TypeSpec {
-        return TypeSpec.objectBuilder("${data.argumentsName}Factory")
-            .addSuperinterface(
-                ClassNames.RouteArgsFactory
-                    .parameterizedBy(ClassName(packageName, data.argumentsName))
-            )
+        return TypeSpec.objectBuilder(data.getArgsFactoryName())
+            .addSuperinterface(ClassNames.RouteArgsFactory.parameterizedBy(data.argsTypeClassName))
             .addFunction(buildNavBackStackEntryInitilizer())
             .addFunction(buildSavedStateHandleInitlizer())
             .build()

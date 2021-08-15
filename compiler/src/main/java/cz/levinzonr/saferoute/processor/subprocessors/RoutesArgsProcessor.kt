@@ -4,8 +4,6 @@ import com.squareup.kotlinpoet.FileSpec
 import cz.levinzonr.saferoute.processor.constants.Constants
 import cz.levinzonr.saferoute.processor.codegen.RouteArgsBuilder
 import cz.levinzonr.saferoute.processor.codegen.RouteArgsFactoryBuilder
-import cz.levinzonr.saferoute.processor.extensions.importNavArgument
-import cz.levinzonr.saferoute.processor.extensions.importNavType
 import cz.levinzonr.saferoute.processor.models.ModelData
 import java.io.File
 
@@ -18,8 +16,6 @@ internal object RoutesArgsProcessor : FileGenProcessor {
 
                 val spec = RouteArgsBuilder(packageName, it).build()
                 FileSpec.builder(packageName, spec.name!!)
-                    .importNavArgument()
-                    .importNavType()
                     .addType(spec)
                     .build()
                     .writeTo(destinationDir)

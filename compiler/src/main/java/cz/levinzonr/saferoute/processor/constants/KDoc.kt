@@ -9,7 +9,4 @@ object KDoc {
     const val ROUTES_SPEC = "This object contains the description of all routes described in the app"
     const val ROUTE_SPEC_OBJ = "A description of the %S route, including its full path and an navArgs"
 
-    const val ROUTE_SPEC_INTERFACE = "An interface to fully describe the app route for the Compose Nav Component" +
-            "\n@path - full route path with arguments" +
-            "\n@navArgs - list of the NamedNavArguments for this route, corresponds with @path"
 }

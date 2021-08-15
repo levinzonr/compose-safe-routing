@@ -24,13 +24,13 @@ internal class RoutesBuilder(val data: ModelData) {
         routes.map {
 
             val implementation = TypeSpec.anonymousClassBuilder()
-                .addSuperinterface(ClassNames.RouteSpec.parameterizedBy(it.className))
+                .addSuperinterface(ClassNames.RouteSpec.parameterizedBy(it.argsTypeClassName))
                 .addProperty(it.toNamePropertySpec())
                 .addProperty(it.toArgsFactoryPropertySpec())
                 .addProperty(it.toArgsPropertySpec())
                 .build()
 
-            val prop = PropertySpec.builder(it.name.capitalize(), ClassNames.RouteSpec.parameterizedBy(it.className))
+            val prop = PropertySpec.builder(it.name.capitalize(), ClassNames.RouteSpec.parameterizedBy(it.argsTypeClassName))
                 .addKdoc(KDoc.ROUTE_SPEC_OBJ, it.name)
                 .initializer("%L", implementation)
             addProperty(prop.build())
@@ -39,8 +39,7 @@ internal class RoutesBuilder(val data: ModelData) {
     }
 
     private fun RouteData.toArgsPropertySpec() : PropertySpec {
-        val navArgClass = Constants.CLASS_NAMED_ARG
-        return PropertySpec.builder(Constants.ROUTE_SPEC_ARGS, navArgClass.asList())
+        return PropertySpec.builder(Constants.ROUTE_SPEC_ARGS, ClassNames.NamedNavArgument.asList())
             .addModifiers(KModifier.OVERRIDE)
             .initializer( if (arguments.isEmpty()) "listOf()" else "$argumentsName.navArgs")
             .build()
@@ -61,9 +60,9 @@ internal class RoutesBuilder(val data: ModelData) {
 
 
     private fun RouteData.toArgsFactoryPropertySpec() : PropertySpec {
-        return PropertySpec.builder("argsFactory", type = ClassNames.RouteArgsFactory.parameterizedBy(className))
+        return PropertySpec.builder("argsFactory", type = ClassNames.RouteArgsFactory.parameterizedBy(argsTypeClassName))
             .addModifiers(KModifier.OVERRIDE)
-            .initializer("%T", argsFactoryName)
+            .initializer("%T", argsFactoryClassName)
             .build()
     }
 }

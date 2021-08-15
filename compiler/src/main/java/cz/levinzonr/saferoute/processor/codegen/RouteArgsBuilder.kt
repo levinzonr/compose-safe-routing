@@ -1,6 +1,7 @@
 package cz.levinzonr.saferoute.processor.codegen
 
 import com.squareup.kotlinpoet.*
+import cz.levinzonr.saferoute.processor.constants.ClassNames
 import cz.levinzonr.saferoute.processor.constants.Constants
 import cz.levinzonr.saferoute.processor.constants.KDoc
 import cz.levinzonr.saferoute.processor.extensions.asList
@@ -35,15 +36,14 @@ internal class RouteArgsBuilder(
     }
 
     private fun buildNavArgsProperty() :PropertySpec {
-        val navArgClass = Constants.CLASS_NAMED_ARG
 
         val code = CodeBlock.builder()
             .addStatement("listOf(")
             .indent()
 
         data.arguments.forEach {
-            code.addStatement("navArgument(%S) {", it.name)
-            code.indent().addStatement("type = ${it.type.toNavType()} ")
+            code.addStatement("%T(%S) {", ClassNames.navArgument, it.name)
+            code.indent().addStatement("type = ${it.type.toNavType()}", ClassNames.NavType)
             code.addStatement("nullable = ${it.isNullable}")
             it.optionalData?.let {
                 code.addStatement("defaultValue = %L", it.value)
@@ -55,7 +55,7 @@ internal class RouteArgsBuilder(
 
         code.unindent().addStatement(")")
 
-        return PropertySpec.builder("navArgs", navArgClass.asList())
+        return PropertySpec.builder("navArgs", ClassNames.NamedNavArgument.asList())
             .initializer(code.build())
             .addKdoc("NamedNavArgs representation for ${data.argumentsName}")
             .build()

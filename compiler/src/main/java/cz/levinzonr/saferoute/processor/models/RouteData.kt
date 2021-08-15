@@ -12,15 +12,23 @@ internal data class RouteData(
 
     val argumentsName: String get() = "${name.capitalize()}${Constants.FILE_ARGS_POSTFIX}"
 
-    val argsFactoryName = if (arguments.isEmpty())
+
+
+    val argsFactoryClassName = if (arguments.isEmpty())
         ClassNames.EmptyArgsFactory
     else
-        ClassName(packageName, "${argumentsName}Factory")
+        ClassName(packageName, getArgsFactoryName())
 
-    val className = if (arguments.isEmpty()) ClassName("kotlin", "Unit") else ClassName(
+    val argsTypeClassName = if (arguments.isEmpty()) ClassName("kotlin", "Unit") else ClassName(
         packageName,
         argumentsName
     )
 
     val argumentsConstructor: String get() = "$argumentsName(${arguments.joinToString { it.name }})"
+
+
+
+    fun getArgsFactoryName() : String{
+        return "$argumentsName${Constants.FILE_ROUTE_ARG_FACTORY}"
+    }
 }
