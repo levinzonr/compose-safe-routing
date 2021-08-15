@@ -51,7 +51,8 @@ afterEvaluate {
                 groupId = "cz.levinzonr.saferouter"
                 artifactId = "core"
                 version = "1.5"
-                artifact("$buildDir/libs/annotations.jar")
+                val dir = rootProject.allprojects.find { it.name == "annotations" }?.buildDir
+                artifact("$dir/libs/annotations.jar")
             }
         }
     }
