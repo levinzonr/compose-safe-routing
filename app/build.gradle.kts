@@ -50,9 +50,12 @@ android {
 
 dependencies {
     val hilt_version = "2.37"
+    implementation(project(":core"))
+    "kapt"(project(":compiler"))
 
-    kapt("cz.levinzonr.safe-routing:compiler:1.0.1")
-    implementation("router:core:1")
+
+   /* kapt("cz.levinzonr.safe-routing:compiler:1.0.1")
+    implementation("router:core:1")*/
 
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
     implementation("androidx.navigation:navigation-compose:2.4.0-alpha06")
