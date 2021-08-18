@@ -1,8 +1,9 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("maven-publish")
+    id("com.vanniktech.maven.publish")
 }
+
 
 android {
     compileSdk = 30
@@ -42,21 +43,10 @@ android {
 
 }
 
-
-afterEvaluate {
-    publishing {
-        publications {
-            this.create("release", MavenPublication::class) {
-                from(components.getByName("release"))
-                groupId = "cz.levinzonr.saferouter"
-                artifactId = "core"
-                version = "1.5"
-                val dir = rootProject.allprojects.find { it.name == "annotations" }?.buildDir
-                artifact("$dir/libs/annotations.jar")
-            }
-        }
-    }
+mavenPublish {
+    releaseSigningEnabled = false
 }
+
 
 dependencies {
 

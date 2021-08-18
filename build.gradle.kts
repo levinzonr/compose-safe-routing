@@ -4,12 +4,13 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
     }
     dependencies {
         classpath("com.android.tools.build:gradle:7.0.0")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21")
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.37")
-
+        classpath("com.vanniktech:gradle-maven-publish-plugin:0.17.0")
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle.kts files
     }
