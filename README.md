@@ -90,17 +90,17 @@ This will allow you to declare your composable inside `NavHost` more easilly by 
 ```kotlin
 NavHost(startDestination = Routes.Profile.route) {
   composable(Routes.Profie) { 
-    ProfileScreen()
+     ProfileScreen()
   }
   
    composableWithArgs(Routes.Details) { entry, args -> 
-     DetailsScreen(args)
+      DetailsScreen(args)
    }
   
   // or in case you want to process args manually 
-  composables(Routes.Details) { entry -> 
+  composable(Routes.Details) { entry -> 
       DetailsScreen(DetailsRouteArgsFactory.fromBackStackEntry(entry))
-   }
+  }
 }
 ```
 
