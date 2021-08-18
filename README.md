@@ -5,8 +5,10 @@
 A small code generating library, inspired by SafeArgs for android, that generates helper code that can be used for Jetpack Compose Navigation Component.
 
 ## Features
+
  - Removes code duplication when describing your routes and its arguments through out the application
- - Helpers functions that will allow to obtain passed arguments easily
+ - Helper functions to declare your Routes using `RouteSpec` interface 
+ - Helper functions that will allow to obtain passed arguments easily
  - Safety during navigation: `RoutesActions.kt` always contains arguments your destination needs
  - Mandatory & Optional parameters
 
@@ -24,15 +26,15 @@ allprojects {
 And then in you app level `build.gradle`
 ```kotlin
 dependencies { 
-    kapt("com.github.levinzonr.compose-safe-routing:compiler:1.0.1")
-    implementation("com.github.levinzonr.compose-safe-routing:core:1.0.1")
+    kapt("com.github.levinzonr.compose-safe-routing:compiler:2.0.0")
+    implementation("com.github.levinzonr.compose-safe-routing:core:2.0.0")
 }
 ```
 
 ```groovy
 dependencies {
-    kapt 'com.github.levinzonr.compose-safe-routing:compiler:1.0.1'
-    implementation 'com.github.levinzonr.compose-safe-routing:core:1.0.1'
+    kapt 'com.github.levinzonr.compose-safe-routing:compiler:2.0.0'
+    implementation 'com.github.levinzonr.compose-safe-routing:core:2.0.0'
 }
 
 ```
@@ -72,26 +74,57 @@ fun DetailsScreen() {
 ```
 
 ### Output
+
 After you build your project with these annotations applied several files will be generated for you. First one is `Routes`, in which you can access all routes with their corresponding paths and arguments
 Another one is `RouteActions` where you can build these paths as a valid destination with all arguments applied. With the examples above this file would look like this
 
 Additionally, an Argument wrapper would be generated for each route, so you can easily access it from either `NavBackStackEntry` or from `SavedStateHandle` in your `ViewModel`
+
+
+
+This will allow you to declare your composable inside `NavHost` more easilly by using `NavGraphBuilder` extensions like so
+
+```kotlin
+NavHost(startDestination = Routes.Profile.route) {
+	 composable(Routes.Profie) { 
+     ProfileScreen()
+   }
+  
+   composableWithArgs(Routes.Details) { entry, args -> 
+			DetailsScreen(args)
+   }
+  
+  // or in case you want to process args manually 
+  composables(Routes.Details) { entry -> 
+			DetailsScreen(DetailsRouteArgsFactory.fromBackStackEntry(entry))
+   }
+}
+```
+
+
+
+
 
 **Routes.kt**
 
 ```kotlin
 object Routes {
   val profile: RouteSpec = object : RouteSpec {
-    override val path: String = "profile"
+    override val route: String = "profile"
     override val navArgs: List<NamedNavArgument> = listOf()
+    override val argsFactory: RouteArgsFactory<ProfileRouteArgs> = EmptyArgsFactory
   }
   
   val details: RouteSpec = object : RouteSpec {
-    override val path: String = "details/{id}?number={number}"
+    override val route: String = "details/{id}?number={number}"
     override val navArgs: List<NamedNavArgument> = DetailsRouteArgs.navArgs
-  }
+    override val argsFactory: RouteArgsFactory<ProfileRouteArgs> = DetailsRouteArgsFactory
 
+  }
 ```
+
+
+
 
 **RoutesActions.kt**
 ```kotlin
@@ -125,23 +158,6 @@ data class DetailsRouteArgs(
       },
 
     )
-    /**
-     * A Helper function to obtain an instance of DetailsRouteArgs from NavBackStackEntry
-     */
-    fun fromNavBackStackEntry(args: NavBackStackEntry): DetailsRouteArgs {
-      val id = requireNotNull(args.arguments?.getString("id"))
-      val number = requireNotNull(args.arguments?.getInt("number"))
-      return DetailsRouteArgs(id, number)
-    }
-
-    /**
-     * A Helper function to obtain an instance of DetailsRouteArgs from SavedStateHandle
-     */
-    fun fromSavedStatedHandle(args: SavedStateHandle): DetailsRouteArgs {
-      val id = requireNotNull(args.get<String>("id"))
-      val number = requireNotNull(args.get<Int>("number"))
-      return DetailsRouteArgs(id, number)
-    }
   }
 }
 ```
