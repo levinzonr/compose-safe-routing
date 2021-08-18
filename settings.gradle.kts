@@ -3,10 +3,12 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
         jcenter() // Warning: this repository is going to shut down soon
     }
 }
 rootProject.name = "router"
 include(":app")
-include(":core")
+include(":annotations")
 include(":compiler")
+include(":core")
