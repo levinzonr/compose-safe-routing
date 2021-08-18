@@ -7,7 +7,6 @@ import cz.levinzonr.saferoute.processor.constants.Constants
 import cz.levinzonr.saferoute.processor.models.RouteData
 
 internal class RouteArgsFactoryBuilder(
-    private val packageName: String,
     private val data: RouteData
 ) {
     fun build() : TypeSpec {
@@ -33,7 +32,7 @@ internal class RouteArgsFactoryBuilder(
 
         code.addStatement("return ${data.argumentsConstructor}")
         return FunSpec.builder("fromBundle")
-            .returns(ClassName(packageName, data.argumentsName))
+            .returns(ClassName(data.packageName, data.argumentsName))
             .addParameter("bundle", ClassNames.Bundle.copy(nullable = true))
             .addModifiers(KModifier.OVERRIDE)
             .addKdoc("A Helper function to obtain an instance of ${data.argumentsName} from Bundle")
@@ -55,7 +54,7 @@ internal class RouteArgsFactoryBuilder(
 
         code.addStatement("return ${data.argumentsConstructor}")
         return FunSpec.builder("fromSavedStateHandle")
-            .returns(ClassName(packageName, data.argumentsName))
+            .returns(ClassName(data.packageName, data.argumentsName))
             .addKdoc("A Helper function to obtain an instance of ${data.argumentsName} from SavedStateHandle")
             .addParameter("handle", ClassNames.SavedStateHandle.copy(nullable = true))
             .addModifiers(KModifier.OVERRIDE)

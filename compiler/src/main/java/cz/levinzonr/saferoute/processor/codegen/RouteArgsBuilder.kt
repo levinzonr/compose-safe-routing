@@ -10,7 +10,6 @@ import cz.levinzonr.saferoute.processor.models.ArgumentData
 import cz.levinzonr.saferoute.processor.models.RouteData
 
 internal class RouteArgsBuilder(
-    private val packageName: String,
     private val data: RouteData
 ) {
     fun build() : TypeSpec {

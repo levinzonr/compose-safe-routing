@@ -11,17 +11,16 @@ internal object RoutesArgsProcessor : FileGenProcessor {
 
     override fun process(data: ModelData, destinationDir: File) {
         try {
-            val packageName = data.packageName + "." + Constants.FILE_ARGS_DIR
             data.routes.filter { it.arguments.isNotEmpty() }.forEach {
 
-                val spec = RouteArgsBuilder(packageName, it).build()
-                FileSpec.builder(packageName, spec.name!!)
+                val spec = RouteArgsBuilder(it).build()
+                FileSpec.builder(it.packageName, spec.name!!)
                     .addType(spec)
                     .build()
                     .writeTo(destinationDir)
 
-                val factorySpec = RouteArgsFactoryBuilder(packageName, it).build()
-                FileSpec.builder(packageName, factorySpec.name!!)
+                val factorySpec = RouteArgsFactoryBuilder(it).build()
+                FileSpec.builder(it.packageName, factorySpec.name!!)
                     .addType(factorySpec)
                     .build()
                     .writeTo(destinationDir)
