@@ -56,7 +56,7 @@ dependencies {
     api((project(":core")))
 
     implementation("com.google.accompanist:accompanist-navigation-animation:0.17.0")
-
+    implementation("com.google.accompanist:accompanist-navigation-material:0.17.0")
 
 
     testImplementation("junit:junit:4.+")

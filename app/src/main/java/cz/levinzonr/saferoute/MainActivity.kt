@@ -10,8 +10,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.plusAssign
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import com.google.accompanist.navigation.material.ModalBottomSheetLayout
+import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import cz.levinzonr.saferoute.accompanist.navigation.AnimatedNavHost
+import cz.levinzonr.saferoute.accompanist.navigation.bottomSheetWithArgs
 import cz.levinzonr.saferoute.accompanist.navigation.composableWithArgs
 import cz.levinzonr.saferoute.screens.DetailsScreen
 import cz.levinzonr.saferoute.screens.ProfileScreen
@@ -22,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @ExperimentalMaterialNavigationApi
     @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,14 +36,22 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     val controller = rememberAnimatedNavController()
-                    AnimatedNavHost(navController = controller, startRouteSpec = Routes.Profile) {
-                        composableWithArgs(Routes.Profile) { _, _ ->
-                            ProfileScreen {
-                                controller.navigate(RoutesActions.toDetails("ID", 0))
+                    val bottomSheetNavigator = rememberBottomSheetNavigator()
+                    controller.navigatorProvider += bottomSheetNavigator
+
+                    ModalBottomSheetLayout(bottomSheetNavigator) {
+                        AnimatedNavHost(
+                            navController = controller,
+                            startRouteSpec = Routes.Profile
+                        ) {
+                            composableWithArgs(Routes.Profile) { _, _ ->
+                                ProfileScreen {
+                                    controller.navigate(RoutesActions.toDetails("ID", 0))
+                                }
                             }
-                        }
-                        composableWithArgs(Routes.Details) { _, args ->
-                            DetailsScreen(args = args, hiltViewModel())
+                            bottomSheetWithArgs(Routes.Details) { _, args ->
+                                DetailsScreen(args = args, hiltViewModel())
+                            }
                         }
                     }
                 }
