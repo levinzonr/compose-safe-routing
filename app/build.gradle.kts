@@ -6,13 +6,13 @@ plugins {
 }
 
 android {
-    compileSdk = 30
+    compileSdk = 31
     buildToolsVersion = "30.0.3"
 
     defaultConfig {
         applicationId = "cz.levinzonr.router"
         minSdk = 23
-        targetSdk = 30
+        targetSdk = 31
         versionCode = 1
         versionName = "1.0"
 
@@ -50,7 +50,7 @@ android {
 
 dependencies {
     val hilt_version = "2.37"
-    implementation(project(":core"))
+    implementation(project(":accompanist-navigation"))
     "kapt"(project(":compiler"))
 
 
@@ -58,7 +58,7 @@ dependencies {
     implementation("router:core:1")*/
 
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
-    implementation("androidx.navigation:navigation-compose:2.4.0-alpha06")
+    implementation("androidx.navigation:navigation-compose:2.4.0-alpha07")
     implementation("androidx.compose.ui:ui:${rootProject.extra["compose_version"]}")
     implementation("androidx.compose.material:material:${rootProject.extra["compose_version"]}")
     implementation("androidx.compose.ui:ui-tooling:${rootProject.extra["compose_version"]}")
@@ -66,6 +66,8 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
     implementation("androidx.core:core-ktx:1.5.0")
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.17.0")
+    implementation("com.google.accompanist:accompanist-navigation-material:0.17.0")
 
 
     implementation("androidx.appcompat:appcompat:1.2.0")

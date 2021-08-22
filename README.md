@@ -5,12 +5,14 @@
 A small code generating library, inspired by SafeArgs for android, that generates helper code that can be used for Jetpack Compose Navigation Component.
 
 ## Release Notes
- - [Version 2.0.0](RELEASE_NOTES.md)
+ - [Version 2.1.0](RELEASE_NOTES.md/#210-release-notes)
+ - [Version 2.0.0](RELEASE_NOTES.md/#200-release-notes)
 
 ## Features
 
  - Removes code duplication when describing your routes and its arguments through out the application
  - Helper functions to declare your Routes using `RouteSpec` interface 
+ - Support for Accompanist Animation/Material libraries 
  - Helper functions that will allow to obtain passed arguments easily
  - Safety during navigation: `RoutesActions.kt` always contains arguments your destination needs
  - Mandatory & Optional parameters
@@ -29,15 +31,22 @@ allprojects {
 And then in you app level `build.gradle`
 ```kotlin
 dependencies { 
-    kapt("com.github.levinzonr.compose-safe-routing:compiler:2.0.0")
-    implementation("com.github.levinzonr.compose-safe-routing:core:2.0.0")
+    kapt("com.github.levinzonr.compose-safe-routing:compiler:2.1.0")
+  
+  implementation("com.github.levinzonr.compose-safe-routing:core:2.1.0")
+  // or in case you are using animation/material routes from accompanist
+  implementation("com.github.levinzonr.compose-safe-routing:accompanist-navigation:2.1.0")
+  
 }
 ```
 
 ```groovy
 dependencies {
-    kapt 'com.github.levinzonr.compose-safe-routing:compiler:2.0.0'
-    implementation 'com.github.levinzonr.compose-safe-routing:core:2.0.0'
+    kapt 'com.github.levinzonr.compose-safe-routing:compiler:2.1.0'
+  
+  implementation 'com.github.levinzonr.compose-safe-routing:core:2.1.0'
+  // or in case you are using animation/material routes from accompanist
+  implementation 'com.github.levinzonr.compose-safe-routing:accompanist-navigation:2.1.0'
 }
 
 ```

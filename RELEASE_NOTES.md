@@ -1,3 +1,54 @@
+
+
+# 2.1.0 Release Notes
+
+# SafeRoute + Accompanist = :heart:
+
+SafeRoute now have a new artifact that supports building your Navigation Graph using Accompanist Navigation Compose and Navigation Material libraries. If you are using (or planning) to use Animations/Material  using Jetpack Compose Navigation, you just need to add this new artifact along side you Accompanist dependencies.
+
+> No need to have both `:core` and `:accompanist-navigation` . If you were using :core artifact previously and want use accompanist one, you can just replace `:core`
+
+```
+implementation("com.github.levinzonr.compose-safe-routing:accompanist-navigation:2.1.0")
+```
+
+
+
+### SafeRoute + Animation
+
+- Check [Accompanist documentation](https://google.github.io/accompanist/navigation-animation/) for initial setup
+
+- Use `cz.levinzonr.saferoute.accompanist.navigation.composableWithArgs` or `cz.levinzonr.saferoute.accompanist.navigation.composable` builder extensions instead of `com.google.accompanist.navigation.animation.composable`
+
+- Profit:
+
+  ```kotlin
+  composableWithArgs(Routes.Profile) { _, _ ->
+      ProfileScreen {
+          controller.navigate(RoutesActions.toDetails("ID", 0))
+      }
+  }
+  ```
+
+
+
+### SafeRoute + Material Navigation
+
+- Check [Accompanist doccumentation](https://google.github.io/accompanist/navigation-material/) for intial setup
+
+- Use `import cz.levinzonr.saferoute.accompanist.navigation.bottomSheet` or `import cz.levinzonr.saferoute.accompanist.navigation.bottomSheetWithArgs` instead of `import com.google.accompanist.navigation.material.bottomSheet` 
+
+- Profit: 
+
+  ```Kotlin
+  bottomSheetWithArgs(Routes.Details) { _, args ->
+      DetailsScreen(args = args, hiltViewModel())
+  }
+  bottomSheetWithArgs(Routes.Home) {
+      HomeScreen(hiltViewModel())
+  }
+  ```
+
 # 2.0.0 Release Notes
 
 ## NavGraphBuilder Extensions
