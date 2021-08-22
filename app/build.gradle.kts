@@ -66,6 +66,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
     implementation("androidx.core:core-ktx:1.5.0")
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.17.0")
 
 
     implementation("androidx.appcompat:appcompat:1.2.0")
