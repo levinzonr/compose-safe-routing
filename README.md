@@ -1,5 +1,8 @@
 [![](https://jitpack.io/v/levinzonr/compose-safe-routing.svg)](https://jitpack.io/#levinzonr/compose-safe-routing)
 
+
+[Blogpost](https://engineering.monstar-lab.com/2021/08/30/Safe-Navigation-With-Jetpack-Compose)
+
 # Compose Safe Routing
 
 A small code generating library, inspired by SafeArgs for android, that generates helper code that can be used for Jetpack Compose Navigation Component.
