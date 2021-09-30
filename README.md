@@ -1,7 +1,7 @@
 [![](https://jitpack.io/v/levinzonr/compose-safe-routing.svg)](https://jitpack.io/#levinzonr/compose-safe-routing)
 
 
-[Medium Blogpos](https://levinzon-roman.medium.com/safe-easy-navigation-with-jetpack-compose-fdd5e0694930)
+[Medium Blogpost](https://levinzon-roman.medium.com/safe-easy-navigation-with-jetpack-compose-fdd5e0694930)
 
 [Monstar Blogpost](https://engineering.monstar-lab.com/2021/08/30/Safe-Navigation-With-Jetpack-Compose)
 
