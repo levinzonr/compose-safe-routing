@@ -12,5 +12,11 @@ internal object ClassNames {
     val navArgument = ClassName(Constants.PACKAGE_NAVIGATION, "navArgument")
     val NavType = ClassName(Constants.PACKAGE_NAVIGATION, "NavType")
     val NavController = ClassName(Constants.PACKAGE_NAVIGATION, "NavController")
+    val NavBackStackEntry = ClassName(Constants.PACKAGE_NAVIGATION, "NavBackStackEntry")
+
+    val CompositionLocal = ClassName(Constants.PACKAGE_COMPOSE_RUNTIME, "ProvidableCompositionLocal")
+    val CompositionLocalProvider = ClassName(Constants.PACKAGE_COMPOSE_RUNTIME, "CompositionLocalProvider")
+    val compositionLocalOf = ClassName(Constants.PACKAGE_COMPOSE_RUNTIME, "compositionLocalOf")
+    val Composable = ClassName(Constants.PACKAGE_COMPOSE_RUNTIME, "Composable")
 }
 

@@ -31,4 +31,9 @@ internal data class RouteData(
     fun getArgsFactoryName() : String{
         return "$argumentsName${Constants.FILE_ROUTE_ARG_FACTORY}"
     }
+
+
+    fun getArgsProviderName() : String{
+        return "$argumentsName${Constants.FILE_ROUTE_ARG_PROVIDER}"
+    }
 }
