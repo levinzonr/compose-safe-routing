@@ -18,10 +18,7 @@ import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import cz.levinzonr.saferoute.accompanist.navigation.AnimatedNavHost
 import cz.levinzonr.saferoute.accompanist.navigation.bottomSheetWithArgs
 import cz.levinzonr.saferoute.accompanist.navigation.composableWithArgs
-import cz.levinzonr.saferoute.screens.DetailsScreen
-import cz.levinzonr.saferoute.screens.ProfileScreen
-import cz.levinzonr.saferoute.screens.Routes
-import cz.levinzonr.saferoute.screens.RoutesActions
+import cz.levinzonr.saferoute.screens.*
 import cz.levinzonr.saferoute.ui.theme.RouterTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,7 +43,7 @@ class MainActivity : ComponentActivity() {
                         ) {
                             composableWithArgs(Routes.Profile) { _, _ ->
                                 ProfileScreen {
-                                    controller.navigate(RoutesActions.toDetails("ID", 0))
+                                    controller.navigateToDetails("helloId")
                                 }
                             }
                             bottomSheetWithArgs(Routes.Details) { _, args ->

@@ -11,5 +11,6 @@ internal object ClassNames {
     val NamedNavArgument =  ClassName(Constants.PACKAGE_NAVIGATION, "NamedNavArgument")
     val navArgument = ClassName(Constants.PACKAGE_NAVIGATION, "navArgument")
     val NavType = ClassName(Constants.PACKAGE_NAVIGATION, "NavType")
+    val NavController = ClassName(Constants.PACKAGE_NAVIGATION, "NavController")
 }
 

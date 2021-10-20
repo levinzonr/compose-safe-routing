@@ -39,8 +39,6 @@ android {
         kotlinCompilerVersion = "1.4.32"
     }
 
-
-
 }
 
 mavenPublish {
