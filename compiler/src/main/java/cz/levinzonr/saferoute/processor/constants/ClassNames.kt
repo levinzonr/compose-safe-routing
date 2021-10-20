@@ -8,8 +8,9 @@ internal object ClassNames {
     val EmptyArgsFactory = ClassName("${Constants.LIB_PACKAGE_NAME}.util", "EmptyArgsFactory")
     val Bundle = ClassName("android.os", "Bundle")
     val SavedStateHandle = ClassName("androidx.lifecycle", "SavedStateHandle")
-    val NamedNavArgument =  ClassName(Constants.PACKAGE_NAV_COMPOSE, "NamedNavArgument")
-    val navArgument = ClassName(Constants.PACKAGE_NAV_COMPOSE, "navArgument")
+    val NamedNavArgument =  ClassName(Constants.PACKAGE_NAVIGATION, "NamedNavArgument")
+    val navArgument = ClassName(Constants.PACKAGE_NAVIGATION, "navArgument")
     val NavType = ClassName(Constants.PACKAGE_NAVIGATION, "NavType")
+    val NavController = ClassName(Constants.PACKAGE_NAVIGATION, "NavController")
 }
 

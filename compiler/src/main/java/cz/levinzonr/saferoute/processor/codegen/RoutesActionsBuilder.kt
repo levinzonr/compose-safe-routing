@@ -41,11 +41,10 @@ internal class RoutesActionsBuilder(
             .addKdoc(KDoc.ROUTES_ACTIONS_FUN, name)
             .returns(returnType = String::class).build()
     }
+}
 
-    private fun ArgumentData.toParamSpec() : ParameterSpec {
-        val builder = ParameterSpec.builder(name, type.asTypeName().copy(isNullable))
-        optionalData?.let { builder.defaultValue("%L", it.value) }
-        return builder.build()
-    }
-
+internal fun ArgumentData.toParamSpec() : ParameterSpec {
+    val builder = ParameterSpec.builder(name, type.asTypeName().copy(isNullable))
+    optionalData?.let { builder.defaultValue("%L", it.value) }
+    return builder.build()
 }

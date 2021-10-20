@@ -39,8 +39,6 @@ android {
         kotlinCompilerVersion = "1.4.32"
     }
 
-
-
 }
 
 mavenPublish {
@@ -51,12 +49,12 @@ mavenPublish {
 dependencies {
 
     implementation("androidx.core:core-ktx:1.6.0")
-    implementation("androidx.navigation:navigation-compose:2.4.0-alpha07")
-    implementation("androidx.compose.ui:ui:${rootProject.extra["compose_version"]}")
+    implementation("androidx.navigation:navigation-compose:${Deps.composeNavigation}")
+    implementation("androidx.compose.ui:ui:${Deps.compose}")
     api((project(":core")))
 
-    implementation("com.google.accompanist:accompanist-navigation-animation:0.17.0")
-    implementation("com.google.accompanist:accompanist-navigation-material:0.17.0")
+    implementation("com.google.accompanist:accompanist-navigation-animation:${Deps.accompanist}")
+    implementation("com.google.accompanist:accompanist-navigation-material:${Deps.accompanist}")
 
 
     testImplementation("junit:junit:4.+")
