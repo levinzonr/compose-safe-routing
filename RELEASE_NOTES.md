@@ -1,5 +1,25 @@
 
 
+# 2.2.0 Release Notes
+## NavController Extensions
+
+`RouteActions` are now available through the extensions of the navController. 
+
+```kotlin
+// 2.1.X
+navController.navigate(RouteActions.toDetails("myId"))
+
+// 2.2.0
+navController.navigateToDetails("myId")
+```
+
+
+
+## Dependencies Updates
+
+- Update Navigation Compose to 2.4.0-alpha10
+- Update Accompanist to 0.20.0
+
 # 2.1.0 Release Notes
 
 # SafeRoute + Accompanist = :heart:
