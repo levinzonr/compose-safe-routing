@@ -1,6 +1,6 @@
 package cz.levinzonr.saferoute.core
 
-import androidx.navigation.compose.NamedNavArgument
+import androidx.navigation.NamedNavArgument
 
 /**
  * An interface to fully describe the app route for the Compose Nav Component
