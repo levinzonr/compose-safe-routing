@@ -12,7 +12,11 @@ fun NavGraphBuilder.composable(
     spec: RouteSpec<*>,
     deepLinks: List<NavDeepLink> = listOf(),
     content: @Composable (NavBackStackEntry) -> Unit
-) = composable(spec.route, spec.navArgs, deepLinks, content)
+) = composable(spec.route, spec.navArgs, deepLinks) {
+    ProvideRouteSpecArg(spec = spec, entry = it) {
+        content.invoke(it)
+    }
+}
 
 
 fun NavGraphBuilder.navigation(
@@ -27,8 +31,6 @@ fun<A> NavGraphBuilder.composableWithArgs(
     deepLinks: List<NavDeepLink> = listOf(),
     content: @Composable (NavBackStackEntry, A) -> Unit
 ) = composable(spec, deepLinks) {
-        content.invoke(it, with(spec.argsFactory) {
-            fromBackStackEntry(it)
-        })
+        content.invoke(it, spec.argsFactory.LocalArgs.current)
     }
 
