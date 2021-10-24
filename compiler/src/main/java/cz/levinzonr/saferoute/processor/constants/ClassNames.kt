@@ -15,5 +15,7 @@ internal object ClassNames {
     val ProvidableCompositionLocal = ClassName(Constants.PACKAGE_COMPOSE_RUNTIME, "ProvidableCompositionLocal")
     val compositionLocalOf = ClassName(Constants.PACKAGE_COMPOSE_RUNTIME, "compositionLocalOf")
     val Composable = ClassName(Constants.PACKAGE_COMPOSE_RUNTIME, "Composable")
+    val NavDeepLink = ClassName(Constants.PACKAGE_NAVIGATION, "NavDeepLink")
+    val NavDeepLinkDSL = ClassName(Constants.PACKAGE_NAVIGATION, "navDeepLink")
 }
 

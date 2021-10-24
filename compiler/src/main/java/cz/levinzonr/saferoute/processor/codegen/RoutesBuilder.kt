@@ -28,6 +28,7 @@ internal class RoutesBuilder(val data: ModelData) {
                 .addProperty(it.toNamePropertySpec())
                 .addProperty(it.toArgsFactoryPropertySpec())
                 .addProperty(it.toArgsPropertySpec())
+                .addProperty(it.toDeeplinksProperty())
                 .build()
 
             val prop = PropertySpec.builder(it.name.capitalize(), ClassNames.RouteSpec.parameterizedBy(it.argsTypeClassName))
@@ -63,6 +64,26 @@ internal class RoutesBuilder(val data: ModelData) {
         return PropertySpec.builder("argsFactory", type = ClassNames.RouteArgsFactory.parameterizedBy(argsTypeClassName))
             .addModifiers(KModifier.OVERRIDE)
             .initializer("%T", argsFactoryClassName)
+            .build()
+    }
+
+    private fun RouteData.toDeeplinksProperty() : PropertySpec {
+        val initilizer = if (deeplinks.isEmpty()) CodeBlock.of("emptyList()") else with(CodeBlock.builder()) {
+            addStatement("listOf(")
+            deeplinks.forEach {
+                beginControlFlow("%T", ClassNames.NavDeepLinkDSL)
+                addStatement("uriPattern = %S", it.uriPattern)
+                addStatement("mimeType = %S", it.mimeType)
+                addStatement("action = %S", it.action)
+                endControlFlow()
+                add(",")
+            }
+            addStatement(")")
+            build()
+        }
+        return PropertySpec.builder("deepLinks", type = ClassNames.NavDeepLink.asList())
+            .addModifiers(KModifier.OVERRIDE)
+            .initializer(initilizer)
             .build()
     }
 }

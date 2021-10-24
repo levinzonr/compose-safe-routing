@@ -16,7 +16,10 @@ import cz.levinzonr.saferoute.screens.args.DetailsRouteArgs
         RouteArg("id", String::class, false),
         RouteArg("number", Int::class, true, defaultValue = "1"),
     ],
-    deepLinks = [RouteDeeplink("app://deeplink/{id}")]
+    deepLinks = [
+        RouteDeeplink("app://deeplink/{id}"),
+        RouteDeeplink("app://deeplink/{id}?number={number}")
+    ]
 )
 fun DetailsScreen(
     args: DetailsRouteArgs,

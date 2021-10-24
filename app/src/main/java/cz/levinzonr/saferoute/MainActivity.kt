@@ -47,18 +47,10 @@ class MainActivity : ComponentActivity() {
                             composableWithArgs(Routes.Profile) { _, _ ->
                                 ProfileScreen {
                                     startActivity(Intent(Intent.ACTION_VIEW).apply {
-                                        data = Uri.parse("app://deeplink/hellodeeplink")
+                                        data = Uri.parse("app://deeplink/hello?number=232")
                                     })                                }
                             }
-                            bottomSheetWithArgs(
-                                Routes.Details,
-                                deepLinks = listOf(
-                                    navDeepLink {
-                                        uriPattern = "app://deeplink/{id}"
-
-                                    }
-                                )
-                            ) { _, args ->
+                            bottomSheetWithArgs(Routes.Details) { _, args ->
                                 DetailsScreen(args = args, hiltViewModel())
                             }
                         }
