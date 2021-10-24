@@ -1,4 +1,5 @@
-package cz.levinzonr.saferoute.annotations
+package cz.levinzonr.saferoute.core.annotations
+
 /**
  * This annotation is used to declare an application route/destination
  * @param name - defines the name of the route, its root path and the prefix for generated arguments

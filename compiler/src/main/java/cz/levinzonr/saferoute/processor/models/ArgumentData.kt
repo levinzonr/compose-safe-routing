@@ -1,10 +1,8 @@
 package cz.levinzonr.saferoute.processor.models
 
-import kotlin.reflect.KClass
-
 internal data class ArgumentData(
     val name: String,
-    val type: KClass<*>,
+    val type: ArgumentType,
     val optionalData: OptionalArgData<*>? = null,
     val isNullable: Boolean = false
 )
