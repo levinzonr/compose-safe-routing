@@ -55,6 +55,7 @@ class MainActivity : ComponentActivity() {
                                 deepLinks = listOf(
                                     navDeepLink {
                                         uriPattern = "app://deeplink/{id}"
+
                                     }
                                 )
                             ) { _, args ->

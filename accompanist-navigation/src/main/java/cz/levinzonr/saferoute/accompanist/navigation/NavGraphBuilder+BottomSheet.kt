@@ -30,5 +30,6 @@ fun<A> NavGraphBuilder.bottomSheetWithArgs(
     deepLinks: List<NavDeepLink> = emptyList(),
     content: @Composable ColumnScope.(backstackEntry: NavBackStackEntry, args: A) -> Unit
 ) = bottomSheet(routeSpec, deepLinks) {
+    println("Deeplinkls: ${deepLinks.map { "A: ${it.action} M: ${it.mimeType} " }}")
     content.invoke(this, it, routeSpec.argsFactory.LocalArgs.current)
 }

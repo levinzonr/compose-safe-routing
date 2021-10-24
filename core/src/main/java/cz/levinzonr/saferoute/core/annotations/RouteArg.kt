@@ -16,9 +16,5 @@ annotation class RouteArg(
     val type: KClass<*> = String::class,
     val isOptional: Boolean = false,
     val isNullable: Boolean = false,
-    val defaultValue: String = VALUE_NULL
-) {
-    companion object {
-        const val VALUE_NULL = "@null"
-    }
-}
+    val defaultValue: String = AnnotationsDefaults.NULL
+)
