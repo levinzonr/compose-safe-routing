@@ -14,7 +14,7 @@ import cz.levinzonr.saferoute.core.fromBackStackEntry
 @ExperimentalAnimationApi
 fun NavGraphBuilder.composable(
     spec: RouteSpec<*>,
-    deepLinks: List<NavDeepLink> = emptyList(),
+    deepLinks: List<NavDeepLink> = spec.deepLinks,
     enterTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> EnterTransition?)? = null,
     exitTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> ExitTransition?)? = null,
     popEnterTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> EnterTransition?)? = enterTransition,
@@ -37,7 +37,7 @@ fun NavGraphBuilder.composable(
 @ExperimentalAnimationApi
 fun<A> NavGraphBuilder.composableWithArgs(
     spec: RouteSpec<A>,
-    deepLinks: List<NavDeepLink> = emptyList(),
+    deepLinks: List<NavDeepLink> = spec.deepLinks,
     enterTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> EnterTransition?)? = null,
     exitTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> ExitTransition?)? = null,
     popEnterTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> EnterTransition?)? = enterTransition,

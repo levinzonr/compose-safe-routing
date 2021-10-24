@@ -1,9 +1,7 @@
 package cz.levinzonr.saferoute.core
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavDeepLink
 
 /**
  * An interface to fully describe the app route for the Compose Nav Component
@@ -14,4 +12,5 @@ interface RouteSpec<A> {
     val route: String
     val navArgs: List<NamedNavArgument>
     val argsFactory: RouteArgsFactory<A>
+    val deepLinks: List<NavDeepLink>
 }
