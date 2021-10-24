@@ -5,6 +5,7 @@ import com.squareup.kotlinpoet.ClassName
 internal object Constants {
 
     const val LIB_PACKAGE_NAME = "cz.levinzonr.saferoute.core"
+    const val ROUTE = "cz.levinzonr.saferoute.core.annotations.Route"
 
     const val FILE_ACTIONS = "RoutesActions"
     const val FILE_ARGS_POSTFIX = "RouteArgs"

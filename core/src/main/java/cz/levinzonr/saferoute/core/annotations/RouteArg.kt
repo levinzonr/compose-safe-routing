@@ -1,5 +1,6 @@
-package cz.levinzonr.saferoute.annotations
+package cz.levinzonr.saferoute.core.annotations
 
+import kotlin.reflect.KClass
 
 /**
  * An annotation to describe the argument of the route
@@ -10,17 +11,14 @@ package cz.levinzonr.saferoute.annotations
  */
 @MustBeDocumented
 @Retention(AnnotationRetention.SOURCE)
-@Deprecated(
-    message = "Use annotations from the :core module instead",
-    replaceWith = ReplaceWith("RouteArg", "cz.levinzonr.saferoute.core.annotations.RouteArg")
-)annotation class RouteArg(
+annotation class RouteArg(
     val name: String,
-    val type: RouteArgType = RouteArgType.StringType,
+    val type: KClass<*> = String::class,
     val isOptional: Boolean = false,
+    val isNullable: Boolean = false,
     val defaultValue: String = VALUE_NULL
 ) {
     companion object {
         const val VALUE_NULL = "@null"
     }
 }
-
