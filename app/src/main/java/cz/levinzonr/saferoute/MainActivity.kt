@@ -18,10 +18,9 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
-import cz.levinzonr.saferoute.accompanist.navigation.AnimatedNavHost
-import cz.levinzonr.saferoute.accompanist.navigation.bottomSheetWithArgs
-import cz.levinzonr.saferoute.accompanist.navigation.composableWithArgs
+import cz.levinzonr.saferoute.accompanist.navigation.*
 import cz.levinzonr.saferoute.screens.*
+import cz.levinzonr.saferoute.screens.args.LocalDetailsRouteArgs
 import cz.levinzonr.saferoute.ui.theme.RouterTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,14 +43,14 @@ class MainActivity : ComponentActivity() {
                             navController = controller,
                             startRouteSpec = Routes.Profile
                         ) {
-                            composableWithArgs(Routes.Profile) { _, _ ->
+                            composable(Routes.Profile) {
                                 ProfileScreen {
                                     startActivity(Intent(Intent.ACTION_VIEW).apply {
                                         data = Uri.parse("app://deeplink/hello?number=232")
                                     })                                }
                             }
-                            bottomSheetWithArgs(Routes.Details) { _, args ->
-                                DetailsScreen(args = args, hiltViewModel())
+                            bottomSheet(Routes.Details) {
+                                DetailsScreen(args = LocalDetailsRouteArgs.current, hiltViewModel())
                             }
                         }
                     }
