@@ -10,7 +10,10 @@ package cz.levinzonr.saferoute.annotations
  */
 @MustBeDocumented
 @Retention(AnnotationRetention.SOURCE)
-annotation class RouteArg(
+@Deprecated(
+    message = "Use annotations from the :core module instead",
+    replaceWith = ReplaceWith("RouteArg", "cz.levinzonr.saferoute.core.annotations.RouteArg")
+)annotation class RouteArg(
     val name: String,
     val type: RouteArgType = RouteArgType.StringType,
     val isOptional: Boolean = false,

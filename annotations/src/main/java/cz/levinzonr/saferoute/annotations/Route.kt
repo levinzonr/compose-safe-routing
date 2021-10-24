@@ -7,4 +7,8 @@ package cz.levinzonr.saferoute.annotations
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.SOURCE)
 @MustBeDocumented
+@Deprecated(
+    message = "Use annotations from the :core module instead",
+    replaceWith = ReplaceWith("Route", "cz.levinzonr.saferoute.core.annotations.Route")
+)
 annotation class Route(val name: String, val args: Array<RouteArg> = [])

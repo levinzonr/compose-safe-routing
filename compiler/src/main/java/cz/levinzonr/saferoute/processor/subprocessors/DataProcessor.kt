@@ -1,13 +1,14 @@
 package cz.levinzonr.saferoute.processor.subprocessors
 
 import cz.levinzonr.saferoute.annotations.Route
+import cz.levinzonr.saferoute.processor.constants.Constants
 import cz.levinzonr.saferoute.processor.models.ModelData
 import javax.annotation.processing.ProcessingEnvironment
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.element.Element
 
 internal object DataProcessor {
-    val RouteV2Class = Class.forName("cz.levinzonr.saferoute.core.annotations.Route").asSubclass(Annotation::class.java)
+    val RouteV2Class = Class.forName(Constants.ROUTE).asSubclass(Annotation::class.java)
     val RouteV1Class = Route::class.java
     fun process(processingEnv: ProcessingEnvironment, environment: RoundEnvironment?) : ModelData? {
         try {

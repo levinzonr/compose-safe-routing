@@ -9,7 +9,7 @@ import cz.levinzonr.saferoute.screens.args.DetailsRouteArgs
 
 @Composable
 @Route("details", args = [
-    RouteArg("id", String::class, false),
+    RouteArg("id", String::class, false, isNullable = true),
     RouteArg("number", Int::class, true, defaultValue = "1"),
 ])
 fun DetailsScreen(args: DetailsRouteArgs, viewModel: DetailsViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {

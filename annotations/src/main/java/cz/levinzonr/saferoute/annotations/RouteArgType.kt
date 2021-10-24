@@ -5,6 +5,10 @@ import kotlin.reflect.KClass
 /**
  * Describes the argument type
  */
+@Deprecated(
+    message = "Use annotations from :core module to specify ArgType using KClass<*> directly\n" +
+            "For example: RouteArgType.StringType -> String::class\n",
+)
 enum class RouteArgType(val clazz: KClass<*>){
     /**
      * Represents non-nullable String type
