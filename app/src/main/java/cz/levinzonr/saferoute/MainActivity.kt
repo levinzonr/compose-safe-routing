@@ -1,5 +1,7 @@
 package cz.levinzonr.saferoute
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,6 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.navDeepLink
 import androidx.navigation.plusAssign
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
@@ -43,10 +46,18 @@ class MainActivity : ComponentActivity() {
                         ) {
                             composableWithArgs(Routes.Profile) { _, _ ->
                                 ProfileScreen {
-                                    controller.navigateToDetails("helloId")
-                                }
+                                    startActivity(Intent(Intent.ACTION_VIEW).apply {
+                                        data = Uri.parse("app://deeplink/hellodeeplink")
+                                    })                                }
                             }
-                            bottomSheetWithArgs(Routes.Details) { _, args ->
+                            bottomSheetWithArgs(
+                                Routes.Details,
+                                deepLinks = listOf(
+                                    navDeepLink {
+                                        uriPattern = "app://deeplink/{id}"
+                                    }
+                                )
+                            ) { _, args ->
                                 DetailsScreen(args = args, hiltViewModel())
                             }
                         }
