@@ -1,6 +1,7 @@
 package cz.levinzonr.saferoute.processor
 
 import cz.levinzonr.saferoute.annotations.Route
+import cz.levinzonr.saferoute.processor.constants.Constants
 import cz.levinzonr.saferoute.processor.subprocessors.DataProcessor
 import cz.levinzonr.saferoute.processor.subprocessors.RoutesActionsProcessor
 import cz.levinzonr.saferoute.processor.subprocessors.RoutesArgsProcessor
@@ -24,7 +25,8 @@ internal class RouteProcessor : AbstractProcessor() {
 
 
     override fun getSupportedAnnotationTypes(): MutableSet<String> = mutableSetOf(
-        Route::class.java.canonicalName
+        Route::class.java.canonicalName,
+        Constants.ROUTE
     )
 
     override fun process(
@@ -33,6 +35,7 @@ internal class RouteProcessor : AbstractProcessor() {
     ): Boolean {
         try {
             val buildDir = processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME] ?: return false
+
             val data = DataProcessor.process(processingEnv, roundEnv) ?: return false
 
             log("Data obtained, start actions processing, $data")

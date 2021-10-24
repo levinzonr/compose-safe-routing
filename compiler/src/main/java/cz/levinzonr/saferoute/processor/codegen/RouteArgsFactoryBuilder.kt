@@ -24,9 +24,9 @@ internal class RouteArgsFactoryBuilder(
         val code = CodeBlock.builder()
         data.arguments.forEach {
             if (it.isNullable) {
-                code.addStatement("val ${it.name} = bundle?.get%T(%S)", it.type, it.name)
+                code.addStatement("val ${it.name} = bundle?.get%T(%S)", it.type.clazz, it.name)
             } else {
-                code.addStatement("val ${it.name} = requireNotNull(bundle?.get%T(%S))", it.type, it.name)
+                code.addStatement("val ${it.name} = requireNotNull(bundle?.get%T(%S))", it.type.clazz, it.name)
 
             }
         }
@@ -47,9 +47,9 @@ internal class RouteArgsFactoryBuilder(
 
         data.arguments.forEach {
             if (it.isNullable) {
-                code.addStatement("val ${it.name} = handle?.get<%T>(%S)", it.type, it.name)
+                code.addStatement("val ${it.name} = handle?.get<%T>(%S)", it.type.clazz, it.name)
             } else {
-                code.addStatement("val ${it.name} = requireNotNull(handle?.get<%T>(%S))", it.type, it.name)
+                code.addStatement("val ${it.name} = requireNotNull(handle?.get<%T>(%S))", it.type.clazz, it.name)
             }
         }
 

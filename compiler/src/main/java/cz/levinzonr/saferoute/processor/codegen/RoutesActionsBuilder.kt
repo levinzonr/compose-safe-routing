@@ -44,7 +44,7 @@ internal class RoutesActionsBuilder(
 }
 
 internal fun ArgumentData.toParamSpec() : ParameterSpec {
-    val builder = ParameterSpec.builder(name, type.asTypeName().copy(isNullable))
+    val builder = ParameterSpec.builder(name, type.clazz.asTypeName().copy(isNullable))
     optionalData?.let { builder.defaultValue("%L", it.value) }
     return builder.build()
 }
