@@ -5,6 +5,7 @@ import cz.levinzonr.saferoute.annotations.Route
 import cz.levinzonr.saferoute.annotations.RouteArg
 import cz.levinzonr.saferoute.annotations.RouteArgType
 import cz.levinzonr.saferoute.processor.constants.Constants
+import cz.levinzonr.saferoute.processor.extensions.fieldByName
 import cz.levinzonr.saferoute.processor.models.ArgumentData
 import cz.levinzonr.saferoute.processor.models.ArgumentType
 import cz.levinzonr.saferoute.processor.models.OptionalArgData
@@ -25,13 +26,20 @@ internal class RouteDataBuilder(val packageName: String) {
     fun from(annotation: Annotation): RouteData {
         return if (annotation is Route) {
             val arguments = annotation.args.map { ArgumentDataBuilder().from(it) }
-            RouteData(annotation.name, arguments, packageName + "." + Constants.FILE_ARGS_DIR)
+            RouteData(
+                name = annotation.name,
+                arguments = arguments,
+                packageName= packageName + "." + Constants.FILE_ARGS_DIR,
+                deeplinks = listOf()
+            )
         } else {
             val argsData = annotation.fieldByName<Array<Annotation>>("args")
+            val deeplinksData = annotation.fieldByName<Array<Annotation>>("deepLinks")
             RouteData(
                 name = annotation.fieldByName("name"),
                 arguments = argsData.map { ArgumentDataBuilder().from(it) },
                 packageName = packageName + "." + Constants.FILE_ARGS_DIR,
+                deeplinks = deeplinksData.map { DeeplinkDataBuilder.build(it) }
             )
         }
     }
@@ -108,13 +116,6 @@ internal class ArgumentDataBuilder {
     }
 }
 
-private inline fun <reified T> Any.fieldByName(name: String): T {
-    try {
-        return this::class.members.find { it.name == name }?.call(this) as T
-    } catch (e: Exception) {
-        throw IllegalArgumentException("Error process $name member: ${e.stackTraceToString()}")
-    }
-}
 
 fun Any.getClassProperty(propertyName: String): TypeMirror {
     return try {

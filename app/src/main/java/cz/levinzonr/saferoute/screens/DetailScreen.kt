@@ -13,12 +13,8 @@ import cz.levinzonr.saferoute.screens.args.DetailsRouteArgs
 @Route(
     name = "details",
     args = [
-        RouteArg("id", String::class, false), RouteArg(
-            "number",
-            Int::class,
-            true,
-            defaultValue = "1"
-        ),
+        RouteArg("id", String::class, false),
+        RouteArg("number", Int::class, true, defaultValue = "1"),
     ],
     deepLinks = [RouteDeeplink("app://deeplink/{id}")]
 )
