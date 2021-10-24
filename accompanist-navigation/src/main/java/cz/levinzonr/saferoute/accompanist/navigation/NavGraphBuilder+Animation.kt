@@ -6,6 +6,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
+import cz.levinzonr.saferoute.core.ProvideRouteSpecArg
 import cz.levinzonr.saferoute.core.RouteSpec
 import cz.levinzonr.saferoute.core.fromBackStackEntry
 
@@ -26,9 +27,12 @@ fun NavGraphBuilder.composable(
     enterTransition,
     exitTransition,
     popEnterTransition,
-    popExitTransition,
-    content
-)
+    popExitTransition
+)  {
+    ProvideRouteSpecArg(spec = spec, entry = it) {
+        content.invoke(this, it)
+    }
+}
 
 @ExperimentalAnimationApi
 fun<A> NavGraphBuilder.composableWithArgs(
@@ -48,6 +52,6 @@ fun<A> NavGraphBuilder.composableWithArgs(
     popEnterTransition,
     popExitTransition
 ) {
-    content.invoke(this, it, with(spec.argsFactory) { fromBackStackEntry(it) })
+    content.invoke(this, it, spec.argsFactory.LocalArgs.current)
 }
 

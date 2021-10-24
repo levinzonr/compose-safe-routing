@@ -1,6 +1,9 @@
 package cz.levinzonr.saferoute.core
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavBackStackEntry
 
 /**
  * An interface to fully describe the app route for the Compose Nav Component

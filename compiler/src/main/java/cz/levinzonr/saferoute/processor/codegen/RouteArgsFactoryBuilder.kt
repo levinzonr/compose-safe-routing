@@ -14,6 +14,7 @@ internal class RouteArgsFactoryBuilder(
             .addSuperinterface(ClassNames.RouteArgsFactory.parameterizedBy(data.argsTypeClassName))
             .addFunction(buildNavBackStackEntryInitilizer())
             .addFunction(buildSavedStateHandleInitlizer())
+            .addProperty(buildLocalArgsPropery())
             .build()
     }
 
@@ -62,4 +63,10 @@ internal class RouteArgsFactoryBuilder(
             .build()
     }
 
+    private fun buildLocalArgsPropery() : PropertySpec {
+        return PropertySpec.builder("LocalArgs", ClassNames.ProvidableCompositionLocal.parameterizedBy(data.argsTypeClassName))
+            .initializer("Local${data.argumentsName}")
+            .addModifiers(KModifier.OVERRIDE)
+            .build()
+    }
 }

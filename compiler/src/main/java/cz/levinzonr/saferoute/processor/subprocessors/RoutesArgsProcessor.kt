@@ -4,6 +4,7 @@ import com.squareup.kotlinpoet.FileSpec
 import cz.levinzonr.saferoute.processor.constants.Constants
 import cz.levinzonr.saferoute.processor.codegen.RouteArgsBuilder
 import cz.levinzonr.saferoute.processor.codegen.RouteArgsFactoryBuilder
+import cz.levinzonr.saferoute.processor.codegen.RouteArgsProviderBuilder
 import cz.levinzonr.saferoute.processor.models.ModelData
 import java.io.File
 
@@ -25,6 +26,9 @@ internal object RoutesArgsProcessor : FileGenProcessor {
                     .build()
                     .writeTo(destinationDir)
 
+
+                RouteArgsProviderBuilder(it).build()
+                    .writeTo(destinationDir)
             }
         } catch (e: Exception) {
             throw IllegalStateException("Error processing args data: ${e.stackTraceToString()}")
