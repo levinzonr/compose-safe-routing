@@ -3,12 +3,14 @@ package cz.levinzonr.saferoute.processor.models
 import com.squareup.kotlinpoet.ClassName
 import cz.levinzonr.saferoute.processor.constants.ClassNames
 import cz.levinzonr.saferoute.processor.constants.Constants
+import javax.lang.model.type.TypeMirror
 
 internal data class RouteData(
     val name: String,
     val arguments: List<ArgumentData>,
     val packageName: String,
-    val deeplinks: List<DeeplinkData>
+    val deeplinks: List<DeeplinkData>,
+    val routeBuilderType: TypeMirror?
 ) {
 
     val argumentsName: String get() = "${name.capitalize()}${Constants.FILE_ARGS_POSTFIX}"

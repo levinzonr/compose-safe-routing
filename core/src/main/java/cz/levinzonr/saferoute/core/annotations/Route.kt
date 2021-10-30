@@ -1,5 +1,8 @@
 package cz.levinzonr.saferoute.core.annotations
 
+import cz.levinzonr.saferoute.core.DefaultRouteBuilder
+import kotlin.reflect.KClass
+
 /**
  * This annotation is used to declare an application route/destination
  * @param name - defines the name of the route, its root path and the prefix for generated arguments
@@ -12,5 +15,6 @@ package cz.levinzonr.saferoute.core.annotations
 annotation class Route(
     val name: String,
     val args: Array<RouteArg> = [],
-    val deepLinks: Array<RouteDeeplink> = []
+    val deepLinks: Array<RouteDeeplink> = [],
+    val routeBuilder: KClass<*> = DefaultRouteBuilder::class
 )

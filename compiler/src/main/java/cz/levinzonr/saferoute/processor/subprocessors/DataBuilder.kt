@@ -30,7 +30,8 @@ internal class RouteDataBuilder(val packageName: String) {
                 name = annotation.name,
                 arguments = arguments,
                 packageName= packageName + "." + Constants.FILE_ARGS_DIR,
-                deeplinks = listOf()
+                deeplinks = listOf(),
+                routeBuilderType = null
             )
         } else {
             val argsData = annotation.fieldByName<Array<Annotation>>("args")
@@ -39,7 +40,8 @@ internal class RouteDataBuilder(val packageName: String) {
                 name = annotation.fieldByName("name"),
                 arguments = argsData.map { ArgumentDataBuilder().from(it) },
                 packageName = packageName + "." + Constants.FILE_ARGS_DIR,
-                deeplinks = deeplinksData.map { DeeplinkDataBuilder.build(it) }
+                deeplinks = deeplinksData.map { DeeplinkDataBuilder.build(it) },
+                routeBuilderType = annotation.getClassProperty("routeBuilder")
             )
         }
     }

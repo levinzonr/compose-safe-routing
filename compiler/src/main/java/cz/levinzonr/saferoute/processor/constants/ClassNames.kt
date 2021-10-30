@@ -17,5 +17,9 @@ internal object ClassNames {
     val Composable = ClassName(Constants.PACKAGE_COMPOSE_RUNTIME, "Composable")
     val NavDeepLink = ClassName(Constants.PACKAGE_NAVIGATION, "NavDeepLink")
     val NavDeepLinkDSL = ClassName(Constants.PACKAGE_NAVIGATION, "navDeepLink")
+    val NavGraphBuilder = ClassName(Constants.PACKAGE_NAVIGATION, "NavGraphBuilder")
+
+    val DefaultRouteBuilder = ClassName(Constants.LIB_PACKAGE_NAME, "DefaultRouteBuilder")
+    val composableBuilder = ClassName(Constants.LIB_PACKAGE_NAME, "composable")
 }
 
