@@ -14,4 +14,6 @@ package cz.levinzonr.saferoute.annotations
 annotation class Route(
     val name: String,
     val args: Array<RouteArg> = [],
+    val graph: String = "main",
+    val start: Boolean = false,
 )

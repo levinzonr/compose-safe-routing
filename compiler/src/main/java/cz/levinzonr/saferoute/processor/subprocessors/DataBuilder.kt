@@ -37,8 +37,8 @@ internal class RouteDataBuilder(val packageName: String) {
                 routeTransition = null,
                 contentClassName = ClassName(packageName, annotatedElement.simpleName.toString()),
                 params = params,
-                navGraphName = "main",
-                start = true
+                navGraphName = annotation.name,
+                start = annotation.start
             )
         } else {
             val argsData = annotation.fieldByName<Array<Annotation>>("args")
