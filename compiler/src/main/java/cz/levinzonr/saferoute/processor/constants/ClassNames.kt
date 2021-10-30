@@ -3,9 +3,9 @@ package cz.levinzonr.saferoute.processor.constants
 import com.squareup.kotlinpoet.ClassName
 
 internal object ClassNames {
-    val RouteArgsFactory = ClassName(Constants.LIB_PACKAGE_NAME, "RouteArgsFactory")
-    val RouteSpec = ClassName(Constants.LIB_PACKAGE_NAME, Constants.FILE_ROUTE_SPEC)
-    val EmptyArgsFactory = ClassName("${Constants.LIB_PACKAGE_NAME}.util", "EmptyArgsFactory")
+    val RouteArgsFactory = ClassName(Constants.PACKAGE_CORE, "RouteArgsFactory")
+    val RouteSpec = ClassName(Constants.PACKAGE_CORE, Constants.FILE_ROUTE_SPEC)
+    val EmptyArgsFactory = ClassName("${Constants.PACKAGE_CORE}.util", "EmptyArgsFactory")
     val Bundle = ClassName("android.os", "Bundle")
     val SavedStateHandle = ClassName("androidx.lifecycle", "SavedStateHandle")
     val NamedNavArgument =  ClassName(Constants.PACKAGE_NAVIGATION, "NamedNavArgument")
@@ -19,7 +19,14 @@ internal object ClassNames {
     val NavDeepLinkDSL = ClassName(Constants.PACKAGE_NAVIGATION, "navDeepLink")
     val NavGraphBuilder = ClassName(Constants.PACKAGE_NAVIGATION, "NavGraphBuilder")
 
-    val DefaultRouteBuilder = ClassName(Constants.LIB_PACKAGE_NAME, "DefaultRouteBuilder")
-    val composableBuilder = ClassName(Constants.LIB_PACKAGE_NAME, "composable")
+    val DefaultRouteTransition = ClassName(Constants.PACKAGE_CORE, "DefaultRouteTransition")
+    val BottomSheetRouteTransition = ClassName(Constants.PACKAGE_ACCOMPANIST + ".transitions", "BottomSheetRouteTransition")
+    val AnimatedRouteTransition = ClassName(Constants.PACKAGE_ACCOMPANIST + ".transitions", "AnimatedRouteTransition")
+
+    val bottomSheetTransition = ClassName(Constants.PACKAGE_ACCOMPANIST, "bottomSheet")
+    val animatedComposableTransition = ClassName(Constants.PACKAGE_ACCOMPANIST, "composable")
+    val composableTransition = ClassName(Constants.PACKAGE_CORE, "composable")
+    val ExperimentalAnimationApi = ClassName("androidx.compose.animation", "ExperimentalAnimationApi")
+    val ExperimentalNavigationApi = ClassName("com.google.accompanist.navigation.material", "ExperimentalMaterialNavigationApi")
 }
 

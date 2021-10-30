@@ -1,7 +1,6 @@
 package cz.levinzonr.saferoute.processor.subprocessors
 
 import com.squareup.kotlinpoet.ClassName
-import com.squareup.kotlinpoet.asTypeName
 import cz.levinzonr.saferoute.annotations.Route
 import cz.levinzonr.saferoute.annotations.RouteArg
 import cz.levinzonr.saferoute.annotations.RouteArgType
@@ -15,14 +14,10 @@ import java.lang.IllegalArgumentException
 import java.lang.reflect.InvocationTargetException
 import javax.lang.model.element.Element
 import javax.lang.model.type.MirroredTypeException
-import javax.lang.model.type.TypeKind
 import javax.lang.model.type.TypeMirror
 import kotlin.reflect.KClass
-import kotlin.reflect.KFunction
-import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 import javax.lang.model.type.ExecutableType
-import kotlin.reflect.KAnnotatedElement
 
 
 internal class RouteDataBuilder(val packageName: String) {
@@ -39,7 +34,7 @@ internal class RouteDataBuilder(val packageName: String) {
                 arguments = arguments,
                 packageName= packageName + "." + Constants.FILE_ARGS_DIR,
                 deeplinks = listOf(),
-                routeBuilderType = null,
+                routeTransition = null,
                 contentClassName = ClassName(packageName, annotatedElement.simpleName.toString()),
                 params = params
             )
@@ -51,7 +46,7 @@ internal class RouteDataBuilder(val packageName: String) {
                 arguments = argsData.map { ArgumentDataBuilder().from(it) },
                 packageName = packageName + "." + Constants.FILE_ARGS_DIR,
                 deeplinks = deeplinksData.map { DeeplinkDataBuilder.build(it) },
-                routeBuilderType = annotation.getClassProperty("routeBuilder"),
+                routeTransition = annotation.getClassProperty("transition"),
                 contentClassName = ClassName(packageName, annotatedElement.simpleName.toString()),
                 params = params
             )

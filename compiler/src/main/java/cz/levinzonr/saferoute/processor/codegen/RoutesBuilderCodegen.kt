@@ -1,9 +1,6 @@
 package cz.levinzonr.saferoute.processor.codegen
 
-import com.squareup.kotlinpoet.CodeBlock
-import com.squareup.kotlinpoet.FileSpec
-import com.squareup.kotlinpoet.FunSpec
-import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.*
 import cz.levinzonr.saferoute.processor.constants.ClassNames
 import cz.levinzonr.saferoute.processor.extensions.ComposableFunction
 import cz.levinzonr.saferoute.processor.models.ModelData
@@ -18,23 +15,50 @@ internal class RoutesBuildersCodegen(val data: ModelData) {
         fileSpec.build().writeTo(output)
     }
 
-    private fun RouteData.createBuilderFun() : FunSpec {
-
-        val cals = if (routeBuilderType.toString() == ClassNames.DefaultRouteBuilder.canonicalName) {
-            ClassNames.composableBuilder
-        } else {
-            throw IllegalArgumentException("Invalid builder: ${routeBuilderType.toString()}")
-        }
+    private fun RouteData.createBuilderFun(): FunSpec {
 
         val code = CodeBlock.Builder()
-            .beginControlFlow("%T(Routes.${name.capitalize()})", cals)
+            .beginControlFlow(this)
             .addStatement("content()")
             .endControlFlow()
 
         return FunSpec.builder("${name}Route")
             .receiver(ClassNames.NavGraphBuilder)
             .addParameter("content", ComposableFunction)
+            .addAnnotation(this)
             .addCode(code.build())
             .build()
     }
+
+    private fun CodeBlock.Builder.beginControlFlow(routeData: RouteData): CodeBlock.Builder {
+        val routeSpec = "Routes.${routeData.name.capitalize()}"
+        return when (routeData.routeTransition.toString()) {
+            ClassNames.DefaultRouteTransition.canonicalName -> {
+                beginControlFlow("%T($routeSpec)", ClassNames.composableTransition)
+            }
+            ClassNames.BottomSheetRouteTransition.canonicalName -> {
+                beginControlFlow("%T($routeSpec)", ClassNames.bottomSheetTransition)
+            }
+            else -> {
+                beginControlFlow(
+                    "%T($routeSpec, transition = %T)",
+                    ClassNames.animatedComposableTransition,
+                    routeData.routeTransition?.asTypeName()
+                )
+            }
+        }
+    }
+
+    private fun FunSpec.Builder.addAnnotation(routeData: RouteData) : FunSpec.Builder {
+        return when (routeData.routeTransition.toString()) {
+            ClassNames.DefaultRouteTransition.canonicalName -> {
+                this
+            }
+            ClassNames.BottomSheetRouteTransition.canonicalName -> {
+                addAnnotation(ClassNames.ExperimentalNavigationApi)
+            }
+            else -> addAnnotation(ClassNames.ExperimentalAnimationApi)
+        }
+    }
+
 }

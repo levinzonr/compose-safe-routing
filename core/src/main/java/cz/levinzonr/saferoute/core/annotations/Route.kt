@@ -1,6 +1,7 @@
 package cz.levinzonr.saferoute.core.annotations
 
-import cz.levinzonr.saferoute.core.DefaultRouteBuilder
+import cz.levinzonr.saferoute.core.DefaultRouteTransition
+import cz.levinzonr.saferoute.core.RouteTransition
 import kotlin.reflect.KClass
 
 /**
@@ -16,5 +17,5 @@ annotation class Route(
     val name: String,
     val args: Array<RouteArg> = [],
     val deepLinks: Array<RouteDeeplink> = [],
-    val routeBuilder: KClass<*> = DefaultRouteBuilder::class
+    val transition: KClass<out RouteTransition> = DefaultRouteTransition::class
 )

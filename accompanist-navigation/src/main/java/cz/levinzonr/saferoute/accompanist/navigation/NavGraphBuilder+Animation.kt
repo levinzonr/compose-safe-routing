@@ -6,10 +6,26 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
+import cz.levinzonr.saferoute.accompanist.navigation.transitions.AnimatedRouteTransition
 import cz.levinzonr.saferoute.core.ProvideRouteSpecArg
 import cz.levinzonr.saferoute.core.RouteSpec
-import cz.levinzonr.saferoute.core.fromBackStackEntry
 
+
+@ExperimentalAnimationApi
+fun NavGraphBuilder.composable(
+    spec: RouteSpec<*>,
+    deepLinks: List<NavDeepLink> = spec.deepLinks,
+    transition: AnimatedRouteTransition,
+    content: @Composable (AnimatedVisibilityScope.(NavBackStackEntry) -> Unit)
+) = composable(
+    spec = spec,
+    deepLinks = deepLinks,
+    enterTransition = transition.enter,
+    exitTransition = transition.exit,
+    popExitTransition = transition.popExit,
+    popEnterTransition = transition.popEnter,
+    content = content
+)
 
 @ExperimentalAnimationApi
 fun NavGraphBuilder.composable(

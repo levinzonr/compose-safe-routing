@@ -1,0 +1,7 @@
+package cz.levinzonr.saferoute.accompanist.navigation.transitions
+
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import cz.levinzonr.saferoute.core.RouteTransition
+
+@ExperimentalMaterialNavigationApi
+interface BottomSheetRouteTransition: RouteTransition

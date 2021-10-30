@@ -10,7 +10,7 @@ internal data class RouteData(
     val arguments: List<ArgumentData>,
     val packageName: String,
     val deeplinks: List<DeeplinkData>,
-    val routeBuilderType: TypeMirror?,
+    val routeTransition: TypeMirror?,
     val contentClassName: ClassName,
     val params: List<String>
 ) {
