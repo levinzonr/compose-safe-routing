@@ -12,7 +12,9 @@ internal data class RouteData(
     val deeplinks: List<DeeplinkData>,
     val routeTransition: TypeMirror?,
     val contentClassName: ClassName,
-    val params: List<String>
+    val params: List<String>,
+    val navGraphName: String,
+    val start: Boolean
 ) {
 
     val argumentsName: String get() = "${name.capitalize()}${Constants.FILE_ARGS_POSTFIX}"

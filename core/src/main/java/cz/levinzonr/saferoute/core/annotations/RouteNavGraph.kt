@@ -5,6 +5,5 @@ import kotlin.reflect.KClass
 
 annotation class RouteNavGraph(
     val name: String = AnnotationsDefaults.DefaultGraphMain,
-    val start: Boolean = false,
-    val builder: KClass<*> = DefaultRouteTransition::class
+    val start: Boolean = false
 )

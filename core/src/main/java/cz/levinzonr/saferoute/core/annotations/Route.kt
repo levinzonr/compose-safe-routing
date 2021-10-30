@@ -17,5 +17,6 @@ annotation class Route(
     val name: String,
     val args: Array<RouteArg> = [],
     val deepLinks: Array<RouteDeeplink> = [],
-    val transition: KClass<out RouteTransition> = DefaultRouteTransition::class
+    val transition: KClass<out RouteTransition> = DefaultRouteTransition::class,
+    val navGraph: RouteNavGraph = RouteNavGraph()
 )

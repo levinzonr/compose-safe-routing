@@ -36,11 +36,14 @@ internal class RouteDataBuilder(val packageName: String) {
                 deeplinks = listOf(),
                 routeTransition = null,
                 contentClassName = ClassName(packageName, annotatedElement.simpleName.toString()),
-                params = params
+                params = params,
+                navGraphName = "main",
+                start = true
             )
         } else {
             val argsData = annotation.fieldByName<Array<Annotation>>("args")
             val deeplinksData = annotation.fieldByName<Array<Annotation>>("deepLinks")
+            val navGraph = annotation.fieldByName<Annotation>("navGraph")
             RouteData(
                 name = annotation.fieldByName("name"),
                 arguments = argsData.map { ArgumentDataBuilder().from(it) },
@@ -48,7 +51,9 @@ internal class RouteDataBuilder(val packageName: String) {
                 deeplinks = deeplinksData.map { DeeplinkDataBuilder.build(it) },
                 routeTransition = annotation.getClassProperty("transition"),
                 contentClassName = ClassName(packageName, annotatedElement.simpleName.toString()),
-                params = params
+                params = params,
+                navGraphName = navGraph.fieldByName("name"),
+                start = navGraph.fieldByName("start")
             )
         }
     }

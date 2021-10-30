@@ -11,4 +11,7 @@ package cz.levinzonr.saferoute.annotations
     message = "Use annotations from the :core module instead",
     replaceWith = ReplaceWith("Route", "cz.levinzonr.saferoute.core.annotations.Route")
 )
-annotation class Route(val name: String, val args: Array<RouteArg> = [])
+annotation class Route(
+    val name: String,
+    val args: Array<RouteArg> = [],
+)
