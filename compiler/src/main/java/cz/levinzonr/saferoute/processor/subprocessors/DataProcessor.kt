@@ -16,7 +16,7 @@ internal object DataProcessor {
             val routes = environment?.getElementsAnnotatedWithAny(setOf(RouteV1Class, RouteV2Class))?.map { element ->
                 packageName = processingEnv.elementUtils.getPackageOf(element).toString()
                 val annotation = element.getAnnotation()
-                RouteDataBuilder(packageName).from(annotation)
+                RouteDataBuilder(packageName).from(annotation, element)
             }?.takeIf { it.isNotEmpty() } ?: return null
 
             return ModelData(packageName, routes)

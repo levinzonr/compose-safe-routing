@@ -10,7 +10,9 @@ internal data class RouteData(
     val arguments: List<ArgumentData>,
     val packageName: String,
     val deeplinks: List<DeeplinkData>,
-    val routeBuilderType: TypeMirror?
+    val routeBuilderType: TypeMirror?,
+    val contentClassName: ClassName,
+    val params: List<String>
 ) {
 
     val argumentsName: String get() = "${name.capitalize()}${Constants.FILE_ARGS_POSTFIX}"
