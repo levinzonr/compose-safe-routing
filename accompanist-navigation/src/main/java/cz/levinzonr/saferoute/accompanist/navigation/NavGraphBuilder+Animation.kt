@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
+import cz.levinzonr.saferoute.accompanist.navigation.transitions.AnimatedRouteTransition
 import cz.levinzonr.saferoute.core.ProvideRouteSpecArgs
 import cz.levinzonr.saferoute.core.RouteSpec
 
@@ -30,6 +31,20 @@ fun NavGraphBuilder.composable(
         content.invoke(this, it)
     }
 }
+
+@ExperimentalAnimationApi
+fun NavGraphBuilder.composable(
+    spec: RouteSpec<*>,
+    transition: AnimatedRouteTransition,
+    content: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit
+) = composable(
+    spec = spec,
+    enterTransition = transition.enter,
+    exitTransition = transition.exit,
+    popEnterTransition = transition.popEnter,
+    popExitTransition = transition.popExit,
+    content = content
+)
 
 @ExperimentalAnimationApi
 @Deprecated(

@@ -9,7 +9,6 @@ import cz.levinzonr.saferoute.core.annotations.Route
 import cz.levinzonr.saferoute.core.annotations.RouteArg
 import cz.levinzonr.saferoute.transitions.FadeInFadeOutTransition
 
-@ExperimentalAnimationApi
 @Composable
 @Route(
     "settings",
