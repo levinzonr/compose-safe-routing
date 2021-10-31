@@ -16,9 +16,14 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.Router.NoActionBar">
             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
-
+                <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="app" android:host="deeplink" />
+
             </intent-filter>
         </activity>
     </application>

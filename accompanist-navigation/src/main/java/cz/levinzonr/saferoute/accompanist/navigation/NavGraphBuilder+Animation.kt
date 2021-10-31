@@ -3,17 +3,15 @@ package cz.levinzonr.saferoute.accompanist.navigation
 import androidx.compose.animation.*
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
+import cz.levinzonr.saferoute.core.ProvideRouteSpecArgs
 import cz.levinzonr.saferoute.core.RouteSpec
-import cz.levinzonr.saferoute.core.fromBackStackEntry
 
 
 @ExperimentalAnimationApi
 fun NavGraphBuilder.composable(
     spec: RouteSpec<*>,
-    deepLinks: List<NavDeepLink> = emptyList(),
     enterTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> EnterTransition?)? = null,
     exitTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> ExitTransition?)? = null,
     popEnterTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> EnterTransition?)? = enterTransition,
@@ -22,18 +20,30 @@ fun NavGraphBuilder.composable(
 ) = composable(
     spec.route,
     spec.navArgs,
-    deepLinks,
+    spec.deepLinks,
     enterTransition,
     exitTransition,
     popEnterTransition,
-    popExitTransition,
-    content
-)
+    popExitTransition
+) {
+    ProvideRouteSpecArgs(spec = spec, entry = it) {
+        content.invoke(this, it)
+    }
+}
 
 @ExperimentalAnimationApi
-fun<A> NavGraphBuilder.composableWithArgs(
+@Deprecated(
+    message = "Use composable(Route) instead, args can be accessed using CompositionLocal APIs i.e LocalRouteArgs.current",
+    replaceWith = ReplaceWith(
+        "composable(spec, enterTransition, exitTransition, popEnterTransition, popExitTransition) {\n " +
+                "val args = spec.currentArgs\n" +
+                "content()\n " +
+                " }",
+        "cz.levinzonr.saferoute.accompanist.navigation", "cz.levinzonr.saferoute.core.currentArgs"
+    )
+)
+fun <A> NavGraphBuilder.composableWithArgs(
     spec: RouteSpec<A>,
-    deepLinks: List<NavDeepLink> = emptyList(),
     enterTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> EnterTransition?)? = null,
     exitTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> ExitTransition?)? = null,
     popEnterTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> EnterTransition?)? = enterTransition,
@@ -42,12 +52,12 @@ fun<A> NavGraphBuilder.composableWithArgs(
 ) = composable(
     spec.route,
     spec.navArgs,
-    deepLinks,
+    spec.deepLinks,
     enterTransition,
     exitTransition,
     popEnterTransition,
     popExitTransition
 ) {
-    content.invoke(this, it, with(spec.argsFactory) { fromBackStackEntry(it) })
+    content.invoke(this, it, spec.argsFactory.LocalArgs.current)
 }
 

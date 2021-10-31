@@ -7,7 +7,8 @@ import cz.levinzonr.saferoute.processor.constants.Constants
 internal data class RouteData(
     val name: String,
     val arguments: List<ArgumentData>,
-    val packageName: String
+    val packageName: String,
+    val deeplinks: List<DeeplinkData>
 ) {
 
     val argumentsName: String get() = "${name.capitalize()}${Constants.FILE_ARGS_POSTFIX}"
@@ -28,7 +29,13 @@ internal data class RouteData(
 
 
 
+
     fun getArgsFactoryName() : String{
         return "$argumentsName${Constants.FILE_ROUTE_ARG_FACTORY}"
+    }
+
+
+    fun getArgsProviderName() : String{
+        return "$argumentsName${Constants.FILE_ROUTE_ARG_PROVIDER}"
     }
 }

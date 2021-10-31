@@ -2,10 +2,8 @@ package cz.levinzonr.saferoute.processor.codegen
 
 import com.squareup.kotlinpoet.*
 import cz.levinzonr.saferoute.processor.constants.ClassNames
-import cz.levinzonr.saferoute.processor.constants.Constants
 import cz.levinzonr.saferoute.processor.constants.KDoc
 import cz.levinzonr.saferoute.processor.extensions.asList
-import cz.levinzonr.saferoute.processor.extensions.toNavType
 import cz.levinzonr.saferoute.processor.models.ArgumentData
 import cz.levinzonr.saferoute.processor.models.RouteData
 
@@ -42,7 +40,7 @@ internal class RouteArgsBuilder(
 
         data.arguments.forEach {
             code.addStatement("%T(%S) {", ClassNames.navArgument, it.name)
-            code.indent().addStatement("type = ${it.type.toNavType()}", ClassNames.NavType)
+            code.indent().addStatement("type = %T.${it.type.navType}", ClassNames.NavType)
             code.addStatement("nullable = ${it.isNullable}")
             it.optionalData?.let {
                 code.addStatement("defaultValue = %L", it.value)
@@ -73,10 +71,10 @@ internal class RouteArgsBuilder(
     }
 
     private fun ArgumentData.toPropertySpec() : PropertySpec {
-        return PropertySpec.builder(name, type.asTypeName().copy(nullable = isNullable)).initializer(name).build()
+        return PropertySpec.builder(name, type.clazz.asTypeName().copy(nullable = isNullable)).initializer(name).build()
     }
 
     private fun ArgumentData.toParameterSpec() : ParameterSpec {
-        return ParameterSpec.builder(name, type.asTypeName().copy(nullable = isNullable)).build()
+        return ParameterSpec.builder(name, type.clazz.asTypeName().copy(nullable = isNullable)).build()
     }
 }
