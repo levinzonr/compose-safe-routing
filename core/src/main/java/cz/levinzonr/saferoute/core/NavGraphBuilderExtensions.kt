@@ -1,9 +1,11 @@
 package cz.levinzonr.saferoute.core
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import androidx.navigation.navigation
 
 
@@ -11,6 +13,16 @@ fun NavGraphBuilder.composable(
     spec: RouteSpec<*>,
     content: @Composable (NavBackStackEntry) -> Unit
 ) = composable(spec.route, spec.navArgs, spec.deepLinks) {
+    ProvideRouteSpecArgs(spec = spec, entry = it) {
+        content.invoke(it)
+    }
+}
+
+fun NavGraphBuilder.dialog(
+    spec: RouteSpec<*>,
+    properties: DialogProperties = DialogProperties(),
+    content: @Composable (NavBackStackEntry) -> Unit
+) = dialog(spec.route, spec.navArgs, spec.deepLinks, properties) {
     ProvideRouteSpecArgs(spec = spec, entry = it) {
         content.invoke(it)
     }
