@@ -3,13 +3,11 @@ package cz.levinzonr.saferoute.accompanist.navigation
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.bottomSheet
-import cz.levinzonr.saferoute.core.ProvideRouteSpecArg
+import cz.levinzonr.saferoute.core.ProvideRouteSpecArgs
 import cz.levinzonr.saferoute.core.RouteSpec
-import cz.levinzonr.saferoute.core.fromBackStackEntry
 
 
 @ExperimentalMaterialNavigationApi
@@ -17,7 +15,7 @@ fun NavGraphBuilder.bottomSheet(
     routeSpec: RouteSpec<*>,
     content: @Composable ColumnScope.(backstackEntry: NavBackStackEntry) -> Unit
 ) = bottomSheet(routeSpec.route, routeSpec.navArgs, routeSpec.deepLinks) {
-    ProvideRouteSpecArg(spec = routeSpec, entry = it) {
+    ProvideRouteSpecArgs(spec = routeSpec, entry = it) {
         content.invoke(this, it)
     }
 }

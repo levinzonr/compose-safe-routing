@@ -2,7 +2,6 @@ package cz.levinzonr.saferoute.core
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavDeepLink
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
@@ -12,7 +11,7 @@ fun NavGraphBuilder.composable(
     spec: RouteSpec<*>,
     content: @Composable (NavBackStackEntry) -> Unit
 ) = composable(spec.route, spec.navArgs, spec.deepLinks) {
-    ProvideRouteSpecArg(spec = spec, entry = it) {
+    ProvideRouteSpecArgs(spec = spec, entry = it) {
         content.invoke(it)
     }
 }
