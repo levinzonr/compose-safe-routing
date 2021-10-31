@@ -1,5 +1,6 @@
 package cz.levinzonr.saferoute.core
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavBackStackEntry
@@ -36,6 +37,15 @@ fun NavGraphBuilder.navigation(
 ) = navigation(route, startSpec.route, content)
 
 
+@ExperimentalAnimationApi
+@Deprecated(
+    message = "Use composable(Route) instead, args can be accessed using CompositionLocal APIs i.e LocalRouteArgs.current",
+    replaceWith = ReplaceWith(
+        "composable(spec) {\n " +
+                "val args = spec.currentArgs\n" +
+                "content()\n " +
+                "}","cz.levinzonr.saferoute.core.currentArgs")
+)
 fun<A> NavGraphBuilder.composableWithArgs(
     spec: RouteSpec<A>,
     content: @Composable (NavBackStackEntry, A) -> Unit

@@ -22,7 +22,17 @@ fun NavGraphBuilder.bottomSheet(
 
 
 @ExperimentalMaterialNavigationApi
-fun<A> NavGraphBuilder.bottomSheetWithArgs(
+@Deprecated(
+    message = "Use bottomSheet(Route) instead, args can be accessed using CompositionLocal APIs i.e LocalRouteArgs.current",
+    replaceWith = ReplaceWith(
+        "bottomSheet(spec) {\n " +
+                "val args = spec.currentArgs\n" +
+                "content()\n " +
+                "}",
+        "cz.levinzonr.saferoute.accompanist.navigation", "cz.levinzonr.saferoute.core.currentArgs"
+    )
+)
+fun <A> NavGraphBuilder.bottomSheetWithArgs(
     routeSpec: RouteSpec<A>,
     content: @Composable ColumnScope.(backstackEntry: NavBackStackEntry, args: A) -> Unit
 ) = bottomSheet(routeSpec) {

@@ -25,14 +25,24 @@ fun NavGraphBuilder.composable(
     exitTransition,
     popEnterTransition,
     popExitTransition
-)  {
+) {
     ProvideRouteSpecArgs(spec = spec, entry = it) {
         content.invoke(this, it)
     }
 }
 
 @ExperimentalAnimationApi
-fun<A> NavGraphBuilder.composableWithArgs(
+@Deprecated(
+    message = "Use composable(Route) instead, args can be accessed using CompositionLocal APIs i.e LocalRouteArgs.current",
+    replaceWith = ReplaceWith(
+        "composable(spec, enterTransition, exitTransition, popEnterTransition, popExitTransition) {\n " +
+                "val args = spec.currentArgs\n" +
+                "content()\n " +
+                " }",
+        "cz.levinzonr.saferoute.accompanist.navigation", "cz.levinzonr.saferoute.core.currentArgs"
+    )
+)
+fun <A> NavGraphBuilder.composableWithArgs(
     spec: RouteSpec<A>,
     enterTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> EnterTransition?)? = null,
     exitTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> ExitTransition?)? = null,
