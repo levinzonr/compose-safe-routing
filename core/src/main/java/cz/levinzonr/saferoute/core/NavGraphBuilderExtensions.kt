@@ -10,9 +10,8 @@ import androidx.navigation.navigation
 
 fun NavGraphBuilder.composable(
     spec: RouteSpec<*>,
-    deepLinks: List<NavDeepLink> = spec.deepLinks,
     content: @Composable (NavBackStackEntry) -> Unit
-) = composable(spec.route, spec.navArgs, deepLinks) {
+) = composable(spec.route, spec.navArgs, spec.deepLinks) {
     ProvideRouteSpecArg(spec = spec, entry = it) {
         content.invoke(it)
     }
@@ -28,9 +27,8 @@ fun NavGraphBuilder.navigation(
 
 fun<A> NavGraphBuilder.composableWithArgs(
     spec: RouteSpec<A>,
-    deepLinks: List<NavDeepLink> = spec.deepLinks,
     content: @Composable (NavBackStackEntry, A) -> Unit
-) = composable(spec, deepLinks) {
+) = composable(spec) {
         content.invoke(it, spec.argsFactory.LocalArgs.current)
     }
 

@@ -14,7 +14,6 @@ import cz.levinzonr.saferoute.core.fromBackStackEntry
 @ExperimentalAnimationApi
 fun NavGraphBuilder.composable(
     spec: RouteSpec<*>,
-    deepLinks: List<NavDeepLink> = spec.deepLinks,
     enterTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> EnterTransition?)? = null,
     exitTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> ExitTransition?)? = null,
     popEnterTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> EnterTransition?)? = enterTransition,
@@ -23,7 +22,7 @@ fun NavGraphBuilder.composable(
 ) = composable(
     spec.route,
     spec.navArgs,
-    deepLinks,
+    spec.deepLinks,
     enterTransition,
     exitTransition,
     popEnterTransition,
@@ -37,7 +36,6 @@ fun NavGraphBuilder.composable(
 @ExperimentalAnimationApi
 fun<A> NavGraphBuilder.composableWithArgs(
     spec: RouteSpec<A>,
-    deepLinks: List<NavDeepLink> = spec.deepLinks,
     enterTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> EnterTransition?)? = null,
     exitTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> ExitTransition?)? = null,
     popEnterTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> EnterTransition?)? = enterTransition,
@@ -46,7 +44,7 @@ fun<A> NavGraphBuilder.composableWithArgs(
 ) = composable(
     spec.route,
     spec.navArgs,
-    deepLinks,
+    spec.deepLinks,
     enterTransition,
     exitTransition,
     popEnterTransition,

@@ -15,9 +15,8 @@ import cz.levinzonr.saferoute.core.fromBackStackEntry
 @ExperimentalMaterialNavigationApi
 fun NavGraphBuilder.bottomSheet(
     routeSpec: RouteSpec<*>,
-    deepLinks: List<NavDeepLink> = routeSpec.deepLinks,
     content: @Composable ColumnScope.(backstackEntry: NavBackStackEntry) -> Unit
-) = bottomSheet(routeSpec.route, routeSpec.navArgs, deepLinks) {
+) = bottomSheet(routeSpec.route, routeSpec.navArgs, routeSpec.deepLinks) {
     ProvideRouteSpecArg(spec = routeSpec, entry = it) {
         content.invoke(this, it)
     }
@@ -27,8 +26,7 @@ fun NavGraphBuilder.bottomSheet(
 @ExperimentalMaterialNavigationApi
 fun<A> NavGraphBuilder.bottomSheetWithArgs(
     routeSpec: RouteSpec<A>,
-    deepLinks: List<NavDeepLink> = routeSpec.deepLinks,
     content: @Composable ColumnScope.(backstackEntry: NavBackStackEntry, args: A) -> Unit
-) = bottomSheet(routeSpec, deepLinks) {
+) = bottomSheet(routeSpec) {
     content.invoke(this, it, routeSpec.argsFactory.LocalArgs.current)
 }
