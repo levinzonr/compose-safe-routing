@@ -53,13 +53,13 @@ class MainActivity : ComponentActivity() {
                             navController = controller,
                             startRouteSpec = Routes.Profile
                         ) {
-                            composable(Routes.Profile    ) {
-        val args = Routes.Profile.currentArgs
-        ProfileScreen {
-            startActivity(Intent(Intent.ACTION_VIEW).apply {
-        data = Uri.parse("app://deeplink/hello?number=232")
-    })
-        }
+                            composable(Routes.Profile) {
+                                val args = Routes.Profile.currentArgs
+                                ProfileScreen {
+                                    startActivity(Intent(Intent.ACTION_VIEW).apply {
+                                        data = Uri.parse("app://deeplink/hello?number=232")
+                                    })
+                                }
                             }
                             bottomSheet(Routes.Details) {
                                 DetailsScreen(args = LocalDetailsRouteArgs.current, hiltViewModel())
