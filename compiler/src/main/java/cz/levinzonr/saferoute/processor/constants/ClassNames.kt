@@ -18,14 +18,9 @@ internal object ClassNames {
     val NavDeepLink = ClassName(Constants.PACKAGE_NAVIGATION, "NavDeepLink")
     val NavDeepLinkDSL = ClassName(Constants.PACKAGE_NAVIGATION, "navDeepLink")
     val NavGraphBuilder = ClassName(Constants.PACKAGE_NAVIGATION, "NavGraphBuilder")
-
-    val DefaultRouteTransition = ClassName(Constants.PACKAGE_CORE, "DefaultRouteTransition")
+    val route = ClassName(Constants.PACKAGE_CORE, "route")
     val BottomSheetRouteTransition = ClassName(Constants.PACKAGE_ACCOMPANIST + ".transitions", "BottomSheetRouteTransition")
     val AnimatedRouteTransition = ClassName(Constants.PACKAGE_ACCOMPANIST + ".transitions", "AnimatedRouteTransition")
-
-    val bottomSheetTransition = ClassName(Constants.PACKAGE_ACCOMPANIST, "bottomSheet")
-    val animatedComposableTransition = ClassName(Constants.PACKAGE_ACCOMPANIST, "composable")
-    val composableTransition = ClassName(Constants.PACKAGE_CORE, "composable")
     val ExperimentalAnimationApi = ClassName("androidx.compose.animation", "ExperimentalAnimationApi")
     val ExperimentalNavigationApi = ClassName("com.google.accompanist.navigation.material", "ExperimentalMaterialNavigationApi")
 }

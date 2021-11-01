@@ -8,7 +8,18 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.navigation
+import cz.levinzonr.saferoute.core.transitions.RouteTransition
 
+
+fun NavGraphBuilder.route(
+    transition: RouteTransition,
+    spec: RouteSpec<*>,
+    content: @Composable () -> Unit
+) {
+    transition.route(this, spec) {
+        content()
+    }
+}
 
 fun NavGraphBuilder.composable(
     spec: RouteSpec<*>,
@@ -44,12 +55,13 @@ fun NavGraphBuilder.navigation(
         "composable(spec) {\n " +
                 "val args = spec.currentArgs\n" +
                 "content()\n " +
-                "}","cz.levinzonr.saferoute.core.currentArgs")
+                "}", "cz.levinzonr.saferoute.core.currentArgs"
+    )
 )
-fun<A> NavGraphBuilder.composableWithArgs(
+fun <A> NavGraphBuilder.composableWithArgs(
     spec: RouteSpec<A>,
     content: @Composable (NavBackStackEntry, A) -> Unit
 ) = composable(spec) {
-        content.invoke(it, spec.argsFactory.LocalArgs.current)
-    }
+    content.invoke(it, spec.argsFactory.LocalArgs.current)
+}
 

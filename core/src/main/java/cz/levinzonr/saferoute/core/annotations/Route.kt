@@ -1,7 +1,7 @@
 package cz.levinzonr.saferoute.core.annotations
 
-import cz.levinzonr.saferoute.core.DefaultRouteTransition
-import cz.levinzonr.saferoute.core.RouteTransition
+import cz.levinzonr.saferoute.core.transitions.DefaultRouteTransition
+import cz.levinzonr.saferoute.core.transitions.RouteTransition
 import kotlin.reflect.KClass
 
 /**

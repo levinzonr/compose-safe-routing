@@ -2,11 +2,16 @@ package cz.levinzonr.saferoute.processor.subprocessors
 
 import com.squareup.kotlinpoet.FileSpec
 import cz.levinzonr.saferoute.processor.codegen.RoutesBuilder
-import cz.levinzonr.saferoute.processor.codegen.RoutesBuildersCodegen
+import cz.levinzonr.saferoute.processor.codegen.RoutesTransitionsCodegen
+import cz.levinzonr.saferoute.processor.logger.Logger
 import cz.levinzonr.saferoute.processor.models.ModelData
 import java.io.File
+import javax.annotation.processing.ProcessingEnvironment
 
-internal object RoutesProcessor : FileGenProcessor {
+internal class RoutesProcessor(
+    private val processingEnvironment: ProcessingEnvironment,
+    private val logger: Logger
+) : FileGenProcessor {
     override fun process(data: ModelData, destinationDir: File) {
         try {
 
@@ -16,7 +21,7 @@ internal object RoutesProcessor : FileGenProcessor {
 
             builder.build().writeTo(destinationDir)
 
-            RoutesBuildersCodegen(data).generate(destinationDir)
+            RoutesTransitionsCodegen(data, processingEnvironment, logger).generate(destinationDir)
 
         } catch (e: Exception) {
             throw IllegalStateException("Error prosessing routes: ${e.stackTraceToString()}")
