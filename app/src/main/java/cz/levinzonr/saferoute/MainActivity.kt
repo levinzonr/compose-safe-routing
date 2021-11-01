@@ -9,7 +9,6 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -17,8 +16,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.NotificationCompat
-import androidx.navigation.NavDeepLink
-import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.plusAssign
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
@@ -26,6 +25,7 @@ import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import cz.levinzonr.saferoute.accompanist.navigation.*
 import cz.levinzonr.saferoute.core.dialog
+import cz.levinzonr.saferoute.core.navigation
 import cz.levinzonr.saferoute.data.Pokemon
 import cz.levinzonr.saferoute.screens.PokemonSelector
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsScreen
@@ -57,31 +57,12 @@ class MainActivity : ComponentActivity() {
 
                             composable(Routes.Home) {
                                 HomeScreen(
-                                    onShowPokedex = { navController.navigateToPokemonList() },
+                                    onShowPokedex = { navController.navigate("pokedex") },
                                     onDeeplink = { navController.navigateToPokemonSelector() }
                                 )
                             }
 
-                            composable(Routes.PokemonList) {
-                                PokemonListScreen(onPokemonClick = {
-                                    navController.navigateToPokemonDetails(it.id)
-                                })
-                            }
-
-                            composable(Routes.PokemonDetails) {
-                                PokemonDetailsScreen(onShowStatsClick = {
-                                    navController.navigateToPokemonStats(
-                                        name = it.name ?: "",
-                                        category = it.category,
-                                        hp = it.hp ?: 0,
-                                        imageRes = it.image
-                                    )
-                                })
-                            }
-
-                            bottomSheet(Routes.PokemonStats) {
-                                PokemonStatsSheet()
-                            }
+                            navigationPokedex(navController)
 
                             dialog(Routes.PokemonSelector) {
                                 PokemonSelector(onSelected = {
@@ -92,6 +73,33 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    @ExperimentalAnimationApi
+    @ExperimentalMaterialNavigationApi
+    private fun NavGraphBuilder.navigationPokedex(navController: NavController) {
+        navigation("pokedex", Routes.PokemonList) {
+            composable(Routes.PokemonList) {
+                PokemonListScreen(onPokemonClick = {
+                    navController.navigateToPokemonDetails(it.id)
+                })
+            }
+
+            composable(Routes.PokemonDetails) {
+                PokemonDetailsScreen(onShowStatsClick = {
+                    navController.navigateToPokemonStats(
+                        name = it.name ?: "",
+                        category = it.category,
+                        hp = it.hp ?: 0,
+                        imageRes = it.image
+                    )
+                })
+            }
+
+            bottomSheet(Routes.PokemonStats) {
+                PokemonStatsSheet()
             }
         }
     }
