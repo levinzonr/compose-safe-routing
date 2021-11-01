@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -25,19 +26,33 @@ fun PokemonSelector(onSelected: (Pokemon) -> Unit) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.8f)
+            .fillMaxHeight(0.8f),
+        shape = RoundedCornerShape(16.dp)
     ) {
-        LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(16.dp)) {
-            items(pokemons) {
-                Text(
-                    text = "${it.id} ${it.name}",
-                    modifier = Modifier.fillMaxWidth()
-                        .border(BorderStroke(2.dp, colorResource(id = it.color())), shape = RoundedCornerShape(32.dp))
-                        .padding(12.dp)
-                        .clickable { onSelected(it) }
-                )
+        Column(
+            modifier = Modifier.padding(32.dp),
+            verticalArrangement = Arrangement.spacedBy(25.dp)
+        ) {
+
+            Text(text = "Choose pokemon to deeplink to", style = MaterialTheme.typography.h6)
+
+            LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                items(pokemons) {
+                    Text(
+                        text = "${it.id} ${it.name}",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .border(
+                                BorderStroke(2.dp, colorResource(id = it.color())),
+                                shape = RoundedCornerShape(32.dp)
+                            )
+                            .padding(12.dp)
+                            .clickable { onSelected(it) }
+                    )
+                }
             }
         }
+
     }
 
 }
