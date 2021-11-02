@@ -33,10 +33,9 @@ import cz.levinzonr.saferoute.data.color
     deepLinks = [RouteDeeplink("app://deeplink/{id}")]
 )
 fun PokemonDetailsScreen(
-    viewModel: PokemonDetailsViewModel = hiltViewModel(),
+    pokemon: Pokemon?,
     onShowStatsClick: (Pokemon) -> Unit,
 ) {
-    val pokemon = viewModel.pokemon.collectAsState().value
     val color = animateColorAsState(targetValue = if (pokemon != null) colorResource(id = pokemon.color()) else Color.White)
     AnimatedVisibility(visible = pokemon != null) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {

@@ -15,8 +15,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.NotificationCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.plusAssign
@@ -30,6 +32,7 @@ import cz.levinzonr.saferoute.core.navigation
 import cz.levinzonr.saferoute.data.Pokemon
 import cz.levinzonr.saferoute.screens.PokemonSelector
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsScreen
+import cz.levinzonr.saferoute.screens.details.PokemonDetailsViewModel
 import cz.levinzonr.saferoute.screens.home.HomeScreen
 import cz.levinzonr.saferoute.screens.list.PokemonListScreen
 import cz.levinzonr.saferoute.screens.statssheet.*
@@ -89,7 +92,10 @@ class MainActivity : ComponentActivity() {
             }
 
             composable(Routes.PokemonDetails) {
-                PokemonDetailsScreen(onShowStatsClick = {
+                val pokemon = hiltViewModel<PokemonDetailsViewModel>().pokemon.collectAsState().value
+                PokemonDetailsScreen(
+                    pokemon = pokemon,
+                    onShowStatsClick = {
                     navController.navigateToPokemonStats(
                         name = it.name ?: "",
                         category = it.category,
