@@ -29,6 +29,8 @@ fun PokemonSelector(onSelected: (Pokemon) -> Unit) {
             .fillMaxHeight(0.8f),
         shape = RoundedCornerShape(16.dp)
     ) {
+
+
         Column(
             modifier = Modifier.padding(32.dp),
             verticalArrangement = Arrangement.spacedBy(25.dp)

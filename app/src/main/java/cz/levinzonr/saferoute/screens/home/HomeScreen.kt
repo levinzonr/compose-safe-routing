@@ -35,7 +35,7 @@ fun HomeScreen(
             HomeButton(title = "Pokedex", color = colorResource(id = R.color.poke_light_teal)) {
                 onShowPokedex.invoke()
             }
-            HomeButton(title = "Deeplink", color = colorResource(id = R.color.poke_light_red)) {
+            HomeButton(title = "Pokelink", color = colorResource(id = R.color.poke_light_red)) {
                 onDeeplink.invoke()
             }
         }

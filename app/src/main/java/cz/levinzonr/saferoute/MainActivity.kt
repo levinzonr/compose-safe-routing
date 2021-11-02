@@ -1,5 +1,6 @@
 package cz.levinzonr.saferoute
 
+import android.app.Fragment
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
