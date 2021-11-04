@@ -45,7 +45,7 @@ fun NavGraphBuilder.navigation(
     route: String,
     startSpec: RouteSpec<*>,
     content: NavGraphBuilder.() -> Unit
-) = navigation(route, startSpec.route, content)
+) = navigation(startSpec.route, route, content)
 
 
 @ExperimentalAnimationApi

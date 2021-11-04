@@ -10,9 +10,9 @@ import cz.levinzonr.saferoute.core.composable
 import cz.levinzonr.saferoute.core.dialog
 
 
-interface DialogRouteTransition: RouteTransition {
+abstract class DialogRouteTransition : RouteTransition {
 
-    val properties: DialogProperties
+    abstract val properties: DialogProperties
 
     override fun route(
         builder: NavGraphBuilder,
@@ -23,7 +23,7 @@ interface DialogRouteTransition: RouteTransition {
     }
 
     companion object {
-        val Default = object : DialogRouteTransition {
+        object Default : DialogRouteTransition() {
             override val properties = DialogProperties()
         }
     }

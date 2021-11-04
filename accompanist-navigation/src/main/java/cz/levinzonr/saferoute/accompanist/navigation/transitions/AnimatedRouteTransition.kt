@@ -3,6 +3,7 @@ package cz.levinzonr.saferoute.accompanist.navigation.transitions
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import cz.levinzonr.saferoute.accompanist.navigation.RouteEnterTransition
@@ -13,17 +14,17 @@ import cz.levinzonr.saferoute.core.RouteSpec
 import cz.levinzonr.saferoute.core.transitions.RouteTransition
 
 @ExperimentalAnimationApi
-interface AnimatedRouteTransition : RouteTransition {
+abstract class AnimatedRouteTransition : RouteTransition {
 
-    val enter: RouteEnterTransition?
-    val exit: RouteExitTransition?
-    val popEnter: RouteEnterTransition?
-    val popExit: RouteExitTransition?
+   abstract val enter: RouteEnterTransition?
+   abstract val exit: RouteExitTransition?
+   abstract val popEnter: RouteEnterTransition?
+   abstract val popExit: RouteExitTransition?
 
     override fun route(
         builder: NavGraphBuilder,
         spec: RouteSpec<*>,
-        content: (NavBackStackEntry) -> Unit
+        content: @Composable (NavBackStackEntry) -> Unit
     ) {
         builder.composable(spec,this) {
             content(it)
@@ -31,7 +32,7 @@ interface AnimatedRouteTransition : RouteTransition {
     }
 
     companion object {
-        val Default = object : AnimatedRouteTransition {
+        object Default : AnimatedRouteTransition() {
             override val enter: RouteEnterTransition = { _, _, -> fadeIn() }
             override val exit: RouteExitTransition = {_, _, -> fadeOut() }
             override val popEnter: RouteEnterTransition? = null

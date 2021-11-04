@@ -1,5 +1,6 @@
 package cz.levinzonr.saferoute.accompanist.navigation.transitions
 
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
@@ -14,7 +15,7 @@ object BottomSheetRouteTransition: RouteTransition {
     override fun route(
         builder: NavGraphBuilder,
         spec: RouteSpec<*>,
-        content: (NavBackStackEntry) -> Unit
+        content: @Composable (NavBackStackEntry) -> Unit
     ) {
         builder.bottomSheet(spec) { content.invoke(it) }
     }
