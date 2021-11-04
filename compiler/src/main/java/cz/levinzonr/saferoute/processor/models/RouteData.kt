@@ -19,8 +19,6 @@ internal data class RouteData(
 
     val argumentsName: String get() = "${name.capitalize()}${Constants.FILE_ARGS_POSTFIX}"
 
-
-
     val argsFactoryClassName = if (arguments.isEmpty())
         ClassNames.EmptyArgsFactory
     else

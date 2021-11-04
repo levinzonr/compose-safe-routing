@@ -12,8 +12,8 @@ import cz.levinzonr.saferoute.core.transitions.RouteTransition
 
 
 fun NavGraphBuilder.route(
-    transition: RouteTransition,
     spec: RouteSpec<*>,
+    transition: RouteTransition,
     content: @Composable () -> Unit
 ) {
     transition.route(this, spec) {

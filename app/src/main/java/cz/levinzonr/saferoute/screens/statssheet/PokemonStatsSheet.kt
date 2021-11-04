@@ -19,7 +19,6 @@ import cz.levinzonr.saferoute.core.annotations.Route
 import cz.levinzonr.saferoute.core.annotations.RouteArg
 import cz.levinzonr.saferoute.screens.statssheet.args.LocalPokemonStatsRouteArgs
 
-@ExperimentalMaterialNavigationApi
 @Composable
 @Route(
     name = "PokemonStats",

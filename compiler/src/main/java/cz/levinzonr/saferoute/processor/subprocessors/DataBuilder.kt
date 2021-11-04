@@ -24,13 +24,14 @@ internal class RouteDataBuilder(val packageName: String) {
 
 
     fun from(annotation: Annotation, annotatedElement: Element): RouteData {
+
         val executableType = annotatedElement.asType() as ExecutableType
         val parameters = executableType.parameterTypes
         val params = parameters.map { it.toString() }
         return if (annotation is Route) {
             val arguments = annotation.args.map { ArgumentDataBuilder().from(it) }
             RouteData(
-                name = annotation.name,
+                name = annotation.name.decapitalize(),
                 arguments = arguments,
                 packageName= packageName + "." + Constants.FILE_ARGS_DIR,
                 deeplinks = listOf(),
@@ -45,7 +46,7 @@ internal class RouteDataBuilder(val packageName: String) {
             val deeplinksData = annotation.fieldByName<Array<Annotation>>("deepLinks")
             val navGraph = annotation.fieldByName<Annotation>("navGraph")
             RouteData(
-                name = annotation.fieldByName("name"),
+                name = annotation.fieldByName<String>("name").decapitalize(),
                 arguments = argsData.map { ArgumentDataBuilder().from(it) },
                 packageName = packageName + "." + Constants.FILE_ARGS_DIR,
                 deeplinks = deeplinksData.map { DeeplinkDataBuilder.build(it) },

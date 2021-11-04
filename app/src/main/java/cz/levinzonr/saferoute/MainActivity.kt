@@ -67,7 +67,7 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
 
-                            PokemonDetailsRoute {
+                            pokemonDetailsRoute {
                                 val args = LocalPokemonDetailsRouteArgs.current
                                 PokemonDetailsScreen(
                                     pokemon = pokemons.find { it.id == args.id },
@@ -76,15 +76,15 @@ class MainActivity : ComponentActivity() {
                                     )}
                                 )
                             }
-                            PokemonListRoute {
+                            pokemonListRoute {
                                 PokemonListScreen(onPokemonClick = {
                                     navController.navigateToPokemonDetails(it.id)
                                 })
                             }
 
-                            PokemonStatsRoute { PokemonStatsSheet() }
+                            pokemonStatsRoute { PokemonStatsSheet() }
 
-                            PokemonSelectorRoute {
+                            pokemonSelectorRoute {
                                 PokemonSelector(onSelected = {
                                     triggerNotification(it)
                                 })

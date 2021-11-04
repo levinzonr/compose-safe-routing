@@ -43,7 +43,7 @@ internal class RoutesTransitionsCodegen(
 
     private fun CodeBlock.Builder.beginControlFlow(routeData: RouteData): CodeBlock.Builder {
         val routeSpec = "Routes.${routeData.name.capitalize()}"
-        beginControlFlow("%T(%T, $routeSpec)", ClassNames.route, routeData.routeTransition)
+        beginControlFlow("%T($routeSpec, %T)", ClassNames.route, routeData.routeTransition)
         return this
     }
 

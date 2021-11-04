@@ -9,9 +9,9 @@ import cz.levinzonr.saferoute.core.ComposableFun
 import cz.levinzonr.saferoute.core.RouteSpec
 import cz.levinzonr.saferoute.core.transitions.RouteTransition
 
-@ExperimentalMaterialNavigationApi
 object BottomSheetRouteTransition: RouteTransition {
 
+    @ExperimentalMaterialNavigationApi
     override fun route(
         builder: NavGraphBuilder,
         spec: RouteSpec<*>,
