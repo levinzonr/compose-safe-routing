@@ -82,7 +82,7 @@ class MainActivity : ComponentActivity() {
                                 })
                             }
 
-                            pokemonStatsRoute { PokemonStatsSheet() }
+                            pokemonStatsRoute()
 
                             pokemonSelectorRoute {
                                 PokemonSelector(onSelected = {

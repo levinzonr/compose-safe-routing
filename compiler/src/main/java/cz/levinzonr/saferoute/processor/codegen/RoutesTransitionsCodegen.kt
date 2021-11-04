@@ -32,18 +32,20 @@ internal class RoutesTransitionsCodegen(
             .addStatement("content()")
             .endControlFlow()
 
+        val parameterSpec = ParameterSpec.builder("content", ComposableFunction).apply {
+            if (params.isEmpty()) defaultValue("{ %T() }", contentClassName)
+        }.build()
 
         return FunSpec.builder("${name}Route")
             .receiver(ClassNames.NavGraphBuilder)
-            .addParameter("content", ComposableFunction)
+            .addParameter(parameterSpec)
             .addAnnotation(this)
             .addCode(code.build())
             .build()
     }
 
     private fun CodeBlock.Builder.beginControlFlow(routeData: RouteData): CodeBlock.Builder {
-        val routeSpec = "Routes.${routeData.name.capitalize()}"
-        beginControlFlow("%T($routeSpec, %T)", ClassNames.route, routeData.routeTransition)
+        beginControlFlow("%T(${routeData.specName}, %T)", ClassNames.route, routeData.routeTransition)
         return this
     }
 

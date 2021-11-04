@@ -30,7 +30,6 @@ internal class RoutesBuilder(val data: ModelData) {
                 .addProperty(it.toArgsFactoryPropertySpec())
                 .addProperty(it.toArgsPropertySpec())
                 .addProperty(it.toDeeplinksProperty())
-                .addProperty(it.toContentProperty())
                 .build()
 
             val prop = PropertySpec.builder(it.name.capitalize(), ClassNames.RouteSpec.parameterizedBy(it.argsTypeClassName))
@@ -89,17 +88,4 @@ internal class RoutesBuilder(val data: ModelData) {
             .build()
     }
 
-    private fun RouteData.toContentProperty() : PropertySpec {
-
-        val initializer = if (params.isEmpty()) {
-            CodeBlock.of("{ %T() }", contentClassName)
-        } else {
-            CodeBlock.of("null")
-        }
-
-        return PropertySpec.builder("content", ComposableFunction.copy(nullable = true))
-            .addModifiers(KModifier.OVERRIDE)
-            .initializer(initializer)
-            .build()
-    }
 }

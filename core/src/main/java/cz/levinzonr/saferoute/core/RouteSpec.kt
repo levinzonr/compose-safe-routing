@@ -13,5 +13,4 @@ interface RouteSpec<A> {
     val navArgs: List<NamedNavArgument>
     val argsFactory: RouteArgsFactory<A>
     val deepLinks: List<NavDeepLink>
-    val content: ComposableFun?
 }
