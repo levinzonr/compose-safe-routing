@@ -1,6 +1,7 @@
 package cz.levinzonr.saferoute.processor.subprocessors
 
 import com.squareup.kotlinpoet.FileSpec
+import cz.levinzonr.saferoute.processor.codegen.RouteGraphCodegen
 import cz.levinzonr.saferoute.processor.codegen.RoutesBuilder
 import cz.levinzonr.saferoute.processor.codegen.RoutesTransitionsCodegen
 import cz.levinzonr.saferoute.processor.logger.Logger
@@ -22,6 +23,9 @@ internal class RoutesProcessor(
             builder.build().writeTo(destinationDir)
 
             RoutesTransitionsCodegen(data, processingEnvironment, logger).generate(destinationDir)
+
+            RouteGraphCodegen(data, logger).generate(destinationDir)
+
 
         } catch (e: Exception) {
             throw IllegalStateException("Error prosessing routes: ${e.stackTraceToString()}")

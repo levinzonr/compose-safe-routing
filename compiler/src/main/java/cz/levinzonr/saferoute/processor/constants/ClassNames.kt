@@ -5,6 +5,7 @@ import com.squareup.kotlinpoet.ClassName
 internal object ClassNames {
     val RouteArgsFactory = ClassName(Constants.PACKAGE_CORE, "RouteArgsFactory")
     val RouteSpec = ClassName(Constants.PACKAGE_CORE, Constants.FILE_ROUTE_SPEC)
+    val RouteGraphSpec = ClassName(Constants.PACKAGE_CORE, "RouteNavGraphSpec")
     val EmptyArgsFactory = ClassName("${Constants.PACKAGE_CORE}.util", "EmptyArgsFactory")
     val Bundle = ClassName("android.os", "Bundle")
     val SavedStateHandle = ClassName("androidx.lifecycle", "SavedStateHandle")

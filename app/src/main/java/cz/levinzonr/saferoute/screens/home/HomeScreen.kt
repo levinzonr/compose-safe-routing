@@ -20,7 +20,6 @@ import cz.levinzonr.saferoute.core.annotations.Route
 import cz.levinzonr.saferoute.core.annotations.RouteNavGraph
 import cz.levinzonr.saferoute.transitions.FadeInFadeOutTransition
 
-@ExperimentalAnimationApi
 @Composable
 @Route(
     name = "home",

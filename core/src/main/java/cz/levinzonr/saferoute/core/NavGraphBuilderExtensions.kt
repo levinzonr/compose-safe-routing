@@ -10,6 +10,10 @@ import androidx.navigation.compose.dialog
 import androidx.navigation.navigation
 import cz.levinzonr.saferoute.core.transitions.RouteTransition
 
+fun NavGraphBuilder.navigation(
+    spec: RouteNavGraphSpec,
+    content: NavGraphBuilder.() -> Unit
+) = navigation(spec.start.route, spec.name, content)
 
 fun NavGraphBuilder.route(
     spec: RouteSpec<*>,
@@ -39,14 +43,6 @@ fun NavGraphBuilder.dialog(
         content.invoke(it)
     }
 }
-
-
-fun NavGraphBuilder.navigation(
-    route: String,
-    startSpec: RouteSpec<*>,
-    content: NavGraphBuilder.() -> Unit
-) = navigation(startSpec.route, route, content)
-
 
 @ExperimentalAnimationApi
 @Deprecated(

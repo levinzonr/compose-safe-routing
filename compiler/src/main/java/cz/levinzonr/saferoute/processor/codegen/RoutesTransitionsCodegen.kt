@@ -36,7 +36,7 @@ internal class RoutesTransitionsCodegen(
             if (params.isEmpty()) defaultValue("{ %T() }", contentClassName)
         }.build()
 
-        return FunSpec.builder("${name}Route")
+        return FunSpec.builder("add${name.capitalize()}Route")
             .receiver(ClassNames.NavGraphBuilder)
             .addParameter(parameterSpec)
             .addAnnotation(this)

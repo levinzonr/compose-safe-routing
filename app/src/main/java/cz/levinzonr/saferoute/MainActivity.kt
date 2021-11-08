@@ -26,6 +26,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
+import cz.levinzonr.saferoute.core.annotations.RouteNavGraph
 import cz.levinzonr.saferoute.core.dialog
 import cz.levinzonr.saferoute.core.navigation
 import cz.levinzonr.saferoute.data.Pokemon
@@ -40,6 +41,7 @@ import cz.levinzonr.saferoute.screens.statssheet.*
 import cz.levinzonr.saferoute.ui.theme.RouterTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalAnimationApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @ExperimentalMaterialNavigationApi
@@ -60,40 +62,55 @@ class MainActivity : ComponentActivity() {
                             startDestination = Routes.Home.route
                         ) {
 
-                            homeRoute {
+                            addHomeRoute {
                                 HomeScreen(
                                     onShowPokedex = { navController.navigateToPokemonList() },
                                     onDeeplink = { navController.navigateToPokemonSelector() }
                                 )
                             }
 
-                            pokemonDetailsRoute {
-                                val args = LocalPokemonDetailsRouteArgs.current
-                                PokemonDetailsScreen(
-                                    pokemon = pokemons.find { it.id == args.id },
-                                    onShowStatsClick = { navController.navigateToPokemonStats(
-                                        it.name ?: "", it.category, it.hp ?: 0, it.image
-                                    )}
-                                )
-                            }
-                            pokemonListRoute {
-                                PokemonListScreen(onPokemonClick = {
-                                    navController.navigateToPokemonDetails(it.id)
-                                })
-                            }
-
-                            pokemonStatsRoute()
-
-                            pokemonSelectorRoute {
-                                PokemonSelector(onSelected = {
-                                    triggerNotification(it)
-                                })
-                            }
+                            addPokedexNavigation(navController)
                         }
                     }
                 }
             }
         }
+    }
+
+    @ExperimentalMaterialNavigationApi
+    private fun NavGraphBuilder.addPokedexNavigation(
+        navController: NavController
+    ) {
+        navigationPoke(
+            detailsContent = {
+                val args = LocalPokemonDetailsRouteArgs.current
+                PokemonDetailsScreen(
+                    pokemon = pokemons.find { it.id == args.id },
+                    onShowStatsClick = {
+                        navController.navigateToPokemonStats(
+                            it.name ?: "", it.category, it.hp ?: 0, it.image
+                        )
+                    }
+                )
+            },
+            listContent = {
+                PokemonListScreen(onPokemonClick = {
+                    navController.navigateToPokemonDetails(it.id)
+                })
+            }
+        )
+    }
+
+    @ExperimentalMaterialNavigationApi
+    @ExperimentalAnimationApi
+    private fun NavGraphBuilder.navigationPoke(
+        listContent: @Composable () -> Unit,
+        detailsContent: @Composable () -> Unit,
+        statsContent: @Composable () -> Unit = { PokemonStatsSheet() }
+    ) {
+            addPokemonDetailsRoute { detailsContent.invoke() }
+            addPokemonListRoute(listContent)
+            addPokemonStatsRoute(statsContent)
     }
 
 
@@ -111,14 +128,20 @@ class MainActivity : ComponentActivity() {
         )
         val nm = getSystemService(NotificationManager::class.java)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            nm.createNotificationChannel(NotificationChannel("channel", "channel", NotificationManager.IMPORTANCE_HIGH))
+            nm.createNotificationChannel(
+                NotificationChannel(
+                    "channel",
+                    "channel",
+                    NotificationManager.IMPORTANCE_HIGH
+                )
+            )
         }
         val notif = NotificationCompat.Builder(this@MainActivity, "channel")
             .setContentTitle("Deeplink to ${pokemon.name}")
             .setContentIntent(pendingIntent)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .build()
-        nm.notify( 0, notif)
+        nm.notify(0, notif)
     }
 }
 
