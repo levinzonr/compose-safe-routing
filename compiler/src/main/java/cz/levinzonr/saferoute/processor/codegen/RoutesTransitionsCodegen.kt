@@ -7,6 +7,7 @@ import cz.levinzonr.saferoute.processor.logger.LogLevel
 import cz.levinzonr.saferoute.processor.logger.Logger
 import cz.levinzonr.saferoute.processor.models.ModelData
 import cz.levinzonr.saferoute.processor.models.RouteData
+import cz.levinzonr.saferoute.processor.typehelper.TypeHelper
 import jdk.dynalink.linker.support.TypeUtilities
 import java.io.File
 import javax.annotation.processing.ProcessingEnvironment
@@ -15,7 +16,7 @@ import kotlin.math.log
 
 internal class RoutesTransitionsCodegen(
     private val data: ModelData,
-    private val processingEnvironment: ProcessingEnvironment,
+    private val typeHelper: TypeHelper<TypeMirror>,
     private val logger: Logger
 ) {
 
@@ -36,7 +37,7 @@ internal class RoutesTransitionsCodegen(
             if (params.isEmpty()) defaultValue("{ %T() }", contentClassName)
         }.build()
 
-        return FunSpec.builder("add${name.capitalize()}Route")
+        return FunSpec.builder(builderName)
             .receiver(ClassNames.NavGraphBuilder)
             .addParameter(parameterSpec)
             .addAnnotation(this)
@@ -52,15 +53,9 @@ internal class RoutesTransitionsCodegen(
 
     private fun FunSpec.Builder.addAnnotation(data: RouteData): FunSpec.Builder {
         data.routeTransition?.let {
-            val superTypes = processingEnvironment.typeUtils.directSupertypes(it)
-            val hasAnimation = superTypes.find { it.toString() == ClassNames.AnimatedRouteTransition.canonicalName } != null
-            val hasBottomSheet = superTypes.find { it.toString() == ClassNames.BottomSheetRouteTransition.canonicalName } != null
-            logger.log(" ${ClassNames.AnimatedRouteTransition.canonicalName} Types of ${data.name}: ${superTypes.joinToString { it.toString() }}", level = LogLevel.Warning)
-            if (hasAnimation) {
-                addAnnotation(ClassNames.ExperimentalAnimationApi)
-            }
-            if (hasBottomSheet || it.toString() == ClassNames.BottomSheetRouteTransition.canonicalName) {
-                addAnnotation(ClassNames.ExperimentalNavigationApi)
+            val annotations = typeHelper.resolveNeededAnnotations(it)
+            annotations.forEach {
+                addAnnotation(it)
             }
         }
         return this
