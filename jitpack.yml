@@ -1,4 +1,4 @@
 jdk:
   - openjdk11
 before_install:
-  - ./gradlew app:assembleDebug
+  - sh remove_app.sh

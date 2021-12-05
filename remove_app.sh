@@ -1,4 +1,4 @@
-dependencyResolutionManagement {
+echo "dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
@@ -7,8 +7,9 @@ dependencyResolutionManagement {
         jcenter() // Warning: this repository is going to shut down soon
     }
 }
-rootProject.name = "router"
-include(":annotations")
-include(":compiler")
-include(":core")
-include(":accompanist-navigation")
+rootProject.name = \"router\"
+include(\":annotations\")
+include(\":compiler\")
+include(\":core\")
+include(\":accompanist-navigation\")
+"  > settings.gradle.kts
