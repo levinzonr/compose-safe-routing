@@ -33,6 +33,7 @@ import cz.levinzonr.saferoute.data.Pokemon
 import cz.levinzonr.saferoute.screens.PokemonSelector
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsScreen
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsViewModel
+import cz.levinzonr.saferoute.screens.details.args.LocalPokemonDetailsRouteArgs
 import cz.levinzonr.saferoute.screens.home.HomeScreen
 import cz.levinzonr.saferoute.screens.list.PokemonListScreen
 import cz.levinzonr.saferoute.screens.statssheet.*
@@ -87,11 +88,12 @@ class MainActivity : ComponentActivity() {
         navigation("pokedex", Routes.PokemonList) {
             composable(Routes.PokemonList) {
                 PokemonListScreen(onPokemonClick = {
-                    navController.navigateToPokemonDetails(it.id)
+                    navController.navigateToPokemonDetails(null)
                 })
             }
 
             composable(Routes.PokemonDetails) {
+                println(LocalPokemonDetailsRouteArgs.current.id ?: " Default Id")
                 val pokemon = hiltViewModel<PokemonDetailsViewModel>().pokemon.collectAsState().value
                 PokemonDetailsScreen(
                     pokemon = pokemon,
