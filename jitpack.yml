@@ -1,2 +1,4 @@
 jdk:
   - openjdk11
+before_install:
+  - sh remove_app.sh
