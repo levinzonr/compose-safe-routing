@@ -16,14 +16,11 @@ import androidx.compose.ui.unit.dp
 import cz.levinzonr.saferoute.R
 import cz.levinzonr.saferoute.accompanist.navigation.transitions.AnimatedRouteTransition
 import cz.levinzonr.saferoute.core.annotations.Route
-import cz.levinzonr.saferoute.core.annotations.RouteNavGraph
-import cz.levinzonr.saferoute.transitions.FadeInFadeOutTransition
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 @Route(
     name = "home",
-    navGraph = RouteNavGraph(start = true),
     transition = AnimatedRouteTransition.Default::class
 )
 fun HomeScreen(

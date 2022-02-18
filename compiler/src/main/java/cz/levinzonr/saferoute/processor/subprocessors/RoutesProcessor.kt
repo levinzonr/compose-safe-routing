@@ -27,8 +27,9 @@ internal class RoutesProcessor(
 
             RoutesTransitionsCodegen(data, typeHelper, logger).generate(destinationDir)
 
-            RouteGraphCodegen(data, logger).generate(destinationDir)
-            RouteGraphExtenstionsCodegen(data, typeHelper).generate(destinationDir)
+            // disable graphs support for now
+            // RouteGraphCodegen(data, logger).generate(destinationDir)
+            // RouteGraphExtenstionsCodegen(data, typeHelper).generate(destinationDir)
 
 
         } catch (e: Exception) {

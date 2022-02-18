@@ -42,9 +42,11 @@ internal class RouteDataBuilder(val packageName: String) {
                 start = annotation.start
             )
         } else {
+            // TODO add navGraph support
+            // val navGraph = annotation.fieldByName<Annotation>("navGraph")
+
             val argsData = annotation.fieldByName<Array<Annotation>>("args")
             val deeplinksData = annotation.fieldByName<Array<Annotation>>("deepLinks")
-            val navGraph = annotation.fieldByName<Annotation>("navGraph")
             RouteData(
                 name = annotation.fieldByName<String>("name").decapitalize(),
                 arguments = argsData.map { ArgumentDataBuilder().from(it) },
@@ -53,8 +55,8 @@ internal class RouteDataBuilder(val packageName: String) {
                 routeTransition = annotation.getClassProperty("transition"),
                 contentClassName = ClassName(packageName, annotatedElement.simpleName.toString()),
                 params = params,
-                navGraphName = navGraph.fieldByName("name"),
-                start = navGraph.fieldByName("start")
+                navGraphName = "TODO",
+                start = false
             )
         }
     }
