@@ -39,22 +39,22 @@ allprojects {
 And then in you app level `build.gradle`
 ```kotlin
 dependencies { 
-    kapt("com.github.levinzonr.compose-safe-routing:compiler:2.3.0")
+    kapt("com.github.levinzonr.compose-safe-routing:compiler:2.3.1")
   
-  implementation("com.github.levinzonr.compose-safe-routing:core:2.3.0")
+  implementation("com.github.levinzonr.compose-safe-routing:core:2.3.1")
   // or in case you are using animation/material routes from accompanist
-  implementation("com.github.levinzonr.compose-safe-routing:accompanist-navigation:2.3.0")
+  implementation("com.github.levinzonr.compose-safe-routing:accompanist-navigation:2.3.1")
   
 }
 ```
 
 ```groovy
 dependencies {
-    kapt 'com.github.levinzonr.compose-safe-routing:compiler:2.3.0'
+    kapt 'com.github.levinzonr.compose-safe-routing:compiler:2.3.1'
   
-  implementation 'com.github.levinzonr.compose-safe-routing:core:2.3.0'
+  implementation 'com.github.levinzonr.compose-safe-routing:core:2.3.1'
   // or in case you are using animation/material routes from accompanist
-  implementation 'com.github.levinzonr.compose-safe-routing:accompanist-navigation:2.3.0'
+  implementation 'com.github.levinzonr.compose-safe-routing:accompanist-navigation:2.3.1'
 }
 
 ```
