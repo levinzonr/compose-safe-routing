@@ -47,8 +47,9 @@ internal class RouteDataBuilder(val packageName: String) {
 
             val argsData = annotation.fieldByName<Array<Annotation>>("args")
             val deeplinksData = annotation.fieldByName<Array<Annotation>>("deepLinks")
+            val routeName = annotation.fieldByName<String>("name").takeIf { it != "@null" }
             RouteData(
-                name = annotation.fieldByName<String>("name").decapitalize(),
+                name = (routeName ?: annotatedElement.simpleName.toString()).decapitalize(),
                 arguments = argsData.map { ArgumentDataBuilder().from(it) },
                 packageName = packageName + "." + Constants.FILE_ARGS_DIR,
                 deeplinks = deeplinksData.map { DeeplinkDataBuilder.build(it) },

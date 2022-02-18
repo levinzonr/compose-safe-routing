@@ -20,7 +20,6 @@ import cz.levinzonr.saferoute.core.annotations.Route
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 @Route(
-    name = "home",
     transition = AnimatedRouteTransition.Default::class
 )
 fun HomeScreen(

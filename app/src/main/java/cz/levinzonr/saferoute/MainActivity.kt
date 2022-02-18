@@ -54,10 +54,10 @@ class MainActivity : ComponentActivity() {
                     ModalBottomSheetLayout(bottomSheetNavigator) {
                         AnimatedNavHost(
                             navController = navController,
-                            startDestination = Routes.Home.route
+                            startDestination = Routes.HomeScreen.route
                         ) {
 
-                            addHomeRoute {
+                            addHomeScreenRoute {
                                 HomeScreen(
                                     onShowPokedex = { navController.navigate("pokedex") },
                                     onDeeplink = { navController.navigateToPokemonSelector() }
