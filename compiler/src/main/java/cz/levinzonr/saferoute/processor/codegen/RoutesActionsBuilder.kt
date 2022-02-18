@@ -22,9 +22,6 @@ internal class RoutesActionsBuilder(
     private fun TypeSpec.Builder.addActions(data: List<RouteData>) : TypeSpec.Builder {
         data.forEach {
             addFunction(it.toFunSpec())
-            if (it.arguments.any { it.optionalData != null } ) {
-                addFunction(it.copy(arguments = it.arguments.filter { it.optionalData == null }).toFunSpec())
-            }
         }
         return this
     }
