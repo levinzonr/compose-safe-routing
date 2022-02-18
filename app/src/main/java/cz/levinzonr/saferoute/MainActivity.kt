@@ -20,18 +20,13 @@ import androidx.core.app.NotificationCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.navigation
 import androidx.navigation.plusAssign
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
-import cz.levinzonr.saferoute.core.annotations.RouteNavGraph
-import cz.levinzonr.saferoute.core.dialog
-import cz.levinzonr.saferoute.core.navigation
-import cz.levinzonr.saferoute.data.Pokemon
-import cz.levinzonr.saferoute.data.pokemons
-import cz.levinzonr.saferoute.screens.PokemonSelector
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsScreen
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsViewModel
 import cz.levinzonr.saferoute.screens.details.args.LocalPokemonDetailsRouteArgs
@@ -64,12 +59,11 @@ class MainActivity : ComponentActivity() {
 
                             addHomeRoute {
                                 HomeScreen(
-                                    onShowPokedex = { navController.navigateToPokemonList() },
+                                    onShowPokedex = { navController.navigate("pokedex") },
                                     onDeeplink = { navController.navigateToPokemonSelector() }
                                 )
                             }
-
-                            addPokedexNavigation(navController)
+                            navigationPokedex(navController)
                         }
                     }
                 }
@@ -79,74 +73,31 @@ class MainActivity : ComponentActivity() {
 
     @ExperimentalMaterialNavigationApi
     private fun NavGraphBuilder.navigationPokedex(navController: NavController) {
-        navigation("pokedex", Routes.PokemonList) {
-            composable(Routes.PokemonList) {
+        navigation(Routes.PokemonList.route, "pokedex") {
+            addPokemonListRoute {
                 PokemonListScreen(onPokemonClick = {
-                    navController.navigateToPokemonDetails(null)
+                    navController.navigateToPokemonDetails(it.id)
                 })
             }
 
-            composable(Routes.PokemonDetails) {
-                println(LocalPokemonDetailsRouteArgs.current.id ?: " Default Id")
-                val pokemon = hiltViewModel<PokemonDetailsViewModel>().pokemon.collectAsState().value
+            addPokemonDetailsRoute {
+                println(LocalPokemonDetailsRouteArgs.current.id)
+                val pokemon =
+                    hiltViewModel<PokemonDetailsViewModel>().pokemon.collectAsState().value
                 PokemonDetailsScreen(
-                    pokemon = pokemons.find { it.id == args.id },
+                    pokemon = pokemon,
                     onShowStatsClick = {
                         navController.navigateToPokemonStats(
                             it.name ?: "", it.category, it.hp ?: 0, it.image
                         )
                     }
                 )
-            },
-            listContent = {
-                PokemonListScreen(onPokemonClick = {
-                    navController.navigateToPokemonDetails(it.id)
-                })
             }
-        )
-    }
 
-    @ExperimentalMaterialNavigationApi
-    @ExperimentalAnimationApi
-    private fun NavGraphBuilder.navigationPoke(
-        listContent: @Composable () -> Unit,
-        detailsContent: @Composable () -> Unit,
-        statsContent: @Composable () -> Unit = { PokemonStatsSheet() }
-    ) {
-            addPokemonDetailsRoute { detailsContent.invoke() }
-            addPokemonListRoute(listContent)
-            addPokemonStatsRoute(statsContent)
-    }
+            addPokemonStatsRoute()
 
-
-    private fun triggerNotification(pokemon: Pokemon) {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            data = Uri.parse("app://deeplink/${pokemon.id}")
         }
 
-        val pendingIntent = PendingIntent.getActivity(
-            this,
-            0,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE
-        )
-        val nm = getSystemService(NotificationManager::class.java)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            nm.createNotificationChannel(
-                NotificationChannel(
-                    "channel",
-                    "channel",
-                    NotificationManager.IMPORTANCE_HIGH
-                )
-            )
-        }
-        val notif = NotificationCompat.Builder(this@MainActivity, "channel")
-            .setContentTitle("Deeplink to ${pokemon.name}")
-            .setContentIntent(pendingIntent)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .build()
-        nm.notify(0, notif)
     }
 }
 

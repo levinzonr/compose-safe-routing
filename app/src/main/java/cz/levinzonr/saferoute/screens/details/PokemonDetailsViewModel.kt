@@ -23,7 +23,9 @@ class PokemonDetailsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            println(args.id)
             pokemons.find { args.id == it.id }?.let {
+                println(it)
                 pokemon.emit(it)
             }
         }

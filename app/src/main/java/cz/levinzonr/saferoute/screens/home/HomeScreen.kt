@@ -10,7 +10,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
@@ -20,11 +19,12 @@ import cz.levinzonr.saferoute.core.annotations.Route
 import cz.levinzonr.saferoute.core.annotations.RouteNavGraph
 import cz.levinzonr.saferoute.transitions.FadeInFadeOutTransition
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 @Route(
     name = "home",
     navGraph = RouteNavGraph(start = true),
-    transition = FadeInFadeOutTransition::class
+    transition = AnimatedRouteTransition.Default::class
 )
 fun HomeScreen(
     onShowPokedex: () -> Unit,

@@ -22,9 +22,7 @@ abstract class DialogRouteTransition : RouteTransition {
         builder.dialog(spec, properties, content)
     }
 
-    companion object {
-        object Default : DialogRouteTransition() {
-            override val properties = DialogProperties()
-        }
+    object Default : DialogRouteTransition() {
+        override val properties = DialogProperties()
     }
 }

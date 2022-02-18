@@ -18,11 +18,10 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import cz.levinzonr.saferoute.accompanist.navigation.transitions.AnimatedRouteTransition
 import cz.levinzonr.saferoute.core.annotations.Route
 import cz.levinzonr.saferoute.core.annotations.RouteArg
 import cz.levinzonr.saferoute.core.annotations.RouteDeeplink
+import cz.levinzonr.saferoute.core.transitions.DialogRouteTransition
 import cz.levinzonr.saferoute.data.Pokemon
 import cz.levinzonr.saferoute.data.color
 
@@ -31,7 +30,8 @@ import cz.levinzonr.saferoute.data.color
 @Route(
     name = "PokemonDetails",
     args = [RouteArg(name = "id", type = String::class, isNullable = true, isOptional = true, defaultValue = "default")],
-    deepLinks = [RouteDeeplink("app://deeplink/{id}")]
+    deepLinks = [RouteDeeplink("app://deeplink/{id}")],
+    transition = DialogRouteTransition.Default::class
 )
 fun PokemonDetailsScreen(
     pokemon: Pokemon?,
