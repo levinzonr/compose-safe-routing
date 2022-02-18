@@ -5,6 +5,7 @@ import cz.levinzonr.saferoute.processor.constants.ClassNames
 import cz.levinzonr.saferoute.processor.constants.KDoc
 import cz.levinzonr.saferoute.processor.extensions.asList
 import cz.levinzonr.saferoute.processor.models.ArgumentData
+import cz.levinzonr.saferoute.processor.models.OptionalArgData
 import cz.levinzonr.saferoute.processor.models.RouteData
 
 internal class RouteArgsBuilder(
@@ -42,8 +43,12 @@ internal class RouteArgsBuilder(
             code.addStatement("%T(%S) {", ClassNames.navArgument, it.name)
             code.indent().addStatement("type = %T.${it.type.navType}", ClassNames.NavType)
             code.addStatement("nullable = ${it.isNullable}")
-            it.optionalData?.let {
-                code.addStatement("defaultValue = %L", it.value)
+            it.optionalData?.let { optional ->
+                if (optional is OptionalArgData.OptionalString) {
+                    code.addStatement("defaultValue = %S", optional.value)
+                } else {
+                    code.addStatement("defaultValue = %L", optional.value)
+                }
             }
             code.unindent()
             code.addStatement("},\n")

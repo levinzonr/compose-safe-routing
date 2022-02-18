@@ -78,12 +78,17 @@ class MainActivity : ComponentActivity() {
     }
 
     @ExperimentalMaterialNavigationApi
-    private fun NavGraphBuilder.addPokedexNavigation(
-        navController: NavController
-    ) {
-        navigationPoke(
-            detailsContent = {
-                val args = LocalPokemonDetailsRouteArgs.current
+    private fun NavGraphBuilder.navigationPokedex(navController: NavController) {
+        navigation("pokedex", Routes.PokemonList) {
+            composable(Routes.PokemonList) {
+                PokemonListScreen(onPokemonClick = {
+                    navController.navigateToPokemonDetails(null)
+                })
+            }
+
+            composable(Routes.PokemonDetails) {
+                println(LocalPokemonDetailsRouteArgs.current.id ?: " Default Id")
+                val pokemon = hiltViewModel<PokemonDetailsViewModel>().pokemon.collectAsState().value
                 PokemonDetailsScreen(
                     pokemon = pokemons.find { it.id == args.id },
                     onShowStatsClick = {

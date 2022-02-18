@@ -4,6 +4,7 @@ import com.squareup.kotlinpoet.*
 import cz.levinzonr.saferoute.processor.constants.Constants
 import cz.levinzonr.saferoute.processor.constants.KDoc
 import cz.levinzonr.saferoute.processor.models.ArgumentData
+import cz.levinzonr.saferoute.processor.models.OptionalArgData
 import cz.levinzonr.saferoute.processor.models.RouteData
 import cz.levinzonr.saferoute.processor.pathbuilder.fullPathBuilder
 
@@ -21,9 +22,6 @@ internal class RoutesActionsBuilder(
     private fun TypeSpec.Builder.addActions(data: List<RouteData>) : TypeSpec.Builder {
         data.forEach {
             addFunction(it.toFunSpec())
-            if (it.arguments.any { it.optionalData != null } ) {
-                addFunction(it.copy(arguments = it.arguments.filter { it.optionalData == null }).toFunSpec())
-            }
         }
         return this
     }
@@ -34,7 +32,11 @@ internal class RoutesActionsBuilder(
         val path = fullPathBuilder(
             args = arguments,
             navBuilder = { "$${it.name}" },
-            optionalBuilder = {"${it.name}=$${it.name}"}
+            optionalBuilder = {
+                val defaultNull = it.optionalData?.value ?: "@null"
+                val path = if (it.isNullable) "{${it.name} ?: \"$defaultNull\"}" else it.name
+                "${it.name}=$$path"
+            }
         )
         builder.addStatement("return \"$name$path\"")
         return builder
@@ -45,6 +47,10 @@ internal class RoutesActionsBuilder(
 
 internal fun ArgumentData.toParamSpec() : ParameterSpec {
     val builder = ParameterSpec.builder(name, type.clazz.asTypeName().copy(isNullable))
-    optionalData?.let { builder.defaultValue("%L", it.value) }
+    if (optionalData is OptionalArgData.OptionalString) {
+        optionalData.let { builder.defaultValue("%S", it.value) }
+    } else {
+        optionalData?.let { builder.defaultValue("%L", it.value) }
+    }
     return builder.build()
 }
