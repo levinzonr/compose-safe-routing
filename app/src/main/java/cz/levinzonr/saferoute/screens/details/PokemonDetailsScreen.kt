@@ -29,7 +29,7 @@ import cz.levinzonr.saferoute.data.color
 @Composable
 @Route(
     name = "PokemonDetails",
-    args = [RouteArg(name = "id", type = String::class, isNullable = true, isOptional = true, defaultValue = "default")],
+    args = [RouteArg(name = "id", type = String::class)],
     deepLinks = [RouteDeeplink("app://deeplink/{id}")],
     transition = DialogRouteTransition.Default::class
 )
