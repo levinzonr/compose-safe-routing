@@ -1,7 +1,5 @@
 package cz.levinzonr.saferoute.processor.constants
 
-import com.squareup.kotlinpoet.ClassName
-
 internal object Constants {
 
     const val PACKAGE_CORE = "cz.levinzonr.saferoute.core"
