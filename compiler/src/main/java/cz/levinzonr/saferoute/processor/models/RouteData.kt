@@ -34,7 +34,7 @@ internal data class RouteData(
     val argumentsConstructor: String get() = "$argumentsName(${arguments.joinToString { it.name }})"
 
 
-    val builderName : String = "add${name.capitalize()}Route"
+    val builderName : String = "${name.decapitalize()}"
 
 
     fun getArgsFactoryName() : String{

@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
                             startRouteSpec = Routes.HomeScreen
                         ) {
 
-                            addHomeScreenRoute {
+                            homeScreen {
                                 HomeScreen(
                                     onShowPokedex = { navController.navigate("pokedex") },
                                     onDeeplink = { navController.navigateToPokemonSelector() }
@@ -75,13 +75,13 @@ class MainActivity : ComponentActivity() {
     @ExperimentalMaterialNavigationApi
     private fun NavGraphBuilder.navigationPokedex(navController: NavController) {
         navigation(Routes.PokemonList.route, "pokedex") {
-            addPokemonListRoute {
+            pokemonList {
                 PokemonListScreen(onPokemonClick = {
                     navController.navigateToPokemonDetails(it.id)
                 })
             }
 
-            addPokemonDetailsRoute {
+            pokemonDetails {
                 println(LocalPokemonDetailsRouteArgs.current.id)
                 val pokemon =
                     hiltViewModel<PokemonDetailsViewModel>().pokemon.collectAsState().value
@@ -95,7 +95,7 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
-            addPokemonStatsRoute()
+            pokemonStats()
 
         }
 
