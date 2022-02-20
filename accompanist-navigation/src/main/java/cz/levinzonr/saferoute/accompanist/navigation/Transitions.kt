@@ -8,14 +8,8 @@ import androidx.navigation.NavBackStackEntry
 
 
 @OptIn(ExperimentalAnimationApi::class)
-typealias RouteEnterTransition = (AnimatedContentScope<String>.(
-    initial: NavBackStackEntry,
-    target: NavBackStackEntry
-) -> EnterTransition?)
+typealias RouteEnterTransition = AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition
 
 
 @OptIn(ExperimentalAnimationApi::class)
-typealias RouteExitTransition = (AnimatedContentScope<String>.(
-    initial: NavBackStackEntry,
-    target: NavBackStackEntry
-) -> ExitTransition?)
+typealias RouteExitTransition = AnimatedContentScope<NavBackStackEntry>.() -> ExitTransition

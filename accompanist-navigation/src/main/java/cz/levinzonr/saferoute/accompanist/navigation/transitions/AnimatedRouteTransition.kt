@@ -16,10 +16,10 @@ import cz.levinzonr.saferoute.core.transitions.RouteTransition
 @ExperimentalAnimationApi
 abstract class AnimatedRouteTransition : RouteTransition {
 
-    abstract val enter: RouteEnterTransition?
-    abstract val exit: RouteExitTransition?
-    abstract val popEnter: RouteEnterTransition?
-    abstract val popExit: RouteExitTransition?
+    abstract val enter: RouteEnterTransition
+    abstract val exit: RouteExitTransition
+    abstract val popEnter: RouteEnterTransition
+    abstract val popExit: RouteExitTransition
 
     override fun route(
         builder: NavGraphBuilder,
@@ -32,10 +32,10 @@ abstract class AnimatedRouteTransition : RouteTransition {
     }
 
     object Default : AnimatedRouteTransition() {
-        override val enter: RouteEnterTransition = { _, _ -> fadeIn() }
-        override val exit: RouteExitTransition = { _, _ -> fadeOut() }
-        override val popEnter: RouteEnterTransition? = null
-        override val popExit: RouteExitTransition? = null
+        override val enter: RouteEnterTransition = { fadeIn() }
+        override val exit: RouteExitTransition = { fadeOut() }
+        override val popEnter: RouteEnterTransition = enter
+        override val popExit: RouteExitTransition = exit
 
     }
 }
