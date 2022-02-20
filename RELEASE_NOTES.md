@@ -1,4 +1,36 @@
 
+# 2.4.0 Release Notes
+## Introducing `RouteTransitions`
+
+You can specify the desired transition using `route` builder.
+
+```kotlin
+route(Routes.Details, DefaultRouteTransition) { /* content */ }
+```
+
+You can also specify the desired transition right inside the `@Route` annotation like so. Doing so will allow you to use the generated route builder in your `NavHost` 
+
+```kotlin
+@Route(
+		name = "HomeScreen"
+    transition = AnimatedRouteTransition.Default::class
+)
+
+// then you can use the generated route builder
+NavHost {
+   homeScreen {
+     val viewModel = hiltViewModel()
+      HomeScreen(viewModel)
+   }
+}
+```
+
+
+
+## Misc
+
+- `name` property of `@Route` annotation is now optional. By default it will take the name of the composable 
+- Navigation Compose version upated to `2.4.1`
 
 # 2.3.0 Release Notes
 
