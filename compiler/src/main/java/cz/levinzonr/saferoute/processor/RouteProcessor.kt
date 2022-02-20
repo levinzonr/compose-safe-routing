@@ -2,6 +2,7 @@ package cz.levinzonr.saferoute.processor
 
 import cz.levinzonr.saferoute.annotations.Route
 import cz.levinzonr.saferoute.processor.constants.Constants
+import cz.levinzonr.saferoute.processor.logger.KaptLogger
 import cz.levinzonr.saferoute.processor.subprocessors.DataProcessor
 import cz.levinzonr.saferoute.processor.subprocessors.RoutesActionsProcessor
 import cz.levinzonr.saferoute.processor.subprocessors.RoutesArgsProcessor
@@ -14,6 +15,7 @@ import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
 import javax.tools.Diagnostic
 import kotlin.Exception
+import kotlin.math.log
 
 
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
@@ -33,33 +35,32 @@ internal class RouteProcessor : AbstractProcessor() {
         annotations: MutableSet<out TypeElement>?,
         roundEnv: RoundEnvironment?
     ): Boolean {
+
+        val logger = KaptLogger(processingEnv)
+
         try {
             val buildDir = processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME] ?: return false
 
             val data = DataProcessor.process(processingEnv, roundEnv) ?: return false
 
-            log("Data obtained, start actions processing, $data")
+            logger.log("Data obtained, start actions processing, $data")
             RoutesActionsProcessor.process(data ,File(buildDir))
 
-            log("Star args processing")
+            logger.log("Star args processing")
             RoutesArgsProcessor.process(data, File(buildDir))
 
 
-            log("Start routes processings")
-            RoutesProcessor.process(data, File(buildDir))
+            logger.log("Start routes processings")
+            RoutesProcessor(processingEnv, logger).process(data, File(buildDir))
 
-            log("Routes processings complete")
+            logger.log("Routes processings complete")
             return true
 
         } catch (e: Exception) {
-            log(e.message, Diagnostic.Kind.ERROR)
+            logger.log(e.message.toString())
             return false
         }
 
     }
 
-
-    private fun log(message: String?, kind: Diagnostic.Kind = Diagnostic.Kind.NOTE) {
-        processingEnv.messager.printMessage(kind, message)
-    }
 }

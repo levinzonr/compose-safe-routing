@@ -1,5 +1,6 @@
 package cz.levinzonr.saferoute.screens.home
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,15 +10,18 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import cz.levinzonr.saferoute.R
+import cz.levinzonr.saferoute.accompanist.navigation.transitions.AnimatedRouteTransition
 import cz.levinzonr.saferoute.core.annotations.Route
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
-@Route("home")
+@Route(
+    transition = AnimatedRouteTransition.Default::class
+)
 fun HomeScreen(
     onShowPokedex: () -> Unit,
     onDeeplink: () -> Unit

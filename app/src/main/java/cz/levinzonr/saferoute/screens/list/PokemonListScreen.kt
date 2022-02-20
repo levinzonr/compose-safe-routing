@@ -13,10 +13,14 @@ import cz.levinzonr.saferoute.core.annotations.Route
 import cz.levinzonr.saferoute.data.Pokemon
 import cz.levinzonr.saferoute.data.pokemons
 import cz.levinzonr.saferoute.screens.list.components.PokemonItem
+import cz.levinzonr.saferoute.transitions.FadeInFadeOutTransition
 
 
 @Composable
-@Route("PokemonList")
+@Route(
+    name = "PokemonList",
+    transition = FadeInFadeOutTransition::class
+)
 fun PokemonListScreen(
     onPokemonClick: (Pokemon) -> Unit,
 ) {

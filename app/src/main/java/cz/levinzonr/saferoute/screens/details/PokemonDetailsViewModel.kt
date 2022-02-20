@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cz.levinzonr.saferoute.data.Pokemon
 import cz.levinzonr.saferoute.data.pokemons
-import cz.levinzonr.saferoute.screens.details.args.PokemonDetailsRouteArgs
 import cz.levinzonr.saferoute.screens.details.args.PokemonDetailsRouteArgsFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -24,7 +23,9 @@ class PokemonDetailsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            println(args.id)
             pokemons.find { args.id == it.id }?.let {
+                println(it)
                 pokemon.emit(it)
             }
         }

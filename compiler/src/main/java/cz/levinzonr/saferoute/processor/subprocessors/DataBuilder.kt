@@ -1,6 +1,6 @@
 package cz.levinzonr.saferoute.processor.subprocessors
 
-import com.squareup.kotlinpoet.asTypeName
+import com.squareup.kotlinpoet.ClassName
 import cz.levinzonr.saferoute.annotations.Route
 import cz.levinzonr.saferoute.annotations.RouteArg
 import cz.levinzonr.saferoute.annotations.RouteArgType
@@ -12,34 +12,52 @@ import cz.levinzonr.saferoute.processor.models.OptionalArgData
 import cz.levinzonr.saferoute.processor.models.RouteData
 import java.lang.IllegalArgumentException
 import java.lang.reflect.InvocationTargetException
+import javax.lang.model.element.Element
 import javax.lang.model.type.MirroredTypeException
-import javax.lang.model.type.TypeKind
 import javax.lang.model.type.TypeMirror
 import kotlin.reflect.KClass
-import kotlin.reflect.KFunction
-import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
+import javax.lang.model.type.ExecutableType
+
 
 internal class RouteDataBuilder(val packageName: String) {
 
 
-    fun from(annotation: Annotation): RouteData {
+    fun from(annotation: Annotation, annotatedElement: Element): RouteData {
+
+        val executableType = annotatedElement.asType() as ExecutableType
+        val parameters = executableType.parameterTypes
+        val params = parameters.map { it.toString() }
         return if (annotation is Route) {
             val arguments = annotation.args.map { ArgumentDataBuilder().from(it) }
             RouteData(
-                name = annotation.name,
+                name = annotation.name.decapitalize(),
                 arguments = arguments,
                 packageName= packageName + "." + Constants.FILE_ARGS_DIR,
-                deeplinks = listOf()
+                deeplinks = listOf(),
+                routeTransition = null,
+                contentClassName = ClassName(packageName, annotatedElement.simpleName.toString()),
+                params = params,
+                navGraphName = annotation.name,
+                start = annotation.start
             )
         } else {
+            // TODO add navGraph support
+            // val navGraph = annotation.fieldByName<Annotation>("navGraph")
+
             val argsData = annotation.fieldByName<Array<Annotation>>("args")
             val deeplinksData = annotation.fieldByName<Array<Annotation>>("deepLinks")
+            val routeName = annotation.fieldByName<String>("name").takeIf { it != "@null" }
             RouteData(
-                name = annotation.fieldByName("name"),
+                name = (routeName ?: annotatedElement.simpleName.toString()).decapitalize(),
                 arguments = argsData.map { ArgumentDataBuilder().from(it) },
                 packageName = packageName + "." + Constants.FILE_ARGS_DIR,
-                deeplinks = deeplinksData.map { DeeplinkDataBuilder.build(it) }
+                deeplinks = deeplinksData.map { DeeplinkDataBuilder.build(it) },
+                routeTransition = annotation.getClassProperty("transition"),
+                contentClassName = ClassName(packageName, annotatedElement.simpleName.toString()),
+                params = params,
+                navGraphName = "TODO",
+                start = false
             )
         }
     }

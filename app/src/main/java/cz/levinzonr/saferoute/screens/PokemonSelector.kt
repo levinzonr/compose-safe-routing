@@ -16,12 +16,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import cz.levinzonr.saferoute.core.annotations.Route
+import cz.levinzonr.saferoute.core.transitions.DialogRouteTransition
 import cz.levinzonr.saferoute.data.Pokemon
 import cz.levinzonr.saferoute.data.color
 import cz.levinzonr.saferoute.data.pokemons
+import cz.levinzonr.saferoute.transitions.CustomDialogTransition
 
 @Composable
-@Route("PokemonSelector")
+@Route(
+    name = "PokemonSelector",
+    transition = CustomDialogTransition::class
+)
 fun PokemonSelector(onSelected: (Pokemon) -> Unit) {
     Surface(
         modifier = Modifier

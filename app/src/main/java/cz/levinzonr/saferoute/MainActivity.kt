@@ -1,6 +1,5 @@
 package cz.levinzonr.saferoute
 
-import android.app.Fragment
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -21,16 +20,14 @@ import androidx.core.app.NotificationCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.navigation
 import androidx.navigation.plusAssign
+import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
-import cz.levinzonr.saferoute.accompanist.navigation.*
-import cz.levinzonr.saferoute.core.dialog
-import cz.levinzonr.saferoute.core.navigation
-import cz.levinzonr.saferoute.data.Pokemon
-import cz.levinzonr.saferoute.screens.PokemonSelector
+import cz.levinzonr.saferoute.accompanist.navigation.AnimatedSafeRouteNavHost
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsScreen
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsViewModel
 import cz.levinzonr.saferoute.screens.details.args.LocalPokemonDetailsRouteArgs
@@ -40,6 +37,7 @@ import cz.levinzonr.saferoute.screens.statssheet.*
 import cz.levinzonr.saferoute.ui.theme.RouterTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalAnimationApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @ExperimentalMaterialNavigationApi
@@ -55,26 +53,18 @@ class MainActivity : ComponentActivity() {
                     navController.navigatorProvider += bottomSheetNavigator
 
                     ModalBottomSheetLayout(bottomSheetNavigator) {
-                        AnimatedNavHost(
+                        AnimatedSafeRouteNavHost(
                             navController = navController,
-                            startRouteSpec = Routes.Home
+                            startRouteSpec = Routes.HomeScreen
                         ) {
 
-                            composable(Routes.Home) {
+                            homeScreen {
                                 HomeScreen(
                                     onShowPokedex = { navController.navigate("pokedex") },
                                     onDeeplink = { navController.navigateToPokemonSelector() }
                                 )
                             }
-
                             navigationPokedex(navController)
-
-                            dialog(Routes.PokemonSelector) {
-                                PokemonSelector(onSelected = {
-                                    navController.popBackStack()
-                                    triggerNotification(it)
-                                })
-                            }
                         }
                     }
                 }
@@ -82,59 +72,33 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    @ExperimentalAnimationApi
     @ExperimentalMaterialNavigationApi
     private fun NavGraphBuilder.navigationPokedex(navController: NavController) {
-        navigation("pokedex", Routes.PokemonList) {
-            composable(Routes.PokemonList) {
+        navigation(Routes.PokemonList.route, "pokedex") {
+            pokemonList {
                 PokemonListScreen(onPokemonClick = {
-                    navController.navigateToPokemonDetails(null)
+                    navController.navigateToPokemonDetails(it.id)
                 })
             }
 
-            composable(Routes.PokemonDetails) {
-                println(LocalPokemonDetailsRouteArgs.current.id ?: " Default Id")
-                val pokemon = hiltViewModel<PokemonDetailsViewModel>().pokemon.collectAsState().value
+            pokemonDetails {
+                println(LocalPokemonDetailsRouteArgs.current.id)
+                val pokemon =
+                    hiltViewModel<PokemonDetailsViewModel>().pokemon.collectAsState().value
                 PokemonDetailsScreen(
                     pokemon = pokemon,
                     onShowStatsClick = {
-                    navController.navigateToPokemonStats(
-                        name = it.name ?: "",
-                        category = it.category,
-                        hp = it.hp ?: 0,
-                        imageRes = it.image
-                    )
-                })
+                        navController.navigateToPokemonStats(
+                            it.name ?: "", it.category, it.hp ?: 0, it.image
+                        )
+                    }
+                )
             }
 
-            bottomSheet(Routes.PokemonStats) {
-                PokemonStatsSheet()
-            }
-        }
-    }
+            pokemonStats()
 
-    private fun triggerNotification(pokemon: Pokemon) {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            data = Uri.parse("app://deeplink/${pokemon.id}")
         }
 
-        val pendingIntent = PendingIntent.getActivity(
-            this,
-            0,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE
-        )
-        val nm = getSystemService(NotificationManager::class.java)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            nm.createNotificationChannel(NotificationChannel("channel", "channel", NotificationManager.IMPORTANCE_HIGH))
-        }
-        val notif = NotificationCompat.Builder(this@MainActivity, "channel")
-            .setContentTitle("Deeplink to ${pokemon.name}")
-            .setContentIntent(pendingIntent)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .build()
-        nm.notify( 0, notif)
     }
 }
 

@@ -8,8 +8,8 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "router"
-include(":app")
 include(":annotations")
 include(":compiler")
 include(":core")
 include(":accompanist-navigation")
+include(":app")

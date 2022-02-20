@@ -10,8 +10,6 @@ import cz.levinzonr.saferoute.screens.details.PokemonDetailsScreen
 import cz.levinzonr.saferoute.screens.home.HomeScreen
 import cz.levinzonr.saferoute.screens.list.PokemonListScreen
 import cz.levinzonr.saferoute.screens.statssheet.PokemonStatsSheet
-import cz.levinzonr.saferoute.screens.statssheet.args.LocalPokemonStatsRouteArgs
-import cz.levinzonr.saferoute.screens.statssheet.args.PokemonStatsRouteArgs
 import cz.levinzonr.saferoute.ui.theme.RouterTheme
 
 
@@ -49,18 +47,3 @@ fun PreviewPokemonSelector() {
     }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewPokemonStats() {
-    RouterTheme {
-        CompositionLocalProvider(LocalPokemonStatsRouteArgs provides PokemonStatsRouteArgs(
-            name = "Pokemon test",
-            category = "Wotah",
-            hp =120,
-            imageRes = R.drawable.poke001
-        )) {
-            PokemonStatsSheet()
-        }
-    }
-}

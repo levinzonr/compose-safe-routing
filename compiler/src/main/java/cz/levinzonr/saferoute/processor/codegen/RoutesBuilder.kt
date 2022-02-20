@@ -5,6 +5,7 @@ import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import cz.levinzonr.saferoute.processor.constants.ClassNames
 import cz.levinzonr.saferoute.processor.constants.Constants
 import cz.levinzonr.saferoute.processor.constants.KDoc
+import cz.levinzonr.saferoute.processor.extensions.ComposableFunction
 import cz.levinzonr.saferoute.processor.extensions.asList
 import cz.levinzonr.saferoute.processor.models.ModelData
 import cz.levinzonr.saferoute.processor.models.RouteData
@@ -86,4 +87,5 @@ internal class RoutesBuilder(val data: ModelData) {
             .initializer(initilizer)
             .build()
     }
+
 }

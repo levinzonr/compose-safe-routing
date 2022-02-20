@@ -3,6 +3,7 @@ package cz.levinzonr.saferoute.processor.subprocessors
 import cz.levinzonr.saferoute.annotations.Route
 import cz.levinzonr.saferoute.processor.constants.Constants
 import cz.levinzonr.saferoute.processor.models.ModelData
+import cz.levinzonr.saferoute.processor.models.NavGraphData
 import javax.annotation.processing.ProcessingEnvironment
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.element.Element
@@ -16,10 +17,16 @@ internal object DataProcessor {
             val routes = environment?.getElementsAnnotatedWithAny(setOf(RouteV1Class, RouteV2Class))?.map { element ->
                 packageName = processingEnv.elementUtils.getPackageOf(element).toString()
                 val annotation = element.getAnnotation()
-                RouteDataBuilder(packageName).from(annotation)
+                RouteDataBuilder(packageName).from(annotation, element)
             }?.takeIf { it.isNotEmpty() } ?: return null
 
-            return ModelData(packageName, routes)
+            val graphs = routes.groupBy { it.navGraphName }.mapKeys {
+                // TODO add navGraphSupport
+                //val startDestination = requireNotNull(routes.find{ it.start} ) { "NavGraph [${it.key}] has no start route specified" }
+                NavGraphData(it.key, it.value, routes.first())
+            }
+
+            return ModelData(packageName, graphs.keys.toList())
         } catch (e: Exception) {
             throw Exception("Error while processing annotations: ${e.stackTraceToString()}")
         }

@@ -12,18 +12,16 @@ import cz.levinzonr.saferoute.core.RouteSpec
 
 @Composable
 @ExperimentalAnimationApi
-fun AnimatedNavHost(
+fun AnimatedSafeRouteNavHost(
     navController: NavHostController,
     startRouteSpec: RouteSpec<*>,
     modifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.Center,
     route: String? = null,
-    enterTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> EnterTransition)? =
-        { _, _ -> fadeIn(animationSpec = tween(700)) },
-    exitTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> ExitTransition)? =
-        { _, _ -> fadeOut(animationSpec = tween(700)) },
-    popEnterTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> EnterTransition)? = enterTransition,
-    popExitTransition: (AnimatedContentScope<String>.(initial: NavBackStackEntry, target: NavBackStackEntry) -> ExitTransition)? = exitTransition,
+    enterTransition: RouteEnterTransition = { fadeIn() },
+    exitTransition: RouteExitTransition = { fadeOut() },
+    popEnterTransition: RouteEnterTransition = enterTransition,
+    popExitTransition: RouteExitTransition = exitTransition,
     builder: NavGraphBuilder.() -> Unit
 ) {
     AnimatedNavHost(

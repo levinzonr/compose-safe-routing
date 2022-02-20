@@ -12,7 +12,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import cz.levinzonr.saferoute.R
+import cz.levinzonr.saferoute.accompanist.navigation.transitions.BottomSheetRouteTransition
 import cz.levinzonr.saferoute.core.annotations.Route
 import cz.levinzonr.saferoute.core.annotations.RouteArg
 import cz.levinzonr.saferoute.screens.statssheet.args.LocalPokemonStatsRouteArgs
@@ -20,6 +22,7 @@ import cz.levinzonr.saferoute.screens.statssheet.args.LocalPokemonStatsRouteArgs
 @Composable
 @Route(
     name = "PokemonStats",
+    transition = BottomSheetRouteTransition::class,
     args = [
         RouteArg("name", type = String::class),
         RouteArg("category", type = String::class, isNullable = true),

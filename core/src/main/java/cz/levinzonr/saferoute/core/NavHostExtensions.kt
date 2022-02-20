@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 
 @Composable
-fun NavHost(
+fun SafeRouteNavHost(
     navController: NavHostController,
     spec: RouteSpec<*>,
     modifier: Modifier = Modifier,

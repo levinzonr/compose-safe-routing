@@ -1,10 +1,9 @@
 package cz.levinzonr.saferoute.processor.constants
 
-import com.squareup.kotlinpoet.ClassName
-
 internal object Constants {
 
-    const val LIB_PACKAGE_NAME = "cz.levinzonr.saferoute.core"
+    const val PACKAGE_CORE = "cz.levinzonr.saferoute.core"
+    const val PACKAGE_ACCOMPANIST = "cz.levinzonr.saferoute.accompanist.navigation"
     const val FILE_ROUTE_ARG_PROVIDER = "Provider"
     const val FILE_ACTIONS = "RoutesActions"
     const val FILE_ARGS_POSTFIX = "RouteArgs"
