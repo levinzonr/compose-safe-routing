@@ -9,7 +9,6 @@ import androidx.navigation.NavGraphBuilder
 import cz.levinzonr.saferoute.accompanist.navigation.RouteEnterTransition
 import cz.levinzonr.saferoute.accompanist.navigation.RouteExitTransition
 import cz.levinzonr.saferoute.accompanist.navigation.composable
-import cz.levinzonr.saferoute.core.ComposableFun
 import cz.levinzonr.saferoute.core.RouteSpec
 import cz.levinzonr.saferoute.core.transitions.RouteTransition
 
