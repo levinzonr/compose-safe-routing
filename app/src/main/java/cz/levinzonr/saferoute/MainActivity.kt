@@ -27,6 +27,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
+import cz.levinzonr.saferoute.accompanist.navigation.AnimatedSafeRouteNavHost
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsScreen
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsViewModel
 import cz.levinzonr.saferoute.screens.details.args.LocalPokemonDetailsRouteArgs
@@ -52,9 +53,9 @@ class MainActivity : ComponentActivity() {
                     navController.navigatorProvider += bottomSheetNavigator
 
                     ModalBottomSheetLayout(bottomSheetNavigator) {
-                        AnimatedNavHost(
+                        AnimatedSafeRouteNavHost(
                             navController = navController,
-                            startDestination = Routes.HomeScreen.route
+                            startRouteSpec = Routes.HomeScreen
                         ) {
 
                             addHomeScreenRoute {
