@@ -12,7 +12,7 @@ You can also specify the desired transition right inside the `@Route` annotation
 
 ```kotlin
 @Route(
-		name = "HomeScreen"
+    name = "HomeScreen",
     transition = AnimatedRouteTransition.Default::class
 )
 
