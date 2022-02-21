@@ -6,11 +6,11 @@ plugins {
 
 
 android {
-    compileSdk = 30
+    compileSdk = 31
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 30
+        targetSdk = 31
         version  = 1
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -48,7 +48,7 @@ mavenPublish {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.6.0")
+    implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.navigation:navigation-compose:${Deps.composeNavigation}")
     implementation("androidx.compose.ui:ui:${Deps.compose}")
     api((project(":core")))

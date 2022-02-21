@@ -19,9 +19,3 @@ buildscript {
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
-
-configurations.all {
-    resolutionStrategy {
-        force("androidx.core:core-ktx:1.6.0")
-    }
-}
