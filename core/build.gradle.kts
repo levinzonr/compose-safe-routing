@@ -50,7 +50,7 @@ mavenPublish {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.7.0")
+    implementation("androidx.core:core-ktx:1.6.0")
     implementation("androidx.navigation:navigation-compose:${Deps.composeNavigation}")
     implementation("androidx.compose.ui:ui:${Deps.compose}")
     implementation("androidx.compose.material:material:${Deps.compose}")
