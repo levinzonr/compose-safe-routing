@@ -33,7 +33,7 @@ internal class RouteArgsFactoryBuilder(
 
         code.addStatement("return ${data.argumentsConstructor}")
         return FunSpec.builder("fromBundle")
-            .returns(ClassName(data.packageName, data.argumentsName))
+            .returns(data.argumentsClassName)
             .addParameter("bundle", ClassNames.Bundle.copy(nullable = true))
             .addModifiers(KModifier.OVERRIDE)
             .addKdoc("A Helper function to obtain an instance of ${data.argumentsName} from Bundle")
@@ -55,7 +55,7 @@ internal class RouteArgsFactoryBuilder(
 
         code.addStatement("return ${data.argumentsConstructor}")
         return FunSpec.builder("fromSavedStateHandle")
-            .returns(ClassName(data.packageName, data.argumentsName))
+            .returns(data.argumentsClassName)
             .addKdoc("A Helper function to obtain an instance of ${data.argumentsName} from SavedStateHandle")
             .addParameter("handle", ClassNames.SavedStateHandle.copy(nullable = true))
             .addModifiers(KModifier.OVERRIDE)

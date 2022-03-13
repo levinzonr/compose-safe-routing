@@ -6,6 +6,7 @@ import androidx.navigation.Navigator
 import cz.levinzonr.saferoute.core.RouteSpec
 
 class EmptyRouter : Router {
+
     override fun navigate(direction: Direction, builder: NavOptionsBuilder.() -> Unit) {
         // no-op
     }

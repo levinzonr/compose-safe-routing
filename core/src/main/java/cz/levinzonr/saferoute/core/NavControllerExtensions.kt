@@ -8,7 +8,7 @@ fun NavController.navigateTo(
     navOptions: NavOptions? = null,
     navigationExtras: Navigator.Extras? = null
 ) = navigate(
-    route = direction.toRoute(),
+    route = direction.route,
     navOptions = navOptions,
     navigatorExtras = navigationExtras
 )
@@ -17,6 +17,6 @@ fun NavController.navigateTo(
     direction: Direction,
     builder: NavOptionsBuilder.() -> Unit = {}
 ) = navigate(
-    route = direction.toRoute(),
+    route = direction.route,
     builder = builder
 )

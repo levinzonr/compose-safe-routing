@@ -9,7 +9,7 @@ internal class RouteArgsProviderBuilder(
     val data: RouteData
 ) {
     fun build(): FileSpec {
-        return FileSpec.builder(data.packageName, "Local${data.argumentsName}")
+        return FileSpec.builder(data.argsPackageName, "Local${data.argumentsName}")
             .addProperty(createLocalArgsProperty())
             .build()
     }

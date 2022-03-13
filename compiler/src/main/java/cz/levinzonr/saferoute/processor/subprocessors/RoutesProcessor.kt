@@ -2,10 +2,10 @@ package cz.levinzonr.saferoute.processor.subprocessors
 
 import com.squareup.kotlinpoet.FileSpec
 import cz.levinzonr.saferoute.processor.codegen.*
-import cz.levinzonr.saferoute.processor.codegen.RouteDirectionsCodegen
 import cz.levinzonr.saferoute.processor.codegen.RouteGraphCodegen
 import cz.levinzonr.saferoute.processor.codegen.RouteGraphExtenstionsCodegen
 import cz.levinzonr.saferoute.processor.codegen.RoutesBuilder
+import cz.levinzonr.saferoute.processor.codegen.RoutesSpecsCodegen
 import cz.levinzonr.saferoute.processor.codegen.RoutesTransitionsCodegen
 import cz.levinzonr.saferoute.processor.logger.Logger
 import cz.levinzonr.saferoute.processor.models.ModelData
@@ -31,7 +31,7 @@ internal class RoutesProcessor(
 
             RouteGraphCodegen(data, logger).generate(destinationDir)
             RouteGraphExtenstionsCodegen(data, typeHelper).generate(destinationDir)
-            RouteDirectionsCodegen(data).generate(destinationDir)
+            RoutesSpecsCodegen(data).generate(destinationDir)
 
         } catch (e: Exception) {
             throw IllegalStateException("Error prosessing routes: ${e.stackTraceToString()}")

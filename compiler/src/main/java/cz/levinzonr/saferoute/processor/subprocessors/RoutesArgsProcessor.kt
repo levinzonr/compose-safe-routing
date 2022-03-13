@@ -15,13 +15,13 @@ internal object RoutesArgsProcessor : FileGenProcessor {
             data.routes.filter { it.arguments.isNotEmpty() }.forEach {
 
                 val spec = RouteArgsBuilder(it).build()
-                FileSpec.builder(it.packageName, spec.name!!)
+                FileSpec.builder(it.argsPackageName, spec.name!!)
                     .addType(spec)
                     .build()
                     .writeTo(destinationDir)
 
                 val factorySpec = RouteArgsFactoryBuilder(it).build()
-                FileSpec.builder(it.packageName, factorySpec.name!!)
+                FileSpec.builder(it.argsPackageName, factorySpec.name!!)
                     .addType(factorySpec)
                     .build()
                     .writeTo(destinationDir)

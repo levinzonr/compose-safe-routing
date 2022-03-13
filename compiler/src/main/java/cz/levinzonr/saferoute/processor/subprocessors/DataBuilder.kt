@@ -33,7 +33,7 @@ internal class RouteDataBuilder(val packageName: String) {
             RouteData(
                 name = annotation.name.decapitalize(),
                 arguments = arguments,
-                packageName= packageName + "." + Constants.FILE_ARGS_DIR,
+                packageName= packageName,
                 deeplinks = listOf(),
                 routeTransition = null,
                 contentClassName = ClassName(packageName, annotatedElement.simpleName.toString()),
@@ -49,7 +49,7 @@ internal class RouteDataBuilder(val packageName: String) {
             RouteData(
                 name = (routeName ?: annotatedElement.simpleName.toString()).decapitalize(),
                 arguments = argsData.map { ArgumentDataBuilder().from(it) },
-                packageName = packageName + "." + Constants.FILE_ARGS_DIR,
+                packageName = packageName,
                 deeplinks = deeplinksData.map { DeeplinkDataBuilder.build(it) },
                 routeTransition = annotation.getClassProperty("transition"),
                 contentClassName = ClassName(packageName, annotatedElement.simpleName.toString()),

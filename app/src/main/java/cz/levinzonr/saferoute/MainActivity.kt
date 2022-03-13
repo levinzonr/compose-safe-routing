@@ -30,17 +30,12 @@ import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import cz.levinzonr.saferoute.accompanist.navigation.AnimatedSafeRouteNavHost
 import cz.levinzonr.saferoute.core.router.Direction
 import cz.levinzonr.saferoute.core.router.Router
-import cz.levinzonr.saferoute.core.router.currentRouter
-import cz.levinzonr.saferoute.screens.args.PokemonSelectorDirection
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsScreen
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsViewModel
 import cz.levinzonr.saferoute.screens.details.args.LocalPokemonDetailsRouteArgs
-import cz.levinzonr.saferoute.screens.details.args.PokemonDetailsDirection
 import cz.levinzonr.saferoute.screens.home.HomeScreen
 import cz.levinzonr.saferoute.screens.list.PokemonListScreen
-import cz.levinzonr.saferoute.screens.list.args.PokemonListDirection
 import cz.levinzonr.saferoute.screens.statssheet.*
-import cz.levinzonr.saferoute.screens.statssheet.args.PokemonStatsDirection
 import cz.levinzonr.saferoute.ui.theme.RouterTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -64,11 +59,10 @@ class MainActivity : ComponentActivity() {
                             homeScreen {
                                 HomeScreen(
                                     onShowPokedex = { router.navigate(object : Direction {
-                                        override fun toRoute(): String {
-                                            return "pokedex"
-                                        }
+                                        override val route: String
+                                            get() = "pokedex"
                                     }) },
-                                    onDeeplink = { router.navigate(PokemonSelectorDirection()) }
+                                    onDeeplink = { router.navigate(Routes.HomeScreen()) }
                                 )
                             }
                             navigationPokedex(router)
@@ -84,7 +78,7 @@ class MainActivity : ComponentActivity() {
         navigation(Routes.PokemonList.route, "pokedex") {
             pokemonList {
                 PokemonListScreen(onPokemonClick = {
-                    router.navigate(PokemonDetailsDirection(it.id))
+                    router.navigate(Routes.PokemonDetails(it.id))
                 })
             }
 
@@ -95,7 +89,7 @@ class MainActivity : ComponentActivity() {
                 PokemonDetailsScreen(
                     pokemon = pokemon,
                     onShowStatsClick = {
-                        router.navigate(PokemonStatsDirection(
+                        router.navigate(Routes.PokemonStats(
                             name = it.name ?: "",
                             category = it.category,
                             hp = it.hp ?: 0

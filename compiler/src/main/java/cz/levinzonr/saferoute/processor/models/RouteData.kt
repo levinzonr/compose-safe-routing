@@ -1,6 +1,9 @@
 package cz.levinzonr.saferoute.processor.models
 
 import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.TypeName
+import com.squareup.kotlinpoet.TypeSpec
 import cz.levinzonr.saferoute.processor.constants.ClassNames
 import cz.levinzonr.saferoute.processor.constants.Constants
 import javax.lang.model.type.TypeMirror
@@ -17,21 +20,29 @@ internal data class RouteData(
     val start: Boolean
 ) {
 
+    val argsPackageName = packageName + "." + Constants.FILE_ARGS_DIR
     val specName: String get() = "Routes.${name.capitalize()}"
 
     val argumentsName: String get() = "${name.capitalize()}${Constants.FILE_ARGS_POSTFIX}"
+    val argumentsClassName = ClassName(argsPackageName, argumentsName)
 
     val argsFactoryClassName = if (arguments.isEmpty())
         ClassNames.EmptyArgsFactory
     else
-        ClassName(packageName, getArgsFactoryName())
+        ClassName(argsPackageName, getArgsFactoryName())
 
     val argsTypeClassName = if (arguments.isEmpty()) ClassName("kotlin", "Unit") else ClassName(
-        packageName,
+        argsPackageName,
         argumentsName
     )
 
-    val directionName = "${name.capitalize()}Direction"
+    val routeClassName = ClassName(
+        packageName, "${name.capitalize()}Route"
+    )
+
+    val routeSpecClassName: TypeName get() {
+        return ClassNames.RouteSpec.parameterizedBy(argsTypeClassName)
+    }
 
     val argumentsConstructor: String get() = "$argumentsName(${arguments.joinToString { it.name }})"
 
@@ -41,10 +52,5 @@ internal data class RouteData(
 
     fun getArgsFactoryName() : String{
         return "$argumentsName${Constants.FILE_ROUTE_ARG_FACTORY}"
-    }
-
-
-    fun getArgsProviderName() : String{
-        return "$argumentsName${Constants.FILE_ROUTE_ARG_PROVIDER}"
     }
 }
