@@ -3,6 +3,7 @@ package cz.levinzonr.saferoute.processor.codegen
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import cz.levinzonr.saferoute.annotations.Route
+import cz.levinzonr.saferoute.processor.codegen.extensions.toParamSpec
 import cz.levinzonr.saferoute.processor.constants.ClassNames
 import cz.levinzonr.saferoute.processor.models.ModelData
 import cz.levinzonr.saferoute.processor.models.RouteData

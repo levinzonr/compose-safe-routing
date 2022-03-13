@@ -3,6 +3,7 @@ package cz.levinzonr.saferoute.processor.constants
 import com.squareup.kotlinpoet.ClassName
 
 internal object ClassNames {
+    val Direction = ClassName("${Constants.PACKAGE_CORE}.router", "Direction")
     val RouteArgsFactory = ClassName(Constants.PACKAGE_CORE, "RouteArgsFactory")
     val RouteSpec = ClassName(Constants.PACKAGE_CORE, Constants.FILE_ROUTE_SPEC)
     val RouteGraphSpec = ClassName(Constants.PACKAGE_CORE, "RouteNavGraphSpec")

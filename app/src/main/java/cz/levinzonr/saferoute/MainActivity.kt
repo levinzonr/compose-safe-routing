@@ -28,12 +28,19 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import cz.levinzonr.saferoute.accompanist.navigation.AnimatedSafeRouteNavHost
+import cz.levinzonr.saferoute.core.router.Direction
+import cz.levinzonr.saferoute.core.router.Router
+import cz.levinzonr.saferoute.core.router.currentRouter
+import cz.levinzonr.saferoute.screens.args.PokemonSelectorDirection
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsScreen
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsViewModel
 import cz.levinzonr.saferoute.screens.details.args.LocalPokemonDetailsRouteArgs
+import cz.levinzonr.saferoute.screens.details.args.PokemonDetailsDirection
 import cz.levinzonr.saferoute.screens.home.HomeScreen
 import cz.levinzonr.saferoute.screens.list.PokemonListScreen
+import cz.levinzonr.saferoute.screens.list.args.PokemonListDirection
 import cz.levinzonr.saferoute.screens.statssheet.*
+import cz.levinzonr.saferoute.screens.statssheet.args.PokemonStatsDirection
 import cz.levinzonr.saferoute.ui.theme.RouterTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,23 +55,23 @@ class MainActivity : ComponentActivity() {
             RouterTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    val navController = rememberAnimatedNavController()
                     val bottomSheetNavigator = rememberBottomSheetNavigator()
-                    navController.navigatorProvider += bottomSheetNavigator
-
                     ModalBottomSheetLayout(bottomSheetNavigator) {
                         AnimatedSafeRouteNavHost(
-                            navController = navController,
-                            startRouteSpec = Routes.HomeScreen
-                        ) {
-
+                            startRouteSpec = Routes.HomeScreen,
+                            navController = rememberAnimatedNavController(bottomSheetNavigator)
+                        ) { router ->
                             homeScreen {
                                 HomeScreen(
-                                    onShowPokedex = { navController.navigate("pokedex") },
-                                    onDeeplink = { navController.navigateToPokemonSelector() }
+                                    onShowPokedex = { router.navigate(object : Direction {
+                                        override fun toRoute(): String {
+                                            return "pokedex"
+                                        }
+                                    }) },
+                                    onDeeplink = { router.navigate(PokemonSelectorDirection()) }
                                 )
                             }
-                            navigationPokedex(navController)
+                            navigationPokedex(router)
                         }
                     }
                 }
@@ -73,11 +80,11 @@ class MainActivity : ComponentActivity() {
     }
 
     @ExperimentalMaterialNavigationApi
-    private fun NavGraphBuilder.navigationPokedex(navController: NavController) {
+    private fun NavGraphBuilder.navigationPokedex(router: Router) {
         navigation(Routes.PokemonList.route, "pokedex") {
             pokemonList {
                 PokemonListScreen(onPokemonClick = {
-                    navController.navigateToPokemonDetails(it.id)
+                    router.navigate(PokemonDetailsDirection(it.id))
                 })
             }
 
@@ -88,9 +95,11 @@ class MainActivity : ComponentActivity() {
                 PokemonDetailsScreen(
                     pokemon = pokemon,
                     onShowStatsClick = {
-                        navController.navigateToPokemonStats(
-                            it.name ?: "", it.category, it.hp ?: 0, it.image
-                        )
+                        router.navigate(PokemonStatsDirection(
+                            name = it.name ?: "",
+                            category = it.category,
+                            hp = it.hp ?: 0
+                        ))
                     }
                 )
             }

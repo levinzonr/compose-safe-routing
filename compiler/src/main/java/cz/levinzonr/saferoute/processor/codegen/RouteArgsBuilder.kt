@@ -1,6 +1,8 @@
 package cz.levinzonr.saferoute.processor.codegen
 
 import com.squareup.kotlinpoet.*
+import cz.levinzonr.saferoute.processor.codegen.extensions.addArguments
+import cz.levinzonr.saferoute.processor.codegen.extensions.initConstructor
 import cz.levinzonr.saferoute.processor.constants.ClassNames
 import cz.levinzonr.saferoute.processor.constants.KDoc
 import cz.levinzonr.saferoute.processor.extensions.asList
@@ -62,24 +64,5 @@ internal class RouteArgsBuilder(
             .addKdoc("NamedNavArgs representation for ${data.argumentsName}")
             .build()
 
-    }
-
-    private fun TypeSpec.Builder.addArguments(args: List<ArgumentData>) : TypeSpec.Builder {
-        addProperties(args.map { it.toPropertySpec() })
-        return this
-    }
-
-    private fun TypeSpec.Builder.initConstructor(args: List<ArgumentData>) : TypeSpec.Builder {
-        val params = args.map { it.toParameterSpec() }
-        primaryConstructor(FunSpec.constructorBuilder().addParameters(params).build())
-        return this
-    }
-
-    private fun ArgumentData.toPropertySpec() : PropertySpec {
-        return PropertySpec.builder(name, type.clazz.asTypeName().copy(nullable = isNullable)).initializer(name).build()
-    }
-
-    private fun ArgumentData.toParameterSpec() : ParameterSpec {
-        return ParameterSpec.builder(name, type.clazz.asTypeName().copy(nullable = isNullable)).build()
     }
 }

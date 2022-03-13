@@ -31,6 +31,8 @@ internal data class RouteData(
         argumentsName
     )
 
+    val directionName = "${name.capitalize()}Direction"
+
     val argumentsConstructor: String get() = "$argumentsName(${arguments.joinToString { it.name }})"
 
 
