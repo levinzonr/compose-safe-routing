@@ -21,9 +21,8 @@ internal object DataProcessor {
             }?.takeIf { it.isNotEmpty() } ?: return null
 
             val graphs = routes.groupBy { it.navGraphName }.mapKeys {
-                // TODO add navGraphSupport
-                //val startDestination = requireNotNull(routes.find{ it.start} ) { "NavGraph [${it.key}] has no start route specified" }
-                NavGraphData(it.key, it.value, routes.first())
+                val startDestination = requireNotNull(routes.find{ it.start} ) { "NavGraph [${it.key}] has no start route specified" }
+                NavGraphData(it.key, it.value, startDestination)
             }
 
             return ModelData(packageName, graphs.keys.toList())

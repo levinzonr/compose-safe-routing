@@ -16,11 +16,13 @@ import androidx.compose.ui.unit.dp
 import cz.levinzonr.saferoute.R
 import cz.levinzonr.saferoute.accompanist.navigation.transitions.AnimatedRouteTransition
 import cz.levinzonr.saferoute.core.annotations.Route
+import cz.levinzonr.saferoute.core.annotations.RouteNavGraph
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 @Route(
-    transition = AnimatedRouteTransition.Default::class
+    transition = AnimatedRouteTransition.Default::class,
+    navGraph = RouteNavGraph(start = true)
 )
 fun HomeScreen(
     onShowPokedex: () -> Unit,
