@@ -9,7 +9,7 @@ import cz.levinzonr.saferoute.core.navigateTo
 
 class RouterImpl(private val navController: NavController) : Router {
     override fun navigate(direction: Direction, builder: NavOptionsBuilder.() -> Unit) {
-        navController.navigateTo(direction)
+        navController.navigateTo(direction, builder)
     }
 
     override fun navigate(
