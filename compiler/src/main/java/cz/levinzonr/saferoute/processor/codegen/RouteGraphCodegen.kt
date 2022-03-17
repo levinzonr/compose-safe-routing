@@ -3,6 +3,7 @@ package cz.levinzonr.saferoute.processor.codegen
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import cz.levinzonr.saferoute.processor.constants.ClassNames
+import cz.levinzonr.saferoute.processor.constants.Constants
 import cz.levinzonr.saferoute.processor.logger.Logger
 import cz.levinzonr.saferoute.processor.models.ModelData
 import cz.levinzonr.saferoute.processor.models.NavGraphData
@@ -14,7 +15,7 @@ internal class RouteGraphCodegen(
 ) {
 
     fun generate(dir: File) {
-        val typeSpec = TypeSpec.objectBuilder("RouteNavGraphs")
+        val typeSpec = TypeSpec.objectBuilder(Constants.FILE_NAV_SPECS)
         data.navGraphs.forEach {
             typeSpec.addProperty(it.createSpecProperty())
         }

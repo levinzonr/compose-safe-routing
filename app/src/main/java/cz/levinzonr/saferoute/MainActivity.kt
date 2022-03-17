@@ -1,11 +1,5 @@
 package cz.levinzonr.saferoute
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,23 +10,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.app.NotificationCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.navigation
-import androidx.navigation.plusAssign
-import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import cz.levinzonr.saferoute.accompanist.navigation.AnimatedSafeRouteNavHost
-import cz.levinzonr.saferoute.core.router.Direction
-import cz.levinzonr.saferoute.core.router.Router
+import cz.levinzonr.saferoute.core.navigation
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsScreen
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsViewModel
-import cz.levinzonr.saferoute.screens.details.args.LocalPokemonDetailsRouteArgs
 import cz.levinzonr.saferoute.screens.home.HomeScreen
 import cz.levinzonr.saferoute.screens.list.PokemonListScreen
 import cz.levinzonr.saferoute.screens.statssheet.*
@@ -58,48 +44,36 @@ class MainActivity : ComponentActivity() {
                         ) { router ->
                             homeScreen {
                                 HomeScreen(
-                                    onShowPokedex = { router.navigate(object : Direction {
-                                        override val route: String
-                                            get() = "pokedex"
-                                    }) },
+                                    onShowPokedex = { router.navigate(NavGraphs.Pokedex) },
                                     onDeeplink = { router.navigate(Routes.HomeScreen()) }
                                 )
                             }
-                            navigationPokedex(router)
+
+                            navigation(NavGraphs.Pokedex) {
+                                pokemonList {
+                                    PokemonListScreen(
+                                       onPokemonClick = { router.navigate(Routes.PokemonDetails(it.id))}
+                                    )
+                                }
+
+                                pokemonStats()
+
+                                pokemonDetails {
+                                    val viewModel = hiltViewModel<PokemonDetailsViewModel>()
+                                    val poke = viewModel.pokemon.collectAsState().value
+                                    PokemonDetailsScreen(pokemon = poke, onShowStatsClick = {
+                                        router.navigate(Routes.PokemonStats(
+                                            name = it.name ?: "",
+                                            category = null,
+                                            hp = it.hp ?: 0,
+                                        ))
+                                    })
+                                }
+                            }
                         }
                     }
                 }
             }
-        }
-    }
-
-    @ExperimentalMaterialNavigationApi
-    private fun NavGraphBuilder.navigationPokedex(router: Router) {
-        navigation(Routes.PokemonList.route, "pokedex") {
-            pokemonList {
-                PokemonListScreen(onPokemonClick = {
-                    router.navigate(Routes.PokemonDetails(it.id))
-                })
-            }
-
-            pokemonDetails {
-                println(LocalPokemonDetailsRouteArgs.current.id)
-                val pokemon =
-                    hiltViewModel<PokemonDetailsViewModel>().pokemon.collectAsState().value
-                PokemonDetailsScreen(
-                    pokemon = pokemon,
-                    onShowStatsClick = {
-                        router.navigate(Routes.PokemonStats(
-                            name = it.name ?: "",
-                            category = it.category,
-                            hp = it.hp ?: 0
-                        ))
-                    }
-                )
-            }
-
-            pokemonStats()
-
         }
 
     }

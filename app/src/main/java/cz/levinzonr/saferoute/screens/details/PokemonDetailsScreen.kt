@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import cz.levinzonr.saferoute.core.annotations.Route
 import cz.levinzonr.saferoute.core.annotations.RouteArg
 import cz.levinzonr.saferoute.core.annotations.RouteDeeplink
+import cz.levinzonr.saferoute.core.annotations.RouteNavGraph
 import cz.levinzonr.saferoute.core.transitions.DialogRouteTransition
 import cz.levinzonr.saferoute.data.Pokemon
 import cz.levinzonr.saferoute.data.color
@@ -31,13 +32,15 @@ import cz.levinzonr.saferoute.data.color
     name = "PokemonDetails",
     args = [RouteArg(name = "id", type = String::class)],
     deepLinks = [RouteDeeplink("app://deeplink/{id}")],
-    transition = DialogRouteTransition.Default::class
+    transition = DialogRouteTransition.Default::class,
+    navGraph = RouteNavGraph("pokedex", start = false)
 )
 fun PokemonDetailsScreen(
     pokemon: Pokemon?,
     onShowStatsClick: (Pokemon) -> Unit,
 ) {
-    val color = animateColorAsState(targetValue = if (pokemon != null) colorResource(id = pokemon.color()) else Color.White)
+    val color =
+        animateColorAsState(targetValue = if (pokemon != null) colorResource(id = pokemon.color()) else Color.White)
     AnimatedVisibility(visible = pokemon != null) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Column(
@@ -69,7 +72,9 @@ fun PokemonDetailsScreen(
                 Button(
                     onClick = { pokemon?.let { onShowStatsClick.invoke(it) } },
                     colors = ButtonDefaults.buttonColors(backgroundColor = color.value),
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 32.dp),
                     contentPadding = PaddingValues(16.dp),
                     shape = RoundedCornerShape(32.dp)
                 ) {

@@ -11,7 +11,7 @@ import androidx.navigation.navigation
 import cz.levinzonr.saferoute.core.transitions.RouteTransition
 
 fun NavGraphBuilder.navigation(
-    spec: RouteNavGraphSpec,
+    spec: NavGraphSpec,
     content: NavGraphBuilder.() -> Unit
 ) = navigation(spec.start.route, spec.name, content)
 

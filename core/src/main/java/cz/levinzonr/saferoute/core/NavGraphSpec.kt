@@ -2,7 +2,7 @@ package cz.levinzonr.saferoute.core
 
 import cz.levinzonr.saferoute.core.router.Direction
 
-interface RouteNavGraphSpec: Direction {
+interface NavGraphSpec: Direction {
     val name: String
     val start: RouteSpec<*>
 

@@ -10,6 +10,7 @@ internal object Constants {
     const val FILE_ROUTES = "Routes"
     const val FILE_ROUTE_SPEC = "RouteSpec"
     const val FILE_ROUTE_ARG_FACTORY = "Factory"
+    const val FILE_NAV_SPECS = "NavGraphs"
 
     const val ROUTE_SPEC_NAME = "route"
     const val ROUTE_SPEC_ARGS = "navArgs"

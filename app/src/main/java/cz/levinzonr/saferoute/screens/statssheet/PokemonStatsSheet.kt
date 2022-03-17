@@ -17,6 +17,7 @@ import cz.levinzonr.saferoute.R
 import cz.levinzonr.saferoute.accompanist.navigation.transitions.BottomSheetRouteTransition
 import cz.levinzonr.saferoute.core.annotations.Route
 import cz.levinzonr.saferoute.core.annotations.RouteArg
+import cz.levinzonr.saferoute.core.annotations.RouteNavGraph
 import cz.levinzonr.saferoute.screens.statssheet.args.LocalPokemonStatsRouteArgs
 
 @Composable
@@ -28,7 +29,8 @@ import cz.levinzonr.saferoute.screens.statssheet.args.LocalPokemonStatsRouteArgs
         RouteArg("category", type = String::class, isNullable = true),
         RouteArg("hp", type = Int::class),
         RouteArg("imageRes", type = Int::class, isOptional = true, defaultValue = R.drawable.poke001.toString())
-    ]
+    ],
+    navGraph = RouteNavGraph("pokedex", start = false)
 )
 fun PokemonStatsSheet() {
    val args = LocalPokemonStatsRouteArgs.current

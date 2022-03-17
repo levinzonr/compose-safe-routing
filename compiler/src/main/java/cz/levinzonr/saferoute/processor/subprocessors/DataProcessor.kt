@@ -11,18 +11,23 @@ import javax.lang.model.element.Element
 internal object DataProcessor {
     val RouteV2Class = Class.forName(Constants.ROUTE).asSubclass(Annotation::class.java)
     val RouteV1Class = Route::class.java
-    fun process(processingEnv: ProcessingEnvironment, environment: RoundEnvironment?) : ModelData? {
+    fun process(processingEnv: ProcessingEnvironment, environment: RoundEnvironment?): ModelData? {
         try {
             var packageName: String = ""
-            val routes = environment?.getElementsAnnotatedWithAny(setOf(RouteV1Class, RouteV2Class))?.map { element ->
-                packageName = processingEnv.elementUtils.getPackageOf(element).toString()
-                val annotation = element.getAnnotation()
-                RouteDataBuilder(packageName).from(annotation, element)
-            }?.takeIf { it.isNotEmpty() } ?: return null
+            val routes = environment?.getElementsAnnotatedWithAny(setOf(RouteV1Class, RouteV2Class))
+                ?.map { element ->
+                    packageName = processingEnv.elementUtils.getPackageOf(element).toString()
+                    val annotation = element.getAnnotation()
+                    RouteDataBuilder(packageName).from(annotation, element)
+                }?.takeIf { it.isNotEmpty() } ?: return null
 
-            val graphs = routes.groupBy { it.navGraphName }.mapKeys {
-                val startDestination = requireNotNull(routes.find{ it.start} ) { "NavGraph [${it.key}] has no start route specified" }
-                NavGraphData(it.key, it.value, startDestination)
+            val graphs = routes.groupBy { it.navGraphName }.mapKeys { entry ->
+                val startDestination = entry.value.find { it.start }
+                NavGraphData(
+                    name = entry.key,
+                    routes = entry.value,
+                    start = requireNotNull(startDestination) { "NavGraph [${entry.key}] has no start route specified" }
+                )
             }
 
             return ModelData(packageName, graphs.keys.toList())
@@ -31,7 +36,7 @@ internal object DataProcessor {
         }
     }
 
-    private fun Element.getAnnotation() : Annotation {
+    private fun Element.getAnnotation(): Annotation {
         return getAnnotation(RouteV1Class) ?: getAnnotation(RouteV2Class)
     }
 }
