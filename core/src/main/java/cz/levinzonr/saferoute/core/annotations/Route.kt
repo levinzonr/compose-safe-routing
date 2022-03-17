@@ -15,7 +15,9 @@ import kotlin.reflect.KClass
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.SOURCE)
+@Repeatable
 @MustBeDocumented
+@java.lang.annotation.Repeatable(Routes::class)
 annotation class Route(
     val name: String = AnnotationsDefaults.NULL,
     val args: Array<RouteArg> = [],
@@ -23,3 +25,6 @@ annotation class Route(
     val transition: KClass<out RouteTransition> = DefaultRouteTransition::class,
     val navGraph: RouteNavGraph = RouteNavGraph()
 )
+
+
+internal annotation class Routes(val value: Array<Route>)

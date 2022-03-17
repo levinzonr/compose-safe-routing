@@ -28,7 +28,8 @@ internal class RouteProcessor : AbstractProcessor() {
 
     override fun getSupportedAnnotationTypes(): MutableSet<String> = mutableSetOf(
         Route::class.java.canonicalName,
-        Constants.ROUTE
+        Constants.ROUTE,
+        Constants.ROUTES
     )
 
     override fun process(

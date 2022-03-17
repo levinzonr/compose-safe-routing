@@ -24,6 +24,11 @@ import cz.levinzonr.saferoute.core.annotations.RouteNavGraph
     transition = AnimatedRouteTransition.Default::class,
     navGraph = RouteNavGraph(start = true)
 )
+@Route(
+    name = "homeTest",
+    transition = AnimatedRouteTransition.Default::class,
+    navGraph = RouteNavGraph("test", start = true)
+)
 fun HomeScreen(
     onShowPokedex: () -> Unit,
     onDeeplink: () -> Unit

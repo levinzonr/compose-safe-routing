@@ -22,6 +22,10 @@ import javax.lang.model.type.ExecutableType
 
 internal class RouteDataBuilder(val packageName: String) {
 
+    fun fromRepeatable(annotation: Annotation, annotatedElement: Element) : List<RouteData> {
+        val annotations = annotation.fieldByName<Array<Annotation>>("value")
+        return annotations.map { from(it, annotatedElement) }
+    }
 
     fun from(annotation: Annotation, annotatedElement: Element): RouteData {
 

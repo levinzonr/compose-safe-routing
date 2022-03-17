@@ -22,6 +22,7 @@ internal object Constants {
     const val PACKAGE_NAV_COMPOSE = "$PACKAGE_NAVIGATION.compose"
     const val PACKAGE_COMPOSE_RUNTIME = "androidx.compose.runtime"
     const val ROUTE = "cz.levinzonr.saferoute.core.annotations.Route"
+    const val ROUTES = "cz.levinzonr.saferoute.core.annotations.Routes"
 }
 
 
