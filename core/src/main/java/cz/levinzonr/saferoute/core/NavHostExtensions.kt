@@ -19,12 +19,27 @@ fun SafeRouteNavHost(
     spec: RouteSpec<*>,
     route: String? = null,
     builder: NavGraphBuilder.(Router) -> Unit
+) = SafeRouteNavHost(
+    startDestination = spec.route,
+    builder = builder,
+    modifier = modifier,
+    navController = navController,
+    route = route
+)
+
+@Composable
+fun SafeRouteNavHost(
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController(navigators = emptyArray()),
+    startDestination: String,
+    route: String? = null,
+    builder: NavGraphBuilder.(Router) -> Unit
 ) {
     val router = RouterImpl(navController)
     CompositionLocalProvider(LocalRouter provides router) {
         NavHost(
             navController = navController,
-            startDestination = spec.route,
+            startDestination = startDestination,
             modifier = modifier,
             route = route,
             builder = { builder(router) }
