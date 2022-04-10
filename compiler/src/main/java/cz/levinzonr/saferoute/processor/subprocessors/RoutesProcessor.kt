@@ -8,7 +8,7 @@ import cz.levinzonr.saferoute.processor.codegen.RoutesBuilder
 import cz.levinzonr.saferoute.processor.codegen.RoutesSpecsCodegen
 import cz.levinzonr.saferoute.processor.codegen.RoutesTransitionsCodegen
 import cz.levinzonr.saferoute.processor.logger.Logger
-import cz.levinzonr.saferoute.processor.models.ModelData
+import com.levinzonr.saferoute.codegen.models.ModelData
 import cz.levinzonr.saferoute.processor.typehelper.TypeHelperImpl
 import java.io.File
 import javax.annotation.processing.ProcessingEnvironment

@@ -4,7 +4,7 @@ apply plugin: "maven-publish"
 
 dependencies {
     implementation project(':annotations')
-    implementation("com.squareup:kotlinpoet:1.4.4")
+    implementation project(':codegen')
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.5.31")
 }
 

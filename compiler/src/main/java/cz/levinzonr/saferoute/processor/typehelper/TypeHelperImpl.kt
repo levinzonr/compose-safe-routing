@@ -1,7 +1,7 @@
 package cz.levinzonr.saferoute.processor.typehelper
 
 import com.squareup.kotlinpoet.ClassName
-import cz.levinzonr.saferoute.processor.constants.ClassNames
+import com.levinzonr.saferoute.codegen.constants.ClassNames
 import javax.lang.model.type.TypeMirror
 import javax.lang.model.util.Types
 

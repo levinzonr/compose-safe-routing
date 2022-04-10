@@ -1,6 +1,6 @@
-package cz.levinzonr.saferoute.processor.models
+package com.levinzonr.saferoute.codegen.models
 
-internal data class ArgumentData(
+data class ArgumentData(
     val name: String,
     val type: ArgumentType,
     val optionalData: OptionalArgData<*>? = null,

@@ -1,11 +1,10 @@
 package cz.levinzonr.saferoute.processor.subprocessors
 
 import com.squareup.kotlinpoet.FileSpec
-import cz.levinzonr.saferoute.processor.constants.Constants
 import cz.levinzonr.saferoute.processor.codegen.RouteArgsBuilder
 import cz.levinzonr.saferoute.processor.codegen.RouteArgsFactoryBuilder
 import cz.levinzonr.saferoute.processor.codegen.RouteArgsProviderBuilder
-import cz.levinzonr.saferoute.processor.models.ModelData
+import com.levinzonr.saferoute.codegen.models.ModelData
 import java.io.File
 
 internal object RoutesArgsProcessor : FileGenProcessor {

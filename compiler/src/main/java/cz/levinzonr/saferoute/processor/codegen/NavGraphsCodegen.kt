@@ -2,11 +2,10 @@ package cz.levinzonr.saferoute.processor.codegen
 
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
-import cz.levinzonr.saferoute.processor.constants.ClassNames
-import cz.levinzonr.saferoute.processor.constants.Constants
+import com.levinzonr.saferoute.codegen.constants.ClassNames
 import cz.levinzonr.saferoute.processor.logger.Logger
-import cz.levinzonr.saferoute.processor.models.ModelData
-import cz.levinzonr.saferoute.processor.models.NavGraphData
+import com.levinzonr.saferoute.codegen.models.ModelData
+import com.levinzonr.saferoute.codegen.models.NavGraphData
 import java.io.File
 
 internal class NavGraphsCodegen(

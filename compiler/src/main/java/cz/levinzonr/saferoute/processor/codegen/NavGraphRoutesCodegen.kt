@@ -1,11 +1,10 @@
 package cz.levinzonr.saferoute.processor.codegen
 
 import com.squareup.kotlinpoet.FileSpec
-import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 import cz.levinzonr.saferoute.processor.codegen.extensions.toRouteProperty
-import cz.levinzonr.saferoute.processor.models.ModelData
-import cz.levinzonr.saferoute.processor.models.NavGraphData
+import com.levinzonr.saferoute.codegen.models.ModelData
+import com.levinzonr.saferoute.codegen.models.NavGraphData
 import java.io.File
 
 

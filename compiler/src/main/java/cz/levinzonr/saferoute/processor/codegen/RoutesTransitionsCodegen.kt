@@ -1,18 +1,14 @@
 package cz.levinzonr.saferoute.processor.codegen
 
 import com.squareup.kotlinpoet.*
-import cz.levinzonr.saferoute.processor.constants.ClassNames
+import com.levinzonr.saferoute.codegen.constants.ClassNames
 import cz.levinzonr.saferoute.processor.extensions.ComposableFunction
-import cz.levinzonr.saferoute.processor.logger.LogLevel
 import cz.levinzonr.saferoute.processor.logger.Logger
-import cz.levinzonr.saferoute.processor.models.ModelData
-import cz.levinzonr.saferoute.processor.models.RouteData
+import com.levinzonr.saferoute.codegen.models.ModelData
+import com.levinzonr.saferoute.codegen.models.RouteData
 import cz.levinzonr.saferoute.processor.typehelper.TypeHelper
-import jdk.dynalink.linker.support.TypeUtilities
 import java.io.File
-import javax.annotation.processing.ProcessingEnvironment
 import javax.lang.model.type.TypeMirror
-import kotlin.math.log
 
 internal class RoutesTransitionsCodegen(
     private val data: ModelData,

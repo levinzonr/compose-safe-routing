@@ -1,4 +1,4 @@
-package cz.levinzonr.saferoute.processor.constants
+package com.levinzonr.saferoute.codegen.constants
 
 object KDoc {
     const val ROUTES_ACTIONS = "This object contains helpers to build actions used to navigate to different routes based on @Route annotations"

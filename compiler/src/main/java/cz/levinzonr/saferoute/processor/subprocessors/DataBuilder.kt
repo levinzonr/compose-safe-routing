@@ -4,12 +4,11 @@ import com.squareup.kotlinpoet.ClassName
 import cz.levinzonr.saferoute.annotations.Route
 import cz.levinzonr.saferoute.annotations.RouteArg
 import cz.levinzonr.saferoute.annotations.RouteArgType
-import cz.levinzonr.saferoute.processor.constants.Constants
 import cz.levinzonr.saferoute.processor.extensions.fieldByName
-import cz.levinzonr.saferoute.processor.models.ArgumentData
-import cz.levinzonr.saferoute.processor.models.ArgumentType
-import cz.levinzonr.saferoute.processor.models.OptionalArgData
-import cz.levinzonr.saferoute.processor.models.RouteData
+import com.levinzonr.saferoute.codegen.models.ArgumentData
+import com.levinzonr.saferoute.codegen.models.ArgumentType
+import com.levinzonr.saferoute.codegen.models.OptionalArgData
+import com.levinzonr.saferoute.codegen.models.RouteData
 import java.lang.IllegalArgumentException
 import java.lang.reflect.InvocationTargetException
 import javax.lang.model.element.Element

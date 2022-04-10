@@ -1,7 +1,7 @@
 package cz.levinzonr.saferoute.processor
 
 import cz.levinzonr.saferoute.annotations.Route
-import cz.levinzonr.saferoute.processor.constants.Constants
+import com.levinzonr.saferoute.codegen.constants.Constants
 import cz.levinzonr.saferoute.processor.logger.KaptLogger
 import cz.levinzonr.saferoute.processor.subprocessors.DataProcessor
 import cz.levinzonr.saferoute.processor.subprocessors.RoutesActionsProcessor
@@ -13,9 +13,7 @@ import javax.annotation.processing.RoundEnvironment
 import javax.annotation.processing.SupportedSourceVersion
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
-import javax.tools.Diagnostic
 import kotlin.Exception
-import kotlin.math.log
 
 
 @SupportedSourceVersion(SourceVersion.RELEASE_8)

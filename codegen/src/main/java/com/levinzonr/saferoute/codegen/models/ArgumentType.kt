@@ -1,4 +1,4 @@
-package cz.levinzonr.saferoute.processor.models
+package com.levinzonr.saferoute.codegen.models
 
 import javax.lang.model.type.TypeKind
 import javax.lang.model.type.TypeMirror

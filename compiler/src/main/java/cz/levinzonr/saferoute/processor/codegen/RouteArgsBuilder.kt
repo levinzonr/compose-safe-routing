@@ -1,14 +1,10 @@
 package cz.levinzonr.saferoute.processor.codegen
 
 import com.squareup.kotlinpoet.*
-import cz.levinzonr.saferoute.processor.codegen.extensions.addArguments
-import cz.levinzonr.saferoute.processor.codegen.extensions.initConstructor
-import cz.levinzonr.saferoute.processor.constants.ClassNames
-import cz.levinzonr.saferoute.processor.constants.KDoc
-import cz.levinzonr.saferoute.processor.extensions.asList
-import cz.levinzonr.saferoute.processor.models.ArgumentData
-import cz.levinzonr.saferoute.processor.models.OptionalArgData
-import cz.levinzonr.saferoute.processor.models.RouteData
+import com.levinzonr.saferoute.codegen.constants.ClassNames
+import com.levinzonr.saferoute.codegen.constants.KDoc
+import com.levinzonr.saferoute.codegen.models.OptionalArgData
+import com.levinzonr.saferoute.codegen.models.RouteData
 
 internal class RouteArgsBuilder(
     private val data: RouteData

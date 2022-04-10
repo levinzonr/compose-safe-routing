@@ -1,7 +1,7 @@
 package cz.levinzonr.saferoute.processor.codegen.extensions
 
 import com.squareup.kotlinpoet.FunSpec
-import cz.levinzonr.saferoute.processor.models.RouteData
+import com.levinzonr.saferoute.codegen.models.RouteData
 import cz.levinzonr.saferoute.processor.pathbuilder.fullPathBuilder
 
 internal fun RouteData.createActionFun(funName: String) : FunSpec.Builder {

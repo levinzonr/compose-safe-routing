@@ -1,14 +1,13 @@
-package cz.levinzonr.saferoute.processor.models
+package com.levinzonr.saferoute.codegen.models
 
+import com.levinzonr.saferoute.codegen.constants.ClassNames
+import com.levinzonr.saferoute.codegen.constants.Constants
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.TypeName
-import com.squareup.kotlinpoet.TypeSpec
-import cz.levinzonr.saferoute.processor.constants.ClassNames
-import cz.levinzonr.saferoute.processor.constants.Constants
 import javax.lang.model.type.TypeMirror
 
-internal data class RouteData(
+data class RouteData(
     val name: String,
     val arguments: List<ArgumentData>,
     val packageName: String,

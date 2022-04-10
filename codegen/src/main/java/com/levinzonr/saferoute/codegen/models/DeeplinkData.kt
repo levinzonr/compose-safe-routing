@@ -1,6 +1,6 @@
-package cz.levinzonr.saferoute.processor.models
+package com.levinzonr.saferoute.codegen.models
 
-internal data class DeeplinkData(
+data class DeeplinkData(
     val uriPattern: String?,
     val action: String?,
     val mimeType: String?

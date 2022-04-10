@@ -2,9 +2,8 @@ package cz.levinzonr.saferoute.processor.codegen
 
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
-import cz.levinzonr.saferoute.processor.constants.ClassNames
-import cz.levinzonr.saferoute.processor.constants.Constants
-import cz.levinzonr.saferoute.processor.models.RouteData
+import com.levinzonr.saferoute.codegen.constants.ClassNames
+import com.levinzonr.saferoute.codegen.models.RouteData
 
 internal class RouteArgsFactoryBuilder(
     private val data: RouteData

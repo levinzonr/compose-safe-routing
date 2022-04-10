@@ -1,6 +1,6 @@
 package cz.levinzonr.saferoute.processor.pathbuilder
 
-import cz.levinzonr.saferoute.processor.models.ArgumentData
+import com.levinzonr.saferoute.codegen.models.ArgumentData
 
 internal typealias ArgumentPathBuilder = (ArgumentData) -> String
 

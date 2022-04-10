@@ -1,4 +1,4 @@
-package cz.levinzonr.saferoute.processor.constants
+package com.levinzonr.saferoute.codegen.constants
 
 internal object Constants {
 

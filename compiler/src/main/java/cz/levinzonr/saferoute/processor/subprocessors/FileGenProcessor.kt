@@ -1,6 +1,6 @@
 package cz.levinzonr.saferoute.processor.subprocessors
 
-import cz.levinzonr.saferoute.processor.models.ModelData
+import com.levinzonr.saferoute.codegen.models.ModelData
 import java.io.File
 
 internal interface FileGenProcessor {

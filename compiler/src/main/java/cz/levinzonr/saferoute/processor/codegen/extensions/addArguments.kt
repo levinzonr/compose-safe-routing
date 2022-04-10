@@ -2,8 +2,8 @@ package cz.levinzonr.saferoute.processor.codegen.extensions
 
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.TypeSpec.*
-import cz.levinzonr.saferoute.processor.models.ArgumentData
-import cz.levinzonr.saferoute.processor.models.OptionalArgData
+import com.levinzonr.saferoute.codegen.models.ArgumentData
+import com.levinzonr.saferoute.codegen.models.OptionalArgData
 
 
 internal fun Builder.addArguments(args: List<ArgumentData>): Builder {

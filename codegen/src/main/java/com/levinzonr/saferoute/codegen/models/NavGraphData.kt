@@ -1,6 +1,6 @@
-package cz.levinzonr.saferoute.processor.models
+package com.levinzonr.saferoute.codegen.models
 
-internal data class NavGraphData(
+data class NavGraphData(
     val name: String,
     val routes: List<RouteData>,
     val start: RouteData

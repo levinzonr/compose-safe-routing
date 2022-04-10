@@ -1,17 +1,11 @@
 package cz.levinzonr.saferoute.processor.codegen
 
 import com.squareup.kotlinpoet.*
-import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import cz.levinzonr.saferoute.processor.codegen.extensions.*
-import cz.levinzonr.saferoute.processor.constants.ClassNames
-import cz.levinzonr.saferoute.processor.constants.Constants
-import cz.levinzonr.saferoute.processor.constants.KDoc
-import cz.levinzonr.saferoute.processor.extensions.ComposableFunction
-import cz.levinzonr.saferoute.processor.extensions.asList
-import cz.levinzonr.saferoute.processor.models.ModelData
-import cz.levinzonr.saferoute.processor.models.NavGraphData
-import cz.levinzonr.saferoute.processor.models.RouteData
-import cz.levinzonr.saferoute.processor.pathbuilder.fullPathBuilder
+import com.levinzonr.saferoute.codegen.constants.Constants
+import com.levinzonr.saferoute.codegen.constants.KDoc
+import com.levinzonr.saferoute.codegen.models.ModelData
+import com.levinzonr.saferoute.codegen.models.NavGraphData
 
 internal class RoutesBuilder(val data: ModelData) {
 
