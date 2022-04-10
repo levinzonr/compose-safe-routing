@@ -19,7 +19,7 @@ publishing {
         mavenJava(MavenPublication) {
             version = "1.0.1"
             groupId = 'cz.levinzonr.safe-routing'
-            artifactId = 'compiler'
+            artifactId = 'processor-kapt'
             from components.java
 
         }

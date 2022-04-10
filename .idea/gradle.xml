@@ -15,8 +15,8 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/codegen" />
-            <option value="$PROJECT_DIR$/compiler" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/processor-kapt" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

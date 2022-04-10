@@ -9,7 +9,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "router"
 include(":annotations")
-include(":compiler")
+include(":processor-kapt")
 include(":core")
 include(":accompanist-navigation")
 include(":app")

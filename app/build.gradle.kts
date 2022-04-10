@@ -49,11 +49,11 @@ android {
 dependencies {
     val hilt_version = "2.37"
     implementation(project(":accompanist-navigation"))
-    "kapt"(project(":compiler"))
+    "kapt"(project(":processor-kapt"))
 
 
-   /* kapt("cz.levinzonr.safe-routing:compiler:1.0.1")
-    implementation("router:core:1")*/
+    /* kapt("cz.levinzonr.safe-routing:compiler:1.0.1")
+     implementation("router:core:1")*/
 
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
     implementation("androidx.navigation:navigation-compose:${Deps.composeNavigation}")
