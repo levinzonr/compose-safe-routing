@@ -4,7 +4,6 @@ import com.squareup.kotlinpoet.FileSpec
 import cz.levinzonr.saferoute.processor.codegen.*
 import cz.levinzonr.saferoute.processor.codegen.NavGraphRoutesCodegen
 import cz.levinzonr.saferoute.processor.codegen.NavGraphsCodegen
-import cz.levinzonr.saferoute.processor.codegen.RouteGraphExtenstionsCodegen
 import cz.levinzonr.saferoute.processor.codegen.RoutesBuilder
 import cz.levinzonr.saferoute.processor.codegen.RoutesSpecsCodegen
 import cz.levinzonr.saferoute.processor.codegen.RoutesTransitionsCodegen
@@ -31,7 +30,6 @@ internal class RoutesProcessor(
             RoutesTransitionsCodegen(data, typeHelper, logger).generate(destinationDir)
 
             NavGraphsCodegen(data, logger).generate(destinationDir)
-            RouteGraphExtenstionsCodegen(data, typeHelper).generate(destinationDir)
             RoutesSpecsCodegen(data).generate(destinationDir)
             NavGraphRoutesCodegen.generate(data, destinationDir)
 
