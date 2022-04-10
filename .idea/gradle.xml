@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/codegen" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/processor-kapt" />
+            <option value="$PROJECT_DIR$/processor-ksp" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

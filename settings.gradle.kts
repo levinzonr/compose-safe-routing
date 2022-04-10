@@ -7,6 +7,7 @@ dependencyResolutionManagement {
         jcenter() // Warning: this repository is going to shut down soon
     }
 }
+
 rootProject.name = "router"
 include(":annotations")
 include(":processor-kapt")
@@ -14,3 +15,4 @@ include(":core")
 include(":accompanist-navigation")
 include(":app")
 include(":codegen")
+include(":processor-ksp")
