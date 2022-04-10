@@ -1,6 +1,6 @@
 package com.levinzonr.saferoute.codegen.constants
 
-internal object Constants {
+object Constants {
 
     const val PACKAGE_CORE = "cz.levinzonr.saferoute.core"
     const val PACKAGE_ACCOMPANIST = "cz.levinzonr.saferoute.accompanist.navigation"

@@ -1,26 +1,28 @@
-package cz.levinzonr.saferoute.processor.codegen
+package com.levinzonr.saferoute.codegen.codegen
 
+import com.levinzonr.saferoute.codegen.codegen.extensions.*
+import com.levinzonr.saferoute.codegen.codegen.extensions.asList
+import com.levinzonr.saferoute.codegen.codegen.extensions.createRouteAction
+import com.levinzonr.saferoute.codegen.codegen.extensions.initConstructor
+import com.levinzonr.saferoute.codegen.codegen.extensions.toParamSpec
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
-import cz.levinzonr.saferoute.processor.codegen.extensions.createRouteAction
-import cz.levinzonr.saferoute.processor.codegen.extensions.toParamSpec
+import com.levinzonr.saferoute.codegen.codegen.pathbuilder.fullPathBuilder
 import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.levinzonr.saferoute.codegen.constants.Constants
+import com.levinzonr.saferoute.codegen.core.FilesGen
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.RouteData
-import cz.levinzonr.saferoute.processor.pathbuilder.fullPathBuilder
 import java.io.File
 
-internal class RoutesSpecsCodegen(
-    private val data: ModelData
-){
-    fun generate(file: File) {
-        data.routes.forEach {
-            FileSpec.get(it.packageName, it.createRouteTypeSpec())
-                .writeTo(file)
-        }
+ object RoutesSpecsCodegen : FilesGen {
 
-    }
+
+     override fun generate(data: ModelData): List<FileSpec> {
+         return data.routes.map {
+             FileSpec.get(it.packageName, it.createRouteTypeSpec())
+         }
+     }
 
     private fun RouteData.createRouteTypeSpec() : TypeSpec {
         return TypeSpec.objectBuilder(routeClassName.simpleName)

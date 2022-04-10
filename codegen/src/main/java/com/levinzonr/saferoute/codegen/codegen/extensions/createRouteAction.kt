@@ -1,9 +1,9 @@
-package cz.levinzonr.saferoute.processor.codegen.extensions
+package com.levinzonr.saferoute.codegen.codegen.extensions
 
+import com.levinzonr.saferoute.codegen.codegen.pathbuilder.fullPathBuilder
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.PropertySpec
 import com.levinzonr.saferoute.codegen.models.RouteData
-import cz.levinzonr.saferoute.processor.pathbuilder.fullPathBuilder
 
 internal fun RouteData.createRouteAction() : PropertySpec {
     val path = fullPathBuilder(

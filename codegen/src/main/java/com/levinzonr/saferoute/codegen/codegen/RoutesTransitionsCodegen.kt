@@ -1,26 +1,23 @@
-package cz.levinzonr.saferoute.processor.codegen
+package com.levinzonr.saferoute.codegen.codegen
 
+import com.levinzonr.saferoute.codegen.codegen.extensions.ComposableFunction
 import com.squareup.kotlinpoet.*
 import com.levinzonr.saferoute.codegen.constants.ClassNames
-import cz.levinzonr.saferoute.processor.extensions.ComposableFunction
-import cz.levinzonr.saferoute.processor.logger.Logger
+import com.levinzonr.saferoute.codegen.core.FilesGen
+import com.levinzonr.saferoute.codegen.core.TypeHelper
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.RouteData
-import cz.levinzonr.saferoute.processor.typehelper.TypeHelper
 import java.io.File
-import javax.lang.model.type.TypeMirror
 
-internal class RoutesTransitionsCodegen(
-    private val data: ModelData,
-    private val typeHelper: TypeHelper<TypeMirror>,
-    private val logger: Logger
-) {
 
-    fun generate(output: File) {
+class RoutesTransitionsCodegen(val typeHelper: TypeHelper) : FilesGen {
+
+    override fun generate(data: ModelData): List<FileSpec> {
         val fileSpec = FileSpec.builder(data.packageName, "NavGraphBuilder+Routes")
         data.routes.forEach { fileSpec.addFunction(it.createBuilderFun()) }
-        fileSpec.build().writeTo(output)
+        return listOf(fileSpec.build())
     }
+
 
     private fun RouteData.createBuilderFun(): FunSpec {
 
@@ -48,12 +45,20 @@ internal class RoutesTransitionsCodegen(
 
 
     private fun FunSpec.Builder.addAnnotation(data: RouteData): FunSpec.Builder {
-        data.routeTransition?.let {
-            val annotations = typeHelper.resolveNeededAnnotations(it)
-            annotations.forEach {
-                addAnnotation(it)
-            }
+        val superTypes = typeHelper.superTypes(data.routeTransition)
+        val hasAnimation =
+            superTypes.find { it.toString() == ClassNames.AnimatedRouteTransition.canonicalName } != null
+        val hasBottomSheet =
+            superTypes.find { it.toString() == ClassNames.BottomSheetRouteTransition.canonicalName } != null
+        val annotations = listOfNotNull(
+            ClassNames.ExperimentalAnimationApi.takeIf { hasAnimation },
+            ClassNames.ExperimentalNavigationApi.takeIf { hasBottomSheet || data.routeTransition?.toString() == ClassNames.BottomSheetRouteTransition.canonicalName }
+        )
+
+        annotations.forEach {
+            addAnnotation(it)
         }
+
         return this
     }
 }

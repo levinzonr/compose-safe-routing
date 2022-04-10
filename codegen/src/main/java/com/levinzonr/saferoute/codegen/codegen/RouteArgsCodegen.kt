@@ -1,25 +1,33 @@
-package cz.levinzonr.saferoute.processor.codegen
+package com.levinzonr.saferoute.codegen.codegen
 
+import com.levinzonr.saferoute.codegen.codegen.extensions.addArguments
+import com.levinzonr.saferoute.codegen.codegen.extensions.asList
+import com.levinzonr.saferoute.codegen.codegen.extensions.initConstructor
 import com.squareup.kotlinpoet.*
 import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.levinzonr.saferoute.codegen.constants.KDoc
+import com.levinzonr.saferoute.codegen.core.FilesGen
+import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.OptionalArgData
 import com.levinzonr.saferoute.codegen.models.RouteData
 
-internal class RouteArgsBuilder(
-    private val data: RouteData
-) {
-    fun build() : TypeSpec {
-        return TypeSpec.classBuilder(data.argumentsName)
-            .initConstructor(data.arguments)
-            .addArguments(data.arguments)
-            .addKdoc(KDoc.ROUTE_ARG, data.name)
-            .addType(buildNamedArgsCompanion(data))
-            .addModifiers(KModifier.DATA)
-            .build()
+object RouteArgsCodegen : FilesGen {
+
+    override fun generate(data: ModelData): List<FileSpec> {
+        return data.routes.filter { it.arguments.isNotEmpty() }.map{ route ->
+            FileSpec.get(
+                route.argsPackageName, TypeSpec.classBuilder(route.argumentsName)
+                    .initConstructor(route.arguments)
+                    .addArguments(route.arguments)
+                    .addKdoc(KDoc.ROUTE_ARG, route.name)
+                    .addType(buildNamedArgsCompanion(route))
+                    .addModifiers(KModifier.DATA)
+                    .build()
+            )
+        }
     }
 
-    private fun buildNamedArgsCompanion(data: RouteData) : TypeSpec {
+    private fun buildNamedArgsCompanion(data: RouteData): TypeSpec {
 
         val code = CodeBlock.builder()
         data.arguments.forEach {
@@ -27,17 +35,17 @@ internal class RouteArgsBuilder(
         }
 
         return TypeSpec.companionObjectBuilder()
-            .addProperty(buildNavArgsProperty())
+            .addProperty(data.buildNavArgsProperty())
             .build()
     }
 
-    private fun buildNavArgsProperty() :PropertySpec {
+    private fun RouteData.buildNavArgsProperty(): PropertySpec {
 
         val code = CodeBlock.builder()
             .addStatement("listOf(")
             .indent()
 
-        data.arguments.forEach {
+        arguments.forEach {
             code.addStatement("%T(%S) {", ClassNames.navArgument, it.name)
             code.indent().addStatement("type = %T.${it.type.navType}", ClassNames.NavType)
             code.addStatement("nullable = ${it.isNullable}")
@@ -57,7 +65,7 @@ internal class RouteArgsBuilder(
 
         return PropertySpec.builder("navArgs", ClassNames.NamedNavArgument.asList())
             .initializer(code.build())
-            .addKdoc("NamedNavArgs representation for ${data.argumentsName}")
+            .addKdoc("NamedNavArgs representation for ${argumentsName}")
             .build()
 
     }

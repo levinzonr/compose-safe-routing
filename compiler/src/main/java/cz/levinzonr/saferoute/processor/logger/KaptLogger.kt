@@ -1,5 +1,7 @@
 package cz.levinzonr.saferoute.processor.logger
 
+import com.levinzonr.saferoute.codegen.core.LogLevel
+import com.levinzonr.saferoute.codegen.core.Logger
 import javax.annotation.processing.ProcessingEnvironment
 import javax.tools.Diagnostic
 

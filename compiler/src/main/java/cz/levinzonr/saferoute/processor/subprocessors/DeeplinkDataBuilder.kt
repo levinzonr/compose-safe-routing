@@ -1,6 +1,6 @@
 package cz.levinzonr.saferoute.processor.subprocessors
 
-import cz.levinzonr.saferoute.processor.extensions.fieldByName
+import com.levinzonr.saferoute.codegen.codegen.extensions.fieldByName
 import com.levinzonr.saferoute.codegen.models.DeeplinkData
 
 internal object DeeplinkDataBuilder {

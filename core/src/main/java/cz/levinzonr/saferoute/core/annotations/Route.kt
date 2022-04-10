@@ -13,11 +13,10 @@ import kotlin.reflect.KClass
  * @param transition - specifies the transition that will be used for the route builder, uses [DefaultRouteTransition] by default
  * @see RouteTransition
  */
-@Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.SOURCE)
 @Repeatable
 @MustBeDocumented
-@java.lang.annotation.Repeatable(Routes::class)
+@JvmRepeatable(Routes::class)
 annotation class Route(
     val name: String = AnnotationsDefaults.NULL,
     val args: Array<RouteArg> = [],
@@ -26,5 +25,5 @@ annotation class Route(
     val navGraph: RouteNavGraph = RouteNavGraph()
 )
 
+annotation class Routes(val value: Array<Route>)
 
-internal annotation class Routes(val value: Array<Route>)

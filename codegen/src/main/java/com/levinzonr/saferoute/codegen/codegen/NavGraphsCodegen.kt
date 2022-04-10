@@ -1,21 +1,17 @@
-package cz.levinzonr.saferoute.processor.codegen
+package com.levinzonr.saferoute.codegen.codegen
 
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.levinzonr.saferoute.codegen.constants.ClassNames
-import cz.levinzonr.saferoute.processor.logger.Logger
+import com.levinzonr.saferoute.codegen.core.FilesGen
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.NavGraphData
-import java.io.File
 
-internal class NavGraphsCodegen(
-    private val data: ModelData,
-    private val logger: Logger
-) {
+object NavGraphsCodegen : FilesGen {
 
-    fun generate(dir: File) {
-        data.navGraphs.forEach {
-            FileSpec.get(data.packageName, it.createSpecProperty()).writeTo(dir)
+    override fun generate(data: ModelData): List<FileSpec> {
+        return data.navGraphs.map {
+            FileSpec.get(data.packageName, it.createSpecProperty())
         }
     }
 

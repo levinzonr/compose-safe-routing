@@ -28,10 +28,9 @@ import cz.levinzonr.saferoute.ui.theme.RouterTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @ExperimentalAnimationApi
+@ExperimentalMaterialNavigationApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @ExperimentalMaterialNavigationApi
-    @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

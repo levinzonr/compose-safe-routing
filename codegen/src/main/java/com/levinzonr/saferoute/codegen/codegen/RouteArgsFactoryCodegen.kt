@@ -1,16 +1,23 @@
-package cz.levinzonr.saferoute.processor.codegen
+package com.levinzonr.saferoute.codegen.codegen
 
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.levinzonr.saferoute.codegen.constants.ClassNames
+import com.levinzonr.saferoute.codegen.core.FilesGen
+import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.RouteData
 
-internal class RouteArgsFactoryBuilder(
-    private val data: RouteData
-) {
-    fun build() : TypeSpec {
-        return TypeSpec.objectBuilder(data.getArgsFactoryName())
-            .addSuperinterface(ClassNames.RouteArgsFactory.parameterizedBy(data.argsTypeClassName))
+object RouteArgsFactoryCodegen : FilesGen {
+
+    override fun generate(data: ModelData): List<FileSpec> {
+        return data.routes.filter { it.arguments.isNotEmpty() }.map {
+            FileSpec.get(it.argsPackageName, it.toArgsFactory())
+        }
+    }
+
+    private fun RouteData.toArgsFactory() : TypeSpec {
+        return TypeSpec.objectBuilder(getArgsFactoryName())
+            .addSuperinterface(ClassNames.RouteArgsFactory.parameterizedBy(argsTypeClassName))
             .addFunction(buildNavBackStackEntryInitilizer())
             .addFunction(buildSavedStateHandleInitlizer())
             .addProperty(buildLocalArgsPropery())
@@ -19,9 +26,9 @@ internal class RouteArgsFactoryBuilder(
 
 
 
-    private fun buildNavBackStackEntryInitilizer() : FunSpec {
+    private fun RouteData.buildNavBackStackEntryInitilizer() : FunSpec {
         val code = CodeBlock.builder()
-        data.arguments.forEach {
+        arguments.forEach {
             if (it.isNullable) {
                 code.addStatement("val ${it.name} = bundle?.get%T(%S)?.takeIf { it != %S }", it.type.clazz, it.name, "@null")
             } else {
@@ -30,21 +37,21 @@ internal class RouteArgsFactoryBuilder(
             }
         }
 
-        code.addStatement("return ${data.argumentsConstructor}")
+        code.addStatement("return ${argumentsConstructor}")
         return FunSpec.builder("fromBundle")
-            .returns(data.argumentsClassName)
+            .returns(argumentsClassName)
             .addParameter("bundle", ClassNames.Bundle.copy(nullable = true))
             .addModifiers(KModifier.OVERRIDE)
-            .addKdoc("A Helper function to obtain an instance of ${data.argumentsName} from Bundle")
+            .addKdoc("A Helper function to obtain an instance of ${argumentsName} from Bundle")
             .addCode(code.build())
             .build()
     }
 
 
-    private fun buildSavedStateHandleInitlizer() : FunSpec {
+    private fun RouteData.buildSavedStateHandleInitlizer() : FunSpec {
         val code = CodeBlock.builder()
 
-        data.arguments.forEach {
+        arguments.forEach {
             if (it.isNullable) {
                 code.addStatement("val ${it.name} = handle?.get<%T>(%S)", it.type.clazz, it.name)
             } else {
@@ -52,19 +59,19 @@ internal class RouteArgsFactoryBuilder(
             }
         }
 
-        code.addStatement("return ${data.argumentsConstructor}")
+        code.addStatement("return ${argumentsConstructor}")
         return FunSpec.builder("fromSavedStateHandle")
-            .returns(data.argumentsClassName)
-            .addKdoc("A Helper function to obtain an instance of ${data.argumentsName} from SavedStateHandle")
+            .returns(argumentsClassName)
+            .addKdoc("A Helper function to obtain an instance of ${argumentsName} from SavedStateHandle")
             .addParameter("handle", ClassNames.SavedStateHandle.copy(nullable = true))
             .addModifiers(KModifier.OVERRIDE)
             .addCode(code.build())
             .build()
     }
 
-    private fun buildLocalArgsPropery() : PropertySpec {
-        return PropertySpec.builder("LocalArgs", ClassNames.ProvidableCompositionLocal.parameterizedBy(data.argsTypeClassName))
-            .initializer("Local${data.argumentsName}")
+    private fun RouteData.buildLocalArgsPropery() : PropertySpec {
+        return PropertySpec.builder("LocalArgs", ClassNames.ProvidableCompositionLocal.parameterizedBy(argsTypeClassName))
+            .initializer("Local${argumentsName}")
             .addModifiers(KModifier.OVERRIDE)
             .build()
     }

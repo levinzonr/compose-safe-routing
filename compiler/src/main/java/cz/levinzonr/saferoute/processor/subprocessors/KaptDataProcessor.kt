@@ -1,7 +1,8 @@
 package cz.levinzonr.saferoute.processor.subprocessors
 
-import cz.levinzonr.saferoute.annotations.Route
 import com.levinzonr.saferoute.codegen.constants.Constants
+import com.levinzonr.saferoute.codegen.core.DataProcessor
+import cz.levinzonr.saferoute.annotations.Route
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.NavGraphData
 import com.levinzonr.saferoute.codegen.models.RouteData
@@ -9,16 +10,19 @@ import javax.annotation.processing.ProcessingEnvironment
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.element.Element
 
-internal object DataProcessor {
-    val RouteV2Class = Class.forName(Constants.ROUTE).asSubclass(Annotation::class.java)
-    val Routes = Class.forName(Constants.ROUTES).asSubclass(Annotation::class.java)
-    val RouteV1Class = Route::class.java
+internal class KaptDataProcessor(
+    private val processingEnv: ProcessingEnvironment,
+    private val environment: RoundEnvironment?
+) : DataProcessor {
+    private val RouteV2Class = Class.forName(Constants.ROUTE).asSubclass(Annotation::class.java)
+    private val Routes = Class.forName(Constants.ROUTES).asSubclass(Annotation::class.java)
+    private val RouteV1Class = Route::class.java
 
     private fun supported(): Set<Class<out Annotation>> {
         return setOf(RouteV1Class, RouteV2Class, Routes)
     }
 
-    fun process(processingEnv: ProcessingEnvironment, environment: RoundEnvironment?): ModelData? {
+    override fun process(): ModelData? {
         try {
 
             var packageName = ""

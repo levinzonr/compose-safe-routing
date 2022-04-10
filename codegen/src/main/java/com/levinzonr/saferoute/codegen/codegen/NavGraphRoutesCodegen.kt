@@ -1,20 +1,19 @@
-package cz.levinzonr.saferoute.processor.codegen
+package com.levinzonr.saferoute.codegen.codegen
 
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.TypeSpec
-import cz.levinzonr.saferoute.processor.codegen.extensions.toRouteProperty
+import com.levinzonr.saferoute.codegen.codegen.extensions.toRouteProperty
+import com.levinzonr.saferoute.codegen.core.FilesGen
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.NavGraphData
 import java.io.File
 
 
-internal object NavGraphRoutesCodegen {
+object NavGraphRoutesCodegen: FilesGen {
 
-    fun generate(data: ModelData, file: File) {
-        data.navGraphs.forEach { graph ->
-            FileSpec.get(data.packageName, createGraph(graph))
-                .writeTo(file)
-
+    override fun generate(data: ModelData): List<FileSpec> {
+        return data.navGraphs.map { navGraphData ->
+            FileSpec.get(data.packageName, createGraph(navGraphData))
         }
     }
 

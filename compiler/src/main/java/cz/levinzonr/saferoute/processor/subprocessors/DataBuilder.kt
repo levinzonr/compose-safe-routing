@@ -1,10 +1,9 @@
 package cz.levinzonr.saferoute.processor.subprocessors
 
-import com.squareup.kotlinpoet.ClassName
+import com.levinzonr.saferoute.codegen.codegen.extensions.fieldByName
 import cz.levinzonr.saferoute.annotations.Route
 import cz.levinzonr.saferoute.annotations.RouteArg
 import cz.levinzonr.saferoute.annotations.RouteArgType
-import cz.levinzonr.saferoute.processor.extensions.fieldByName
 import com.levinzonr.saferoute.codegen.models.ArgumentData
 import com.levinzonr.saferoute.codegen.models.ArgumentType
 import com.levinzonr.saferoute.codegen.models.OptionalArgData
@@ -39,7 +38,7 @@ internal class RouteDataBuilder(val packageName: String) {
                 packageName= packageName,
                 deeplinks = listOf(),
                 routeTransition = null,
-                contentClassName = ClassName(packageName, annotatedElement.simpleName.toString()),
+                contentName = annotatedElement.simpleName.toString(),
                 params = params,
                 navGraphName = annotation.name,
                 start = annotation.start
@@ -55,7 +54,7 @@ internal class RouteDataBuilder(val packageName: String) {
                 packageName = packageName,
                 deeplinks = deeplinksData.map { DeeplinkDataBuilder.build(it) },
                 routeTransition = annotation.getClassProperty("transition"),
-                contentClassName = ClassName(packageName, annotatedElement.simpleName.toString()),
+                contentName = annotatedElement.simpleName.toString(),
                 params = params,
                 navGraphName = navGraph.fieldByName("name"),
                 start = navGraph.fieldByName("start")
@@ -98,9 +97,9 @@ internal class ArgumentDataBuilder {
         when (type) {
             ArgumentType.StringType -> {
                 val stringDefault = if (isNullable) {
-                    if (value == RouteArg.VALUE_NULL) null else value
+                    if (value == "@null") null else value
                 } else {
-                    require(value != RouteArg.VALUE_NULL)
+                    require(value != "@null")
                     value
                 }
 

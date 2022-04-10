@@ -13,7 +13,7 @@ data class RouteData(
     val packageName: String,
     val deeplinks: List<DeeplinkData>,
     val routeTransition: TypeMirror?,
-    val contentClassName: ClassName,
+    val contentName: String,
     val params: List<String>,
     val navGraphName: String,
     val start: Boolean
@@ -35,6 +35,8 @@ data class RouteData(
         argsPackageName,
         argumentsName
     )
+
+    val contentClassName = ClassName(packageName, contentName)
 
     val routeClassName = ClassName(
         packageName, "${name.capitalize()}Route"

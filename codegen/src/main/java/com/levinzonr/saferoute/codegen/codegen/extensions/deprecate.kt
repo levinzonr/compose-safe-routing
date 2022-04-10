@@ -1,4 +1,4 @@
-package cz.levinzonr.saferoute.processor.codegen.extensions
+package com.levinzonr.saferoute.codegen.codegen.extensions
 
 import com.squareup.kotlinpoet.*
 

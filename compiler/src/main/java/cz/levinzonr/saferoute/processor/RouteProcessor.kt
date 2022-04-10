@@ -2,11 +2,13 @@ package cz.levinzonr.saferoute.processor
 
 import cz.levinzonr.saferoute.annotations.Route
 import com.levinzonr.saferoute.codegen.constants.Constants
+import com.levinzonr.saferoute.codegen.core.FileGenProcessor
+import com.levinzonr.saferoute.codegen.core.LogLevel
+import com.levinzonr.saferoute.codegen.core.ProcessingComponents
+import com.levinzonr.saferoute.codegen.core.TypeHelper
 import cz.levinzonr.saferoute.processor.logger.KaptLogger
-import cz.levinzonr.saferoute.processor.subprocessors.DataProcessor
-import cz.levinzonr.saferoute.processor.subprocessors.RoutesActionsProcessor
-import cz.levinzonr.saferoute.processor.subprocessors.RoutesArgsProcessor
-import cz.levinzonr.saferoute.processor.subprocessors.RoutesProcessor
+import cz.levinzonr.saferoute.processor.subprocessors.KaptDataProcessor
+import cz.levinzonr.saferoute.processor.typehelper.TypeHelperImpl
 import java.io.File
 import javax.annotation.processing.AbstractProcessor
 import javax.annotation.processing.RoundEnvironment
@@ -14,6 +16,7 @@ import javax.annotation.processing.SupportedSourceVersion
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
 import kotlin.Exception
+import kotlin.math.log
 
 
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
@@ -36,27 +39,18 @@ internal class RouteProcessor : AbstractProcessor() {
     ): Boolean {
 
         val logger = KaptLogger(processingEnv)
+        val processingComponents = ProcessingComponents(
+            logger = logger,
+            typeHelper = TypeHelperImpl(processingEnv.typeUtils)
+        )
 
         try {
             val buildDir = processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME] ?: return false
-
-            val data = DataProcessor.process(processingEnv, roundEnv) ?: return false
-
-            logger.log("Data obtained, start actions processing, $data")
-            RoutesActionsProcessor.process(data ,File(buildDir))
-
-            logger.log("Star args processing")
-            RoutesArgsProcessor.process(data, File(buildDir))
-
-
-            logger.log("Start routes processings")
-            RoutesProcessor(processingEnv, logger).process(data, File(buildDir))
-
-            logger.log("Routes processings complete")
+            val data = KaptDataProcessor(processingEnv, roundEnv).process() ?: return false
+            FileGenProcessor(processingComponents).process(data, File(buildDir))
             return true
-
         } catch (e: Exception) {
-            logger.log(e.message.toString())
+            logger.log(e.stackTraceToString(), level = LogLevel.Error)
             return false
         }
 

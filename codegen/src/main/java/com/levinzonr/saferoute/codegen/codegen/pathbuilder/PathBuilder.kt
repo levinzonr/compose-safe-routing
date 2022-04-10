@@ -1,4 +1,4 @@
-package cz.levinzonr.saferoute.processor.pathbuilder
+package com.levinzonr.saferoute.codegen.codegen.pathbuilder
 
 import com.levinzonr.saferoute.codegen.models.ArgumentData
 

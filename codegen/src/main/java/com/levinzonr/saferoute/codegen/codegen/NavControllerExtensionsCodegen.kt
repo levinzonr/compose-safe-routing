@@ -1,19 +1,21 @@
-package cz.levinzonr.saferoute.processor.codegen
+package com.levinzonr.saferoute.codegen.codegen
 
+import com.levinzonr.saferoute.codegen.codegen.extensions.deprecate
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
-import cz.levinzonr.saferoute.processor.codegen.extensions.toParamSpec
+import com.levinzonr.saferoute.codegen.codegen.extensions.toParamSpec
 import com.levinzonr.saferoute.codegen.constants.ClassNames
+import com.levinzonr.saferoute.codegen.core.FilesGen
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.RouteData
 
-internal class NavControllerExtensionsBuilder(
-    private val modelData: ModelData
-) {
-    fun build(): FileSpec {
-        val builder = FileSpec.builder(modelData.packageName, "NavController+RouteActions")
-        modelData.routes.forEach { builder.addFunction(createActionFunSpec(it)) }
-        return builder.build()
+
+object NavControllerExtensionsCodegen : FilesGen {
+
+    override fun generate(data: ModelData) : List<FileSpec> {
+        val builder = FileSpec.builder(data.packageName, "NavController+RouteActions")
+        data.routes.forEach { builder.addFunction(createActionFunSpec(it)) }
+        return listOf(builder.build())
     }
 
     private fun createActionFunSpec(route: RouteData) : FunSpec {
