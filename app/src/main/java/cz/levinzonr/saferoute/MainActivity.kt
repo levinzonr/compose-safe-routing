@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
                         ) { router ->
                             homeScreen {
                                 HomeScreen(
-                                    onShowPokedex = { router.navigate(PokemonDetailsRoute("")) },
+                                    onShowPokedex = { router.navigate(PokedexGraph) },
                                     onDeeplink = { router.navigate(MainGraphRoutes.HomeScreen()) }
                                 )
                             }

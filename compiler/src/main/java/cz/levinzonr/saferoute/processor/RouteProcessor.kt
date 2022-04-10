@@ -2,10 +2,10 @@ package cz.levinzonr.saferoute.processor
 
 import cz.levinzonr.saferoute.annotations.Route
 import com.levinzonr.saferoute.codegen.constants.Constants
-import com.levinzonr.saferoute.codegen.core.FileGenProcessor
+import com.levinzonr.saferoute.codegen.core.DataProcessor
+import com.levinzonr.saferoute.codegen.core.RoutesGenerationProcessor
 import com.levinzonr.saferoute.codegen.core.LogLevel
 import com.levinzonr.saferoute.codegen.core.ProcessingComponents
-import com.levinzonr.saferoute.codegen.core.TypeHelper
 import cz.levinzonr.saferoute.processor.logger.KaptLogger
 import cz.levinzonr.saferoute.processor.subprocessors.KaptDataProcessor
 import cz.levinzonr.saferoute.processor.typehelper.TypeHelperImpl
@@ -16,7 +16,6 @@ import javax.annotation.processing.SupportedSourceVersion
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
 import kotlin.Exception
-import kotlin.math.log
 
 
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
@@ -39,19 +38,20 @@ internal class RouteProcessor : AbstractProcessor() {
     ): Boolean {
 
         val logger = KaptLogger(processingEnv)
+        val buildDir = processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME] ?: return false
+
         val processingComponents = ProcessingComponents(
             logger = logger,
-            typeHelper = TypeHelperImpl(processingEnv.typeUtils)
+            typeHelper = TypeHelperImpl(processingEnv.typeUtils),
+            dataProcessor = KaptDataProcessor(processingEnv, roundEnv),
+            directory = File(buildDir)
         )
-
-        try {
-            val buildDir = processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME] ?: return false
-            val data = KaptDataProcessor(processingEnv, roundEnv).process() ?: return false
-            FileGenProcessor(processingComponents).process(data, File(buildDir))
-            return true
+        return try {
+            RoutesGenerationProcessor(processingComponents).process()
+            true
         } catch (e: Exception) {
             logger.log(e.stackTraceToString(), level = LogLevel.Error)
-            return false
+            false
         }
 
     }
