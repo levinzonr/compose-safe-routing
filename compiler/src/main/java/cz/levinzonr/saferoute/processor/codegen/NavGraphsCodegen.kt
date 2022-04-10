@@ -9,37 +9,31 @@ import cz.levinzonr.saferoute.processor.models.ModelData
 import cz.levinzonr.saferoute.processor.models.NavGraphData
 import java.io.File
 
-internal class RouteGraphCodegen(
+internal class NavGraphsCodegen(
     private val data: ModelData,
     private val logger: Logger
 ) {
 
     fun generate(dir: File) {
-        val typeSpec = TypeSpec.objectBuilder(Constants.FILE_NAV_SPECS)
         data.navGraphs.forEach {
-            typeSpec.addProperty(it.createSpecProperty())
+            FileSpec.get(data.packageName, it.createSpecProperty()).writeTo(dir)
         }
-        FileSpec.get(data.packageName, typeSpec.build()).writeTo(dir)
     }
 
 
-    private fun NavGraphData.createSpecProperty() : PropertySpec{
-        val type = TypeSpec.anonymousClassBuilder()
+    private fun NavGraphData.createSpecProperty() : TypeSpec{
+        return TypeSpec.objectBuilder(graphName)
             .addSuperinterface(ClassNames.RouteGraphSpec)
             .addProperty(
                 PropertySpec.builder("name", String::class, KModifier.OVERRIDE)
-                    .initializer("%S", name)
+                    .initializer("%S", graphName)
                     .build()
             )
             .addProperty(
                 PropertySpec.builder("start", ClassNames.RouteSpec.parameterizedBy(STAR), KModifier.OVERRIDE)
-                    .initializer(start.specName)
+                    .initializer("%T", start.specClassName)
                 .build()
             )
-            .build()
-
-        return PropertySpec.builder(graphSpecName, ClassNames.RouteGraphSpec)
-            .initializer("%L", type)
             .build()
     }
 }

@@ -46,7 +46,7 @@ internal class RoutesTransitionsCodegen(
     }
 
     private fun CodeBlock.Builder.beginControlFlow(routeData: RouteData): CodeBlock.Builder {
-        beginControlFlow("%T(${routeData.specName}, %T)", ClassNames.route, routeData.routeTransition)
+        beginControlFlow("%T(%T, %T)", ClassNames.route, routeData.specClassName, routeData.routeTransition)
         return this
     }
 

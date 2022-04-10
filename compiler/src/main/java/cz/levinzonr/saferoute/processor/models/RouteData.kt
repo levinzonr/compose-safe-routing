@@ -21,7 +21,8 @@ internal data class RouteData(
 ) {
 
     val argsPackageName = packageName + "." + Constants.FILE_ARGS_DIR
-    val specName: String get() = "Routes.${name.capitalize()}"
+    val specName: String get() = "${name.capitalize()}Route"
+    val specClassName = ClassName(packageName, specName)
 
     val argumentsName: String get() = "${name.capitalize()}${Constants.FILE_ARGS_POSTFIX}"
     val argumentsClassName = ClassName(argsPackageName, argumentsName)

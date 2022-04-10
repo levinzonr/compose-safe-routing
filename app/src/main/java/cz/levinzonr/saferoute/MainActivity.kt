@@ -44,15 +44,15 @@ class MainActivity : ComponentActivity() {
                         ) { router ->
                             homeScreen {
                                 HomeScreen(
-                                    onShowPokedex = { router.navigate(NavGraphs.Pokedex) },
+                                    onShowPokedex = { router.navigate(PokedexGraph) },
                                     onDeeplink = { router.navigate(Routes.HomeScreen()) }
                                 )
                             }
 
-                            navigation(NavGraphs.Pokedex) {
+                            navigation(PokedexGraph) {
                                 pokemonList {
                                     PokemonListScreen(
-                                       onPokemonClick = { router.navigate(Routes.PokemonDetails(it.id))}
+                                       onPokemonClick = { router.navigate(PokedexGraphRoutes.PokemonDetails(it.id))}
                                     )
                                 }
 
@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
                                     val viewModel = hiltViewModel<PokemonDetailsViewModel>()
                                     val poke = viewModel.pokemon.collectAsState().value
                                     PokemonDetailsScreen(pokemon = poke, onShowStatsClick = {
-                                        router.navigate(Routes.PokemonStats(
+                                        router.navigate(PokedexGraphRoutes.PokemonStats(
                                             name = it.name ?: "",
                                             category = null,
                                             hp = it.hp ?: 0,
