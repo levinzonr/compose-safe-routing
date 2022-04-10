@@ -3,6 +3,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.devtools.ksp") version "1.6.10-1.0.3"
 }
 
 android {
@@ -46,11 +47,20 @@ android {
     }
 }
 
+kotlin {
+    sourceSets.main {
+        kotlin.srcDir("build/generated/ksp/main/kotlin")
+    }
+    sourceSets.test {
+        kotlin.srcDir("build/generated/ksp/test/kotlin")
+    }
+}
+
 dependencies {
     val hilt_version = "2.37"
     implementation(project(":accompanist-navigation"))
-    "kapt"(project(":processor-kapt"))
-
+    // "kapt"(project(":processor-kapt"))
+    ksp(project(":processor-ksp"))
 
     /* kapt("cz.levinzonr.safe-routing:compiler:1.0.1")
      implementation("router:core:1")*/

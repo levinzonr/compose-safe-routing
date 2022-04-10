@@ -1,9 +1,9 @@
 plugins {
-    id("java-library")
-    id("org.jetbrains.kotlin.jvm")
+    kotlin("jvm")
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
+
+dependencies {
+    implementation(project(":codegen"))
+    implementation("com.google.devtools.ksp:symbol-processing-api:1.6.10-1.0.3")
 }
