@@ -21,6 +21,7 @@ internal object ClassNames {
     val NavDeepLinkDSL = ClassName(Constants.PACKAGE_NAVIGATION, "navDeepLink")
     val NavGraphBuilder = ClassName(Constants.PACKAGE_NAVIGATION, "NavGraphBuilder")
     val route = ClassName(Constants.PACKAGE_CORE, "route")
+    val navigateTo = ClassName(Constants.PACKAGE_CORE, "navigateTo")
     val BottomSheetRouteTransition = ClassName(Constants.PACKAGE_ACCOMPANIST + ".transitions", "BottomSheetRouteTransition")
     val AnimatedRouteTransition = ClassName(Constants.PACKAGE_ACCOMPANIST + ".transitions", "AnimatedRouteTransition")
     val ExperimentalAnimationApi = ClassName("androidx.compose.animation", "ExperimentalAnimationApi")

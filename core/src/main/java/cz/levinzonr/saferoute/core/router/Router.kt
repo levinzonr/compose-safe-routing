@@ -17,7 +17,7 @@ interface Router {
         navigationExtras: Navigator.Extras? = null
     )
 
-    fun navigateBack() : Boolean
+    fun navigateUp() : Boolean
 
     fun popBackStack() : Boolean
 

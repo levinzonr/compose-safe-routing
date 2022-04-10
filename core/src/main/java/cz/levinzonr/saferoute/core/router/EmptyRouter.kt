@@ -19,7 +19,7 @@ class EmptyRouter : Router {
         // no-op
     }
 
-    override fun navigateBack(): Boolean = false
+    override fun navigateUp(): Boolean = false
 
     override fun popBackStack(): Boolean = true
 

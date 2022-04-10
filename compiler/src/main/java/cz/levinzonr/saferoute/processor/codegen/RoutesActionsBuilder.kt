@@ -2,6 +2,7 @@ package cz.levinzonr.saferoute.processor.codegen
 
 import com.squareup.kotlinpoet.*
 import cz.levinzonr.saferoute.processor.codegen.extensions.createActionFun
+import cz.levinzonr.saferoute.processor.codegen.extensions.deprecate
 import cz.levinzonr.saferoute.processor.codegen.extensions.toParamSpec
 import cz.levinzonr.saferoute.processor.constants.Constants
 import cz.levinzonr.saferoute.processor.constants.KDoc
@@ -34,6 +35,11 @@ internal class RoutesActionsBuilder(
         arguments.forEach { builder.addParameter(it.toParamSpec()) }
         return builder
             .addKdoc(KDoc.ROUTES_ACTIONS_FUN, name)
+            .deprecate(
+                message = "RouteActions.kt is deprecated, use Routes objects instead",
+                replaceWithExpression = "${specName}()",
+                imports = arrayOf(specClassName)
+            )
             .build()
     }
 }

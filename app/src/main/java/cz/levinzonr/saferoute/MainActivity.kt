@@ -16,7 +16,9 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import cz.levinzonr.saferoute.accompanist.navigation.AnimatedSafeRouteNavHost
+import cz.levinzonr.saferoute.core.navigateTo
 import cz.levinzonr.saferoute.core.navigation
+import cz.levinzonr.saferoute.screens.details.PokemonDetailsRoute
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsScreen
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsViewModel
 import cz.levinzonr.saferoute.screens.home.HomeScreen
@@ -37,15 +39,16 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     val bottomSheetNavigator = rememberBottomSheetNavigator()
+                    val navComposable = rememberAnimatedNavController()
                     ModalBottomSheetLayout(bottomSheetNavigator) {
                         AnimatedSafeRouteNavHost(
-                            startRouteSpec = Routes.HomeScreen,
+                            startRouteSpec = MainGraphRoutes.HomeScreen,
                             navController = rememberAnimatedNavController(bottomSheetNavigator)
                         ) { router ->
                             homeScreen {
                                 HomeScreen(
-                                    onShowPokedex = { router.navigate(PokedexGraph) },
-                                    onDeeplink = { router.navigate(Routes.HomeScreen()) }
+                                    onShowPokedex = { router.navigate(PokemonDetailsRoute("")) },
+                                    onDeeplink = { router.navigate(MainGraphRoutes.HomeScreen()) }
                                 )
                             }
 

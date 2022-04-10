@@ -20,7 +20,7 @@ class RouterImpl(private val navController: NavController) : Router {
         navController.navigateTo(direction, navOptions, navigationExtras)
     }
 
-    override fun navigateBack() : Boolean {
+    override fun navigateUp() : Boolean {
         return navController.navigateUp()
     }
 

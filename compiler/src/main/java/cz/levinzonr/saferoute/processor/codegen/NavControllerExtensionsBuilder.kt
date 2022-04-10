@@ -3,6 +3,7 @@ package cz.levinzonr.saferoute.processor.codegen
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import cz.levinzonr.saferoute.annotations.Route
+import cz.levinzonr.saferoute.processor.codegen.extensions.deprecate
 import cz.levinzonr.saferoute.processor.codegen.extensions.toParamSpec
 import cz.levinzonr.saferoute.processor.constants.ClassNames
 import cz.levinzonr.saferoute.processor.models.ModelData
@@ -22,6 +23,11 @@ internal class NavControllerExtensionsBuilder(
         return FunSpec.builder("navigateTo${route.name.capitalize()}")
             .addParameters(route.arguments.map { it.toParamSpec() })
             .receiver(ClassNames.NavController)
+            .deprecate(
+                message = "RouteActions.kt is deprecated, please use Route object and its invoke() operator",
+                replaceWithExpression = "navigateTo(${route.specName}())",
+                imports = arrayOf(route.specClassName, ClassNames.navigateTo)
+            )
             .returns(Unit::class)
             .addCode("navigate(RoutesActions.to${route.name.capitalize()}($arguments))")
             .build()
