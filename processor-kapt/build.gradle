@@ -21,7 +21,6 @@ publishing {
             groupId = 'cz.levinzonr.safe-routing'
             artifactId = 'processor-kapt'
             from components.java
-
         }
     }
 }
