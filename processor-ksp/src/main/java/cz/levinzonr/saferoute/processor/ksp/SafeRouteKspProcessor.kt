@@ -1,7 +1,6 @@
 package cz.levinzonr.saferoute.processor.ksp
 
 import com.google.devtools.ksp.processing.CodeGenerator
-import com.google.devtools.ksp.processing.Dependencies
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.processing.SymbolProcessor
 import com.google.devtools.ksp.symbol.KSAnnotated
@@ -12,17 +11,14 @@ import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.ksp.KotlinPoetKspPreview
 import com.squareup.kotlinpoet.ksp.writeTo
 import java.io.File
-import java.lang.IllegalArgumentException
-import kotlin.math.log
 
 @OptIn(KotlinPoetKspPreview::class)
-class SafeRouteKspProcessor(
+internal class SafeRouteKspProcessor(
     private val logger: Logger,
-    private val packageName: String,
     private val codeGenerator: CodeGenerator,
 ) : SymbolProcessor {
 
-    internal class TypeH(val resolver: Resolver): TypeHelper {
+    internal class TypeH(val resolver: Resolver) : TypeHelper {
         override fun superTypes(value: Any?): List<String> {
             return emptyList()
         }
@@ -43,21 +39,17 @@ class SafeRouteKspProcessor(
 
         if (elements.isEmpty()) return emptyList()
 
-        val processingComponents = ProcessingComponents(
+        val processingComponent = ProcessingComponent(
             logger = logger,
             typeHelper = TypeH(resolver),
             dataProcessor = KspDataProcessor(elements, resolver),
             directory = File(resolver.getAllFiles().first().packageName.getQualifier()),
-            writer = object : Writer {
-                override fun write(fileSpec: FileSpec, directory: File) {
-                    fileSpec.writeTo(codeGenerator, aggregating = true)
-                }
-            }
+            writer = KspWriter(codeGenerator)
         )
 
 
         try {
-            RoutesGenerationProcessor(processingComponents)
+            RoutesGenerationProcessor(processingComponent)
                 .process()
         } catch (e: Throwable) {
             logger.log("Error processing routes: ${e.stackTraceToString()}")

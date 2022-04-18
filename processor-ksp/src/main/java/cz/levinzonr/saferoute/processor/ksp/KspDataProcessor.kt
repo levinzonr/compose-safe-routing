@@ -11,7 +11,7 @@ import com.levinzonr.saferoute.codegen.models.*
 import java.lang.IllegalArgumentException
 
 @OptIn(KspExperimental::class)
-class KspDataProcessor(
+internal class KspDataProcessor(
     private val elements: List<KSFunctionDeclaration>,
     private val resolver: Resolver
 ) : DataProcessor {

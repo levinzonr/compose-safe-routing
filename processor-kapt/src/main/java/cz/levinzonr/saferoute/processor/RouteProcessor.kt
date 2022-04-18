@@ -2,10 +2,9 @@ package cz.levinzonr.saferoute.processor
 
 import cz.levinzonr.saferoute.annotations.Route
 import com.levinzonr.saferoute.codegen.constants.Constants
-import com.levinzonr.saferoute.codegen.core.DataProcessor
 import com.levinzonr.saferoute.codegen.core.RoutesGenerationProcessor
 import com.levinzonr.saferoute.codegen.core.LogLevel
-import com.levinzonr.saferoute.codegen.core.ProcessingComponents
+import com.levinzonr.saferoute.codegen.core.ProcessingComponent
 import cz.levinzonr.saferoute.processor.logger.KaptLogger
 import cz.levinzonr.saferoute.processor.subprocessors.KaptDataProcessor
 import cz.levinzonr.saferoute.processor.typehelper.TypeHelperImpl
@@ -40,7 +39,7 @@ internal class RouteProcessor : AbstractProcessor() {
         val logger = KaptLogger(processingEnv)
         val buildDir = processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME] ?: return false
 
-        val processingComponents = ProcessingComponents(
+        val processingComponents = ProcessingComponent(
             logger = logger,
             typeHelper = TypeHelperImpl(processingEnv.typeUtils),
             dataProcessor = KaptDataProcessor(processingEnv, roundEnv),

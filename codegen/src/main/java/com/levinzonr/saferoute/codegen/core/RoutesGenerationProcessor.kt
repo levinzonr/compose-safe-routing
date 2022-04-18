@@ -1,18 +1,16 @@
 package com.levinzonr.saferoute.codegen.core
 
 import com.levinzonr.saferoute.codegen.codegen.*
-import com.levinzonr.saferoute.codegen.models.ModelData
-import java.io.File
 
 
 class RoutesGenerationProcessor(
-    components: ProcessingComponents
+    component: ProcessingComponent
 ) {
 
-    private val logger: Logger = components.logger
-    private val dataProcessor = components.dataProcessor
-    private val directory = components.directory
-    private val writer = components.writer
+    private val logger: Logger = component.logger
+    private val dataProcessor = component.dataProcessor
+    private val directory = component.directory
+    private val writer = component.writer
 
     private val generators: List<FilesGen> = listOf(
         NavControllerExtensionsCodegen,
@@ -24,7 +22,7 @@ class RoutesGenerationProcessor(
         RoutesActionsCodegen,
         RoutesCodegen,
         RoutesSpecsCodegen,
-        RoutesTransitionsCodegen(components.typeHelper)
+        RoutesTransitionsCodegen(component.typeHelper)
     )
 
     fun process() = try {
