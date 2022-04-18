@@ -12,5 +12,6 @@ include(\":annotations\")
 include(\":core\")
 include(\":accompanist-navigation\")
 include(\":processor-kapt\")
+include(\":codegen\")
 include(\":processor-ksp\")
 "  > settings.gradle.kts
