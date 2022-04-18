@@ -3,6 +3,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.devtools.ksp") version "1.6.10-1.0.3"
 }
 
 android {
@@ -37,25 +38,33 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
-        useIR = true
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = rootProject.extra["compose_version"] as String
-        kotlinCompilerVersion = "1.4.32"
     }
+
+    applicationVariants.all {
+        kotlin.sourceSets {
+            getByName(name) {
+                kotlin.srcDir("build/generated/ksp/$name/kotlin")
+            }
+        }
+    }
+
 }
+
 
 dependencies {
     val hilt_version = "2.37"
     implementation(project(":accompanist-navigation"))
-    "kapt"(project(":compiler"))
+    // "kapt"(project(":processor-kapt"))
+    ksp(project(":processor-ksp"))
 
-
-   /* kapt("cz.levinzonr.safe-routing:compiler:1.0.1")
-    implementation("router:core:1")*/
+    /* kapt("cz.levinzonr.safe-routing:compiler:1.0.1")
+     implementation("router:core:1")*/
 
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
     implementation("androidx.navigation:navigation-compose:${Deps.composeNavigation}")

@@ -14,8 +14,10 @@
             <option value="$PROJECT_DIR$/annotations" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/buildSrc" />
-            <option value="$PROJECT_DIR$/compiler" />
+            <option value="$PROJECT_DIR$/codegen" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/processor-kapt" />
+            <option value="$PROJECT_DIR$/processor-ksp" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

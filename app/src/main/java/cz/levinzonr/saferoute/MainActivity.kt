@@ -18,7 +18,7 @@ import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import cz.levinzonr.saferoute.accompanist.navigation.AnimatedSafeRouteNavHost
 import cz.levinzonr.saferoute.core.navigateTo
 import cz.levinzonr.saferoute.core.navigation
-import cz.levinzonr.saferoute.screens.details.PokemonDetailsRoute
+import cz.levinzonr.saferoute.screens.*
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsScreen
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsViewModel
 import cz.levinzonr.saferoute.screens.home.HomeScreen
@@ -28,10 +28,9 @@ import cz.levinzonr.saferoute.ui.theme.RouterTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @ExperimentalAnimationApi
+@ExperimentalMaterialNavigationApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @ExperimentalMaterialNavigationApi
-    @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -47,7 +46,7 @@ class MainActivity : ComponentActivity() {
                         ) { router ->
                             homeScreen {
                                 HomeScreen(
-                                    onShowPokedex = { router.navigate(PokemonDetailsRoute("")) },
+                                    onShowPokedex = { router.navigate(PokedexGraph) },
                                     onDeeplink = { router.navigate(MainGraphRoutes.HomeScreen()) }
                                 )
                             }
