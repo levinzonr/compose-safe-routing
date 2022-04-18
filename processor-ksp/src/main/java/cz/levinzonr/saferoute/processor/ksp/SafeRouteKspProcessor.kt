@@ -60,15 +60,4 @@ internal class SafeRouteKspProcessor(
         return emptyList()
     }
 
-
-    private fun processElements(elements: List<KSAnnotated>) {
-        elements.forEach { element ->
-            val annotations = element.annotations
-            annotations.forEach { annotation ->
-
-            }
-        }
-    }
-
-
 }
