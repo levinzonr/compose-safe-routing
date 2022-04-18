@@ -18,7 +18,7 @@ import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import cz.levinzonr.saferoute.accompanist.navigation.AnimatedSafeRouteNavHost
 import cz.levinzonr.saferoute.core.navigateTo
 import cz.levinzonr.saferoute.core.navigation
-import cz.levinzonr.saferoute.screens.details.PokemonDetailsRoute
+import cz.levinzonr.saferoute.screens.*
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsScreen
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsViewModel
 import cz.levinzonr.saferoute.screens.home.HomeScreen

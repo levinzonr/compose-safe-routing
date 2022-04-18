@@ -12,13 +12,20 @@ data class RouteData(
     val arguments: List<ArgumentData>,
     val packageName: String,
     val deeplinks: List<DeeplinkData>,
-    val routeTransition: TypeMirror?,
+    val routeTransition: String?,
     val contentName: String,
     val params: List<String>,
     val navGraphName: String,
     val start: Boolean
 ) {
 
+    val routeTransitionClass
+        get() = routeTransition?.let {
+            ClassName(
+                packageName = routeTransition.split(".").dropLast(1).joinToString("."),
+                simpleNames = listOf(routeTransition.split(".").last())
+            )
+        }
     val argsPackageName = packageName + "." + Constants.FILE_ARGS_DIR
     val specName: String get() = "${name.capitalize()}Route"
     val specClassName = ClassName(packageName, specName)
@@ -42,17 +49,18 @@ data class RouteData(
         packageName, "${name.capitalize()}Route"
     )
 
-    val routeSpecClassName: TypeName get() {
-        return ClassNames.RouteSpec.parameterizedBy(argsTypeClassName)
-    }
+    val routeSpecClassName: TypeName
+        get() {
+            return ClassNames.RouteSpec.parameterizedBy(argsTypeClassName)
+        }
 
     val argumentsConstructor: String get() = "$argumentsName(${arguments.joinToString { it.name }})"
 
 
-    val builderName : String = "${name.decapitalize()}"
+    val builderName: String = "${name.decapitalize()}"
 
 
-    fun getArgsFactoryName() : String{
+    fun getArgsFactoryName(): String {
         return "$argumentsName${Constants.FILE_ROUTE_ARG_FACTORY}"
     }
 }

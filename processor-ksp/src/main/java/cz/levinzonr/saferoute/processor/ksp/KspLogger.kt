@@ -7,6 +7,10 @@ import com.levinzonr.saferoute.codegen.core.Logger
 internal class KspLogger(
     private val kspLogger: KSPLogger
 ) : Logger {
+
+    init {
+    }
+
     override fun log(message: String, level: LogLevel) {
         when(level) {
             LogLevel.Error -> kspLogger.error(message)

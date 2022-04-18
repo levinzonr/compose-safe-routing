@@ -1,7 +1,8 @@
 package cz.levinzonr.saferoute.processor.subprocessors
 
-import com.levinzonr.saferoute.codegen.codegen.extensions.fieldByName
+import com.levinzonr.saferoute.codegen.codegen.extensions.checkNullable
 import com.levinzonr.saferoute.codegen.models.DeeplinkData
+import cz.levinzonr.saferoute.processor.extensions.fieldByName
 
 internal object DeeplinkDataBuilder {
     fun build(annotation: Annotation) : DeeplinkData {
@@ -14,7 +15,5 @@ internal object DeeplinkDataBuilder {
         }
     }
 
-    private fun String.checkNullable(): String? {
-        return takeUnless { it == "@null" }
-    }
+
 }

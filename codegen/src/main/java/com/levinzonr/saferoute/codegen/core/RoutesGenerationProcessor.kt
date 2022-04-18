@@ -12,6 +12,7 @@ class RoutesGenerationProcessor(
     private val logger: Logger = components.logger
     private val dataProcessor = components.dataProcessor
     private val directory = components.directory
+    private val writer = components.writer
 
     private val generators: List<FilesGen> = listOf(
         NavControllerExtensionsCodegen,
@@ -29,7 +30,7 @@ class RoutesGenerationProcessor(
     fun process() = try {
         dataProcessor.process()?.let { data ->
             generators.forEach { gens ->
-                gens.generate(data).forEach { it.writeTo(directory) }
+                gens.generate(data).forEach { writer.write(it, directory) }
             }
         }
 

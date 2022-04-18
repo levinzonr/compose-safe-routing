@@ -1,6 +1,5 @@
 package cz.levinzonr.saferoute.processor.subprocessors
 
-import com.levinzonr.saferoute.codegen.codegen.extensions.fieldByName
 import cz.levinzonr.saferoute.annotations.Route
 import cz.levinzonr.saferoute.annotations.RouteArg
 import cz.levinzonr.saferoute.annotations.RouteArgType
@@ -8,7 +7,7 @@ import com.levinzonr.saferoute.codegen.models.ArgumentData
 import com.levinzonr.saferoute.codegen.models.ArgumentType
 import com.levinzonr.saferoute.codegen.models.OptionalArgData
 import com.levinzonr.saferoute.codegen.models.RouteData
-import java.lang.IllegalArgumentException
+import cz.levinzonr.saferoute.processor.extensions.fieldByName
 import java.lang.reflect.InvocationTargetException
 import javax.lang.model.element.Element
 import javax.lang.model.type.MirroredTypeException
@@ -53,7 +52,7 @@ internal class RouteDataBuilder(val packageName: String) {
                 arguments = argsData.map { ArgumentDataBuilder().from(it) },
                 packageName = packageName,
                 deeplinks = deeplinksData.map { DeeplinkDataBuilder.build(it) },
-                routeTransition = annotation.getClassProperty("transition"),
+                routeTransition = annotation.getClassProperty("transition").toString(),
                 contentName = annotatedElement.simpleName.toString(),
                 params = params,
                 navGraphName = navGraph.fieldByName("name"),
@@ -68,11 +67,13 @@ internal class ArgumentDataBuilder {
     fun from(routeArg: RouteArg): ArgumentData {
         val argType = requireNotNull(ArgumentType.values().find { routeArg.type.clazz == it.clazz })
         return with(routeArg) {
-            val optional = if (isOptional) buildOptionData(
-                argType,
-                defaultValue,
-                routeArg.type == RouteArgType.StringNullableType
-            ) else null
+            val optional =  OptionalArgData.build(
+                type = argType,
+                value = defaultValue,
+                isNullable = routeArg.type == RouteArgType.StringNullableType,
+                isOptional = isOptional,
+                name = name
+            )
             ArgumentData(name, argType, optional, type == RouteArgType.StringNullableType)
         }
     }
@@ -84,54 +85,11 @@ internal class ArgumentDataBuilder {
             val name = fieldByName<String>("name")
             val type = ArgumentType.from(getClassProperty("type"))
             val isNullable = fieldByName<Boolean>("isNullable")
-            val optional = if (isOptional) buildOptionData(type, defaultValue, isNullable) else null
+            val optional = OptionalArgData.build(type, defaultValue, isNullable, isOptional, name)
             ArgumentData(name, type, optional, isNullable)
         }
     }
 
-    private fun buildOptionData(
-        type: ArgumentType,
-        value: String,
-        isNullable: Boolean
-    ): OptionalArgData<*> {
-        when (type) {
-            ArgumentType.StringType -> {
-                val stringDefault = if (isNullable) {
-                    if (value == "@null") null else value
-                } else {
-                    require(value != "@null")
-                    value
-                }
-
-                return OptionalArgData.OptionalString(stringDefault)
-            }
-
-            ArgumentType.IntType -> {
-                val intValue =
-                    requireNotNull(value.toIntOrNull()) { "Provided arg value ($value) is not matching type $type" }
-                return OptionalArgData.OptionalInt(intValue)
-            }
-            ArgumentType.FloatType -> {
-                val floatValue =
-                    requireNotNull(value.toFloatOrNull()) { "Provided arg value ($value) is not matching type $type" }
-                return OptionalArgData.OptionalFloat(floatValue)
-
-            }
-            ArgumentType.LongType -> {
-                val longValue =
-                    requireNotNull(value.toLongOrNull()) { "Provided arg value ($value) is not matching type $type" }
-                return OptionalArgData.OptionalLong(longValue)
-            }
-            ArgumentType.BooleanType -> {
-                val boolValue =
-                    requireNotNull(value.toBoolean()) { "Provided arg value ($value) is not matching type $type" }
-                return OptionalArgData.OptionalBool(boolValue)
-            }
-            else -> {
-                throw IllegalArgumentException("Type $type is not supported")
-            }
-        }
-    }
 }
 
 

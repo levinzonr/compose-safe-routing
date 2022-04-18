@@ -39,7 +39,7 @@ class RoutesTransitionsCodegen(val typeHelper: TypeHelper) : FilesGen {
     }
 
     private fun CodeBlock.Builder.beginControlFlow(routeData: RouteData): CodeBlock.Builder {
-        beginControlFlow("%T(%T, %T)", ClassNames.route, routeData.specClassName, routeData.routeTransition)
+        beginControlFlow("%T(%T, %T)", ClassNames.route, routeData.specClassName, routeData.routeTransitionClass)
         return this
     }
 

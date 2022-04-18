@@ -6,5 +6,6 @@ data class ProcessingComponents(
     val logger: Logger,
     val typeHelper: TypeHelper,
     val dataProcessor: DataProcessor,
-    val directory: File
+    val directory: File,
+    val writer: Writer = DefaultWriter()
 )

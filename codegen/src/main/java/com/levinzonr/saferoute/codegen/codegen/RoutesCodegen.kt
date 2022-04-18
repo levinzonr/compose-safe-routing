@@ -16,15 +16,15 @@ import com.levinzonr.saferoute.codegen.models.NavGraphData
      }
 
      fun ModelData.build(): TypeSpec {
-        val mainGraph = navGraphs.first { it.name == "main" }
+        val mainGraph = navGraphs.firstOrNull() { it.name == "main" }
         val graphs = navGraphs.filterNot { it.name == "main" }
         return TypeSpec.objectBuilder(Constants.FILE_ROUTES)
-            .addProperties(mainGraph.routes.map { it.toRouteProperty() })
+            .addProperties(mainGraph?.routes.orEmpty().map { it.toRouteProperty() })
             .addProperties(graphs.map { it.toRoutesProperty(packageName) })
             .deprecate(
                 message ="Routes.kt is deprecated, please use GraphRoutes object or Routes directly",
-                replaceWithExpression = "${mainGraph.graphName}Routes",
-                ClassName(packageName, "${mainGraph.graphName}Routes")
+                replaceWithExpression = "${mainGraph?.graphName}Routes",
+                ClassName(packageName, "${mainGraph?.graphName}Routes")
             )
             .addKdoc(KDoc.ROUTES_SPEC)
             .build()
