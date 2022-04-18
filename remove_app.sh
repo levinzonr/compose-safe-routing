@@ -9,7 +9,8 @@ echo "dependencyResolutionManagement {
 }
 rootProject.name = \"router\"
 include(\":annotations\")
-include(\":compiler\")
 include(\":core\")
 include(\":accompanist-navigation\")
+include(\":processor-kapt\")
+include(\":processor-ksp\")
 "  > settings.gradle.kts
