@@ -45,18 +45,19 @@ class RoutesTransitionsCodegen(val typeHelper: TypeHelper) : FilesGen {
 
 
     private fun FunSpec.Builder.addAnnotation(data: RouteData): FunSpec.Builder {
-        val superTypes = typeHelper.superTypes(data.routeTransition)
+        val superTypes = typeHelper.superTypes(data.routeTransitionType)
+
         val hasAnimation =
-            superTypes.find { it.toString() == ClassNames.AnimatedRouteTransition.canonicalName } != null
+            superTypes.find { it == ClassNames.AnimatedRouteTransition.canonicalName } != null
         val hasBottomSheet =
-            superTypes.find { it.toString() == ClassNames.BottomSheetRouteTransition.canonicalName } != null
+            superTypes.find { it == ClassNames.BottomSheetRouteTransition.canonicalName } != null
         val annotations = listOfNotNull(
             ClassNames.ExperimentalAnimationApi.takeIf { hasAnimation },
-            ClassNames.ExperimentalNavigationApi.takeIf { hasBottomSheet || data.routeTransition?.toString() == ClassNames.BottomSheetRouteTransition.canonicalName }
+            ClassNames.ExperimentalNavigationApi.takeIf { hasBottomSheet || data.routeTransitionClass == ClassNames.BottomSheetRouteTransition }
         )
 
         annotations.forEach {
-            addAnnotation(it)
+           addAnnotation(it)
         }
 
         return this

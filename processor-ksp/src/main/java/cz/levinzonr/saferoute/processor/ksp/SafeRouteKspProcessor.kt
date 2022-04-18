@@ -3,14 +3,13 @@ package cz.levinzonr.saferoute.processor.ksp
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.processing.SymbolProcessor
-import com.google.devtools.ksp.symbol.KSAnnotated
-import com.google.devtools.ksp.symbol.KSFunctionDeclaration
+import com.google.devtools.ksp.symbol.*
 import com.levinzonr.saferoute.codegen.constants.Constants
 import com.levinzonr.saferoute.codegen.core.*
-import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.ksp.KotlinPoetKspPreview
-import com.squareup.kotlinpoet.ksp.writeTo
 import java.io.File
+import java.lang.IllegalArgumentException
+import kotlin.math.log
 
 @OptIn(KotlinPoetKspPreview::class)
 internal class SafeRouteKspProcessor(
@@ -18,9 +17,14 @@ internal class SafeRouteKspProcessor(
     private val codeGenerator: CodeGenerator,
 ) : SymbolProcessor {
 
-    internal class TypeH(val resolver: Resolver) : TypeHelper {
+    internal class KspTypeHelper(private val logger: Logger) : TypeHelper {
         override fun superTypes(value: Any?): List<String> {
-            return emptyList()
+            return if (value is KSClassDeclaration) {
+                value.superTypes.map { it.resolve().declaration.qualifiedName!!.asString() }
+                    .toList().also { logger.log(it.toString()) }
+            } else {
+                emptyList()
+            }
         }
     }
 
@@ -41,7 +45,7 @@ internal class SafeRouteKspProcessor(
 
         val processingComponent = ProcessingComponent(
             logger = logger,
-            typeHelper = TypeH(resolver),
+            typeHelper = KspTypeHelper(logger),
             dataProcessor = KspDataProcessor(elements, resolver),
             directory = File(resolver.getAllFiles().first().packageName.getQualifier()),
             writer = KspWriter(codeGenerator)

@@ -12,7 +12,8 @@ data class RouteData(
     val arguments: List<ArgumentData>,
     val packageName: String,
     val deeplinks: List<DeeplinkData>,
-    val routeTransition: String?,
+    val routeTransitionType: Any?,
+    private val routeTransitionClassName: String?,
     val contentName: String,
     val params: List<String>,
     val navGraphName: String,
@@ -20,10 +21,10 @@ data class RouteData(
 ) {
 
     val routeTransitionClass
-        get() = routeTransition?.let {
+        get() = routeTransitionClassName?.let {
             ClassName(
-                packageName = routeTransition.split(".").dropLast(1).joinToString("."),
-                simpleNames = listOf(routeTransition.split(".").last())
+                packageName = it.split(".").dropLast(1).joinToString("."),
+                simpleNames = listOf(it.split(".").last())
             )
         }
     val argsPackageName = packageName + "." + Constants.FILE_ARGS_DIR
