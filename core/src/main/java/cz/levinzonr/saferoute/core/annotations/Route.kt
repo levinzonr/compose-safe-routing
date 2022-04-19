@@ -25,5 +25,5 @@ annotation class Route(
     val navGraph: RouteNavGraph = RouteNavGraph()
 )
 
-annotation class Routes(val value: Array<Route>)
+internal annotation class Routes(val value: Array<Route>)
 
