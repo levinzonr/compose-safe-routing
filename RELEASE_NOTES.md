@@ -1,3 +1,90 @@
+# 2.5.0 Release Notes (BETA)
+
+## Disclaimer ⚠️
+This update is quite big in terms of introducing new logic and deprecating the logic that was here since the beginning. Thus, I'd like to gather as much feedback as possible and encourage you to open issues in case you have any suggestions regarding newly introduced stuff. I'm also making this update as `beta` as there are things I would like to make it in full 2.5.0 and so there is somewhat of a breathing room in case of any feedback :)
+Thanls!
+
+
+## NavGraph Support
+Version 2.5.0 introduces support to the Navigation Graphs so you can structure your routes in a more concise way. By default, all your current routes will be a part of the "Main" Graph - the default graph all route annotations have, and, since all NavGraphs need to have a starting point, you need to declare of your routes to be a "start", otherwise  the build may fail
+```kotlin
+@Route(
+    transition = AnimatedRouteTransition.Default::class,
+    navGraph = RouteNavGraph(start = true)
+)
+```
+### Defining Custom Graphs
+If you want to define your graph you can simply set another graph name and set a starting route for it
+
+```kotlin
+@Route(
+    name = "PokemonList",
+    transition = FadeInFadeOutTransition::class,
+    navGraph = RouteNavGraph("pokedex", start = true)
+)
+```
+This will generate a new file and called `PokedexGraph` and `PokedexGraphRoutes` which you can you for navigation or declaration, like so
+```kotling
+navigation(PokedexGraph) {
+    pokemonList {
+        // Composable content()
+    }
+}
+and navigation
+navController.navigateTo(PokedexGraph)
+navContoller.navigateTo(PokemonDetailsRoute())
+
+```
+
+## New Navigation APIs and Deprecation of the Old Ones
+`RoutesActions.kt` were deprecated in favor of the invoke operator that is a part of RouteSpec. We've added another navController extension `navigateTo()` that can be used together with it. This results in one less generated file and more straightforward usage. NavController+Routes.kt will also be deleted in the future releases
+
+### 2.4.X - Old behaviour
+```kotlin
+navController.navigate(RouteActions.toDetails("id")
+navController.navigateToDetails("id")
+```
+### 2.5.0 - New behavior
+```kotlin
+navController.navigateTo(DetailsRoute("Id"))
+```
+
+## Router API
+2.5.0 Introduces new component called `Router`, which is basically a wrapper around your usual `navController`, but is specifically built to handle navigation using the newly introduced extensions. It is also an Interface, which means it would be easier to test your composables. `Router` can be accessed from Composition Local and used as so:
+```kotlin
+val router = LocalRouter.current
+router.navigate(DetailsRoute("id"))
+```
+
+
+## Deprecation of Routes.kt
+`Routes.kt` is now also deprecated since we've introduced the navigation graphs which allow you to structure in a similar fashion but in a more logical and flexible way. By Default, all your Routes will be a part of the `MainGraphRoutes.kt` so the migration should be fairly simple. Every new graph will hold its own set of Routes.
+
+## KSP Support
+From version 2.5.0 Safe Route now has the support for Kotlin Symbol Processing (KSP). The API is the same so the migration should be more or less painless (considering you already using 2.5.0-X version), however, the imports might change. Here is how to get started.
+
+This is a pre-release based on the 2.5.0-beta01, make sure to also check whats new in beta01 release [here](https://github.com/levinzonr/compose-safe-routing/releases/tag/2.5.0-beta01)
+
+> ⚠️ If you dont want to use KSP you can still use KAPT, KAPT support is not going anywhere :). However in order to keep the modules name aligned, `compiler` artifact was renamed into `processor-kapt`
+```kotlin
+    kapt("com.github.levinzonr.compose-safe-routing:processor-kapt:2.5.0-beta02")
+```
+
+### Add KSP Plugin (if you haven't already)
+Gradle
+```gradle
+plugins {
+    id  "com.google.devtools.ksp" version '"1.6.10-1.0.3" // 
+}
+```
+
+Kotlin
+```kotlin
+plugins {
+    id("com.google.devtools.ksp") version "1.6.10-1.0.3" // Depends on your kotlin version
+}
+```
+
 
 # 2.4.0 Release Notes
 ## Introducing `RouteTransitions`
