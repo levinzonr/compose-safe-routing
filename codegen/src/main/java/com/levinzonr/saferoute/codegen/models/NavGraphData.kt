@@ -7,5 +7,5 @@ data class NavGraphData(
 ) {
     val graphSpecName get() = name.capitalize()
     val graphName get() = name.capitalize() + "Graph"
-
+    val sources get() = routes.map { it.source }
 }

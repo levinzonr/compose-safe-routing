@@ -1,5 +1,6 @@
 package cz.levinzonr.saferoute.processor.subprocessors
 
+import com.levinzonr.saferoute.codegen.core.Source
 import cz.levinzonr.saferoute.annotations.Route
 import cz.levinzonr.saferoute.annotations.RouteArg
 import cz.levinzonr.saferoute.annotations.RouteArgType
@@ -8,6 +9,7 @@ import com.levinzonr.saferoute.codegen.models.ArgumentType
 import com.levinzonr.saferoute.codegen.models.OptionalArgData
 import com.levinzonr.saferoute.codegen.models.RouteData
 import cz.levinzonr.saferoute.processor.extensions.fieldByName
+import java.lang.reflect.AnnotatedElement
 import java.lang.reflect.InvocationTargetException
 import javax.lang.model.element.Element
 import javax.lang.model.type.MirroredTypeException
@@ -41,7 +43,8 @@ internal class RouteDataBuilder(val packageName: String) {
                 contentName = annotatedElement.simpleName.toString(),
                 params = params,
                 navGraphName = annotation.name,
-                start = annotation.start
+                start = annotation.start,
+                source = annotatedElement.getSource()
             )
         } else {
             val navGraph = annotation.fieldByName<Annotation>("navGraph")
@@ -59,9 +62,18 @@ internal class RouteDataBuilder(val packageName: String) {
                 contentName = annotatedElement.simpleName.toString(),
                 params = params,
                 navGraphName = navGraph.fieldByName("name"),
-                start = navGraph.fieldByName("start")
+                start = navGraph.fieldByName("start"),
+                source = annotatedElement.getSource()
             )
         }
+    }
+
+    private fun Element.getSource() : Source {
+        return Source(
+            filename = this.simpleName.toString(),
+            filepath = packageName.replace(".", "/"),
+            packageName = packageName
+        )
     }
 }
 

@@ -28,7 +28,10 @@ class RoutesGenerationProcessor(
     fun process() = try {
         dataProcessor.process()?.let { data ->
             generators.forEach { gens ->
-                gens.generate(data).forEach { writer.write(it, directory) }
+                val generationUnits = gens.generate(data)
+                generationUnits.forEach {
+                    writer.write(it.fileSpec, directory, it.sources)
+                }
             }
         }
 

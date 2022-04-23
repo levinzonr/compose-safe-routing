@@ -4,14 +4,18 @@ import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.levinzonr.saferoute.codegen.core.FilesGen
+import com.levinzonr.saferoute.codegen.core.GeneratorUnit
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.RouteData
 
 object RouteArgsFactoryCodegen : FilesGen {
 
-    override fun generate(data: ModelData): List<FileSpec> {
+    override fun generate(data: ModelData): List<GeneratorUnit> {
         return data.routes.filter { it.arguments.isNotEmpty() }.map {
-            FileSpec.get(it.argsPackageName, it.toArgsFactory())
+            GeneratorUnit(
+                FileSpec.get(it.argsPackageName, it.toArgsFactory()),
+                listOf(it.source)
+            )
         }
     }
 

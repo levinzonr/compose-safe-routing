@@ -11,6 +11,7 @@ import com.levinzonr.saferoute.codegen.codegen.pathbuilder.fullPathBuilder
 import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.levinzonr.saferoute.codegen.constants.Constants
 import com.levinzonr.saferoute.codegen.core.FilesGen
+import com.levinzonr.saferoute.codegen.core.GeneratorUnit
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.RouteData
 import java.io.File
@@ -18,9 +19,10 @@ import java.io.File
  object RoutesSpecsCodegen : FilesGen {
 
 
-     override fun generate(data: ModelData): List<FileSpec> {
+     override fun generate(data: ModelData): List<GeneratorUnit> {
          return data.routes.map {
-             FileSpec.get(it.packageName, it.createRouteTypeSpec())
+             val fileSpec= FileSpec.get(it.packageName, it.createRouteTypeSpec())
+             GeneratorUnit(fileSpec, listOf(it.source))
          }
      }
 

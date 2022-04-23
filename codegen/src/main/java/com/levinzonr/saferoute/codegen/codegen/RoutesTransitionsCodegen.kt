@@ -4,6 +4,7 @@ import com.levinzonr.saferoute.codegen.codegen.extensions.ComposableFunction
 import com.squareup.kotlinpoet.*
 import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.levinzonr.saferoute.codegen.core.FilesGen
+import com.levinzonr.saferoute.codegen.core.GeneratorUnit
 import com.levinzonr.saferoute.codegen.core.TypeHelper
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.RouteData
@@ -12,10 +13,15 @@ import java.io.File
 
 class RoutesTransitionsCodegen(val typeHelper: TypeHelper) : FilesGen {
 
-    override fun generate(data: ModelData): List<FileSpec> {
+    override fun generate(data: ModelData): List<GeneratorUnit> {
         val fileSpec = FileSpec.builder(data.packageName, "NavGraphBuilder+Routes")
         data.routes.forEach { fileSpec.addFunction(it.createBuilderFun()) }
-        return listOf(fileSpec.build())
+        return listOf(
+            GeneratorUnit(
+                fileSpec = fileSpec.build(),
+                sources = data.sources
+            )
+        )
     }
 
 

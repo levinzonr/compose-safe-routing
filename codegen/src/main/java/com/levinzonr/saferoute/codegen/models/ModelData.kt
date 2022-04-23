@@ -5,4 +5,6 @@ data class ModelData(
     val navGraphs: List<NavGraphData>
 ) {
     val routes = navGraphs.map { it.routes }.flatten()
+
+    val sources get() = routes.map { it.source }
 }

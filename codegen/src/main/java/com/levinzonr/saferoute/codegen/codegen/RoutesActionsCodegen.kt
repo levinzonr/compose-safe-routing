@@ -7,19 +7,25 @@ import com.levinzonr.saferoute.codegen.codegen.extensions.toParamSpec
 import com.levinzonr.saferoute.codegen.constants.Constants
 import com.levinzonr.saferoute.codegen.constants.KDoc
 import com.levinzonr.saferoute.codegen.core.FilesGen
+import com.levinzonr.saferoute.codegen.core.GeneratorUnit
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.RouteData
 
 
 object RoutesActionsCodegen : FilesGen {
 
-    override fun generate(data: ModelData): List<FileSpec> {
+    override fun generate(data: ModelData): List<GeneratorUnit> {
+        val fileSpec = FileSpec.get(
+            data.packageName, TypeSpec.objectBuilder(Constants.FILE_ACTIONS)
+                .addKdoc(KDoc.ROUTES_ACTIONS)
+                .addActions(data.routes)
+                .build()
+        )
+
         return listOf(
-            FileSpec.get(
-                data.packageName, TypeSpec.objectBuilder(Constants.FILE_ACTIONS)
-                    .addKdoc(KDoc.ROUTES_ACTIONS)
-                    .addActions(data.routes)
-                    .build()
+            GeneratorUnit(
+                fileSpec = fileSpec,
+                sources = data.sources
             )
         )
     }

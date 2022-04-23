@@ -2,6 +2,7 @@ package com.levinzonr.saferoute.codegen.models
 
 import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.levinzonr.saferoute.codegen.constants.Constants
+import com.levinzonr.saferoute.codegen.core.Source
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.TypeName
@@ -17,7 +18,8 @@ data class RouteData(
     val contentName: String,
     val params: List<String>,
     val navGraphName: String,
-    val start: Boolean
+    val start: Boolean,
+    val source: Source
 ) {
 
     val routeTransitionClass

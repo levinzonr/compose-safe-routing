@@ -4,14 +4,18 @@ import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.levinzonr.saferoute.codegen.core.FilesGen
+import com.levinzonr.saferoute.codegen.core.GeneratorUnit
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.NavGraphData
 
 object NavGraphsCodegen : FilesGen {
 
-    override fun generate(data: ModelData): List<FileSpec> {
+    override fun generate(data: ModelData): List<GeneratorUnit> {
         return data.navGraphs.map {
-            FileSpec.get(data.packageName, it.createSpecProperty())
+            GeneratorUnit(
+                FileSpec.get(data.packageName, it.createSpecProperty()),
+                it.sources
+            )
         }
     }
 

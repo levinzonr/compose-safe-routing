@@ -3,10 +3,12 @@ package cz.levinzonr.saferoute.processor.ksp
 import com.google.devtools.ksp.KspExperimental
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.symbol.KSAnnotation
+import com.google.devtools.ksp.symbol.KSDeclaration
 import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.google.devtools.ksp.symbol.KSType
 import com.levinzonr.saferoute.codegen.codegen.extensions.checkNullable
 import com.levinzonr.saferoute.codegen.core.DataProcessor
+import com.levinzonr.saferoute.codegen.core.Source
 import com.levinzonr.saferoute.codegen.models.*
 import java.lang.IllegalArgumentException
 
@@ -54,7 +56,16 @@ internal class KspDataProcessor(
             contentName = element.toString(),
             params = element.parameters.mapNotNull { it.name?.asString() },
             navGraphName = fieldByName<KSAnnotation>("navGraph").fieldByName("name") ?: "main",
-            start = fieldByName<KSAnnotation>("navGraph").fieldByName("start") ?: false
+            start = fieldByName<KSAnnotation>("navGraph").fieldByName("start") ?: false,
+            source = element.getSource()
+        )
+    }
+
+    private fun KSDeclaration.getSource(): Source {
+        return Source(
+            filename = containingFile!!.fileName,
+            filepath = containingFile!!.filePath,
+            packageName = packageName.asString()
         )
     }
 

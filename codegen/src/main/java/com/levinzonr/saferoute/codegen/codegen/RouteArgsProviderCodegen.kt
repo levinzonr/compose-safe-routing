@@ -4,16 +4,22 @@ import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.levinzonr.saferoute.codegen.core.FilesGen
+import com.levinzonr.saferoute.codegen.core.GeneratorUnit
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.RouteData
 
 object RouteArgsProviderCodegen : FilesGen {
 
-    override fun generate(data: ModelData): List<FileSpec> {
+    override fun generate(data: ModelData): List<GeneratorUnit> {
         return data.routes.map { route ->
-            FileSpec.builder(route.argsPackageName, "Local${route.argumentsName}")
+            val fileSpec = FileSpec.builder(route.argsPackageName, "Local${route.argumentsName}")
                 .addProperty(route.createLocalArgsProperty())
                 .build()
+
+            GeneratorUnit(
+                fileSpec,
+                listOf(route.source)
+            )
         }
     }
 

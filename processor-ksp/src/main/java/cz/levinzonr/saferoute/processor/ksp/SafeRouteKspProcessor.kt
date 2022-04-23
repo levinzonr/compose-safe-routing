@@ -48,7 +48,7 @@ internal class SafeRouteKspProcessor(
             typeHelper = KspTypeHelper(logger),
             dataProcessor = KspDataProcessor(elements, resolver),
             directory = File(resolver.getAllFiles().first().packageName.getQualifier()),
-            writer = KspWriter(codeGenerator)
+            writer = KspWriter(codeGenerator, resolver)
         )
 
 

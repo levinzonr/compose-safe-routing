@@ -60,8 +60,8 @@ android {
 dependencies {
     val hilt_version = "2.37"
     implementation(project(":accompanist-navigation"))
-    // "kapt"(project(":processor-kapt"))
-    ksp("cz.levinzonr.safe-routing:ksp-processor:2.5.0-beta02")
+    ksp(project(":processor-ksp"))
+    //ksp("cz.levinzonr.safe-routing:ksp-processor:2.5.0-beta02")
 
     /* kapt("cz.levinzonr.safe-routing:compiler:1.0.1")
      implementation("router:core:1")*/
