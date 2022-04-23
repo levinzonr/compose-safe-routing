@@ -8,5 +8,4 @@ object KDoc {
 
     const val ROUTES_SPEC = "This object contains the description of all routes described in the app"
     const val ROUTE_SPEC_OBJ = "A description of the %S route, including its full path and an navArgs"
-
 }

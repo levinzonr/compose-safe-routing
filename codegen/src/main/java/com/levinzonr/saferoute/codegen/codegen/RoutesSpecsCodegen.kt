@@ -1,12 +1,10 @@
 package com.levinzonr.saferoute.codegen.codegen
 
-import com.levinzonr.saferoute.codegen.codegen.extensions.*
+import com.levinzonr.saferoute.codegen.codegen.extensions.addArguments
 import com.levinzonr.saferoute.codegen.codegen.extensions.asList
 import com.levinzonr.saferoute.codegen.codegen.extensions.createRouteAction
 import com.levinzonr.saferoute.codegen.codegen.extensions.initConstructor
 import com.levinzonr.saferoute.codegen.codegen.extensions.toParamSpec
-import com.squareup.kotlinpoet.*
-import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.levinzonr.saferoute.codegen.codegen.pathbuilder.fullPathBuilder
 import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.levinzonr.saferoute.codegen.constants.Constants
@@ -14,19 +12,24 @@ import com.levinzonr.saferoute.codegen.core.FilesGen
 import com.levinzonr.saferoute.codegen.core.GeneratorUnit
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.RouteData
-import java.io.File
+import com.squareup.kotlinpoet.CodeBlock
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.TypeSpec
 
- object RoutesSpecsCodegen : FilesGen {
+object RoutesSpecsCodegen : FilesGen {
 
+    override fun generate(data: ModelData): List<GeneratorUnit> {
+        return data.routes.map {
+            val fileSpec = FileSpec.get(it.packageName, it.createRouteTypeSpec())
+            GeneratorUnit(fileSpec, listOf(it.source))
+        }
+    }
 
-     override fun generate(data: ModelData): List<GeneratorUnit> {
-         return data.routes.map {
-             val fileSpec= FileSpec.get(it.packageName, it.createRouteTypeSpec())
-             GeneratorUnit(fileSpec, listOf(it.source))
-         }
-     }
-
-    private fun RouteData.createRouteTypeSpec() : TypeSpec {
+    private fun RouteData.createRouteTypeSpec(): TypeSpec {
         return TypeSpec.objectBuilder(routeClassName.simpleName)
             .addSuperinterface(routeSpecClassName)
             .addProperty(toNamePropertySpec())
@@ -42,7 +45,6 @@ import java.io.File
             .addModifiers(KModifier.OVERRIDE)
             .initializer(if (arguments.isEmpty()) "listOf()" else "$argumentsName.navArgs")
             .build()
-
     }
 
     private fun RouteData.toNamePropertySpec(): PropertySpec {
@@ -57,7 +59,6 @@ import java.io.File
             .build()
     }
 
-
     private fun RouteData.toArgsFactoryPropertySpec(): PropertySpec {
         return PropertySpec.builder(
             "argsFactory",
@@ -69,7 +70,7 @@ import java.io.File
     }
 
     private fun RouteData.toDirectionProperty(): FunSpec {
-        val impl =  TypeSpec.anonymousClassBuilder()
+        val impl = TypeSpec.anonymousClassBuilder()
             .initConstructor(arguments)
             .addArguments(arguments)
             .addProperty(createRouteAction())

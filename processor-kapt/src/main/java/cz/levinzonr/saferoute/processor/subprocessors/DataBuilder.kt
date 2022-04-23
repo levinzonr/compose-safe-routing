@@ -1,27 +1,25 @@
 package cz.levinzonr.saferoute.processor.subprocessors
 
 import com.levinzonr.saferoute.codegen.core.Source
-import cz.levinzonr.saferoute.annotations.Route
-import cz.levinzonr.saferoute.annotations.RouteArg
-import cz.levinzonr.saferoute.annotations.RouteArgType
 import com.levinzonr.saferoute.codegen.models.ArgumentData
 import com.levinzonr.saferoute.codegen.models.ArgumentType
 import com.levinzonr.saferoute.codegen.models.OptionalArgData
 import com.levinzonr.saferoute.codegen.models.RouteData
+import cz.levinzonr.saferoute.annotations.Route
+import cz.levinzonr.saferoute.annotations.RouteArg
+import cz.levinzonr.saferoute.annotations.RouteArgType
 import cz.levinzonr.saferoute.processor.extensions.fieldByName
-import java.lang.reflect.AnnotatedElement
 import java.lang.reflect.InvocationTargetException
 import javax.lang.model.element.Element
+import javax.lang.model.type.ExecutableType
 import javax.lang.model.type.MirroredTypeException
 import javax.lang.model.type.TypeMirror
 import kotlin.reflect.KClass
 import kotlin.reflect.full.memberProperties
-import javax.lang.model.type.ExecutableType
-
 
 internal class RouteDataBuilder(val packageName: String) {
 
-    fun fromRepeatable(annotation: Annotation, annotatedElement: Element) : List<RouteData> {
+    fun fromRepeatable(annotation: Annotation, annotatedElement: Element): List<RouteData> {
         val annotations = annotation.fieldByName<Array<Annotation>>("value")
         return annotations.map { from(it, annotatedElement) }
     }
@@ -36,7 +34,7 @@ internal class RouteDataBuilder(val packageName: String) {
             RouteData(
                 name = annotation.name.decapitalize(),
                 arguments = arguments,
-                packageName= packageName,
+                packageName = packageName,
                 deeplinks = listOf(),
                 routeTransitionType = null,
                 routeTransitionClassName = null,
@@ -58,7 +56,7 @@ internal class RouteDataBuilder(val packageName: String) {
                 packageName = packageName,
                 deeplinks = deeplinksData.map { DeeplinkDataBuilder.build(it) },
                 routeTransitionType = annotation.getClassProperty("transition"),
-                routeTransitionClassName  = transition.toString(),
+                routeTransitionClassName = transition.toString(),
                 contentName = annotatedElement.simpleName.toString(),
                 params = params,
                 navGraphName = navGraph.fieldByName("name"),
@@ -68,7 +66,7 @@ internal class RouteDataBuilder(val packageName: String) {
         }
     }
 
-    private fun Element.getSource() : Source {
+    private fun Element.getSource(): Source {
         return Source(
             filename = this.simpleName.toString(),
             filepath = packageName.replace(".", "/"),
@@ -82,7 +80,7 @@ internal class ArgumentDataBuilder {
     fun from(routeArg: RouteArg): ArgumentData {
         val argType = requireNotNull(ArgumentType.values().find { routeArg.type.clazz == it.clazz })
         return with(routeArg) {
-            val optional =  OptionalArgData.build(
+            val optional = OptionalArgData.build(
                 type = argType,
                 value = defaultValue,
                 isNullable = routeArg.type == RouteArgType.StringNullableType,
@@ -104,9 +102,7 @@ internal class ArgumentDataBuilder {
             ArgumentData(name, type, optional, isNullable)
         }
     }
-
 }
-
 
 fun Any.getClassProperty(propertyName: String): TypeMirror {
     return try {
@@ -117,5 +113,4 @@ fun Any.getClassProperty(propertyName: String): TypeMirror {
         val cause = requireNotNull(e.cause as? MirroredTypeException)
         cause.typeMirror
     }
-
 }

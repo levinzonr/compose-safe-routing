@@ -2,8 +2,8 @@ package cz.levinzonr.saferoute.core
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -35,7 +35,7 @@ fun SafeRouteNavHost(
     route: String? = null,
     builder: NavGraphBuilder.(Router) -> Unit
 ) {
-    val router = RouterImpl(navController)
+    val router = remember(navController) { RouterImpl(navController) }
     CompositionLocalProvider(LocalRouter provides router) {
         NavHost(
             navController = navController,

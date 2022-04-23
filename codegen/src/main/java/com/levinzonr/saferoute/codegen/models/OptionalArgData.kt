@@ -9,7 +9,6 @@ sealed class OptionalArgData<T>(val value: T) {
     class OptionalLong(value: Long) : OptionalArgData<Long>(value = value)
     class OptionalString(value: String?) : OptionalArgData<String?>(value = value)
 
-
     companion object {
 
         fun build(
@@ -27,7 +26,7 @@ sealed class OptionalArgData<T>(val value: T) {
                     val stringDefault = if (isNullable) {
                         if (value == "@null") null else value
                     } else {
-                        require(value != "@null") { "Argument $name is  optional and not nullabble but has @null default value"}
+                        require(value != "@null") { "Argument $name is  optional and not nullabble but has @null default value" }
                         value
                     }
 
@@ -43,7 +42,6 @@ sealed class OptionalArgData<T>(val value: T) {
                     val floatValue =
                         requireNotNull(value.toFloatOrNull()) { "Provided arg value ($value) is not matching type $type" }
                     return OptionalFloat(floatValue)
-
                 }
                 ArgumentType.LongType -> {
                     val longValue =

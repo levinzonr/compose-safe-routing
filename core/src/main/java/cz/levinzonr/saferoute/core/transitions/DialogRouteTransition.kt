@@ -4,11 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
-import cz.levinzonr.saferoute.core.ComposableFun
 import cz.levinzonr.saferoute.core.RouteSpec
-import cz.levinzonr.saferoute.core.composable
 import cz.levinzonr.saferoute.core.dialog
-
 
 abstract class DialogRouteTransition : RouteTransition {
 

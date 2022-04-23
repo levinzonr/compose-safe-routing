@@ -1,6 +1,9 @@
 package cz.levinzonr.saferoute.core
 
-import androidx.navigation.*
+import androidx.navigation.NavController
+import androidx.navigation.NavOptions
+import androidx.navigation.NavOptionsBuilder
+import androidx.navigation.Navigator
 import cz.levinzonr.saferoute.core.router.Direction
 
 fun NavController.navigateTo(

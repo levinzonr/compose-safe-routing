@@ -1,14 +1,12 @@
 package com.levinzonr.saferoute.codegen.codegen
 
-import com.squareup.kotlinpoet.FileSpec
-import com.squareup.kotlinpoet.TypeSpec
 import com.levinzonr.saferoute.codegen.codegen.extensions.toRouteProperty
 import com.levinzonr.saferoute.codegen.core.FilesGen
 import com.levinzonr.saferoute.codegen.core.GeneratorUnit
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.NavGraphData
-import java.io.File
-
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.TypeSpec
 
 object NavGraphRoutesCodegen : FilesGen {
 

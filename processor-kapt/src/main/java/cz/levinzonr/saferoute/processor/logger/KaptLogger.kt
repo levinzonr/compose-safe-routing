@@ -11,14 +11,12 @@ data class KaptLogger(
 
     override fun log(message: String, level: LogLevel) {
         processingEnv.messager.printMessage(
-            when(level) {
+            when (level) {
                 LogLevel.Debug -> Diagnostic.Kind.NOTE
                 LogLevel.Error -> Diagnostic.Kind.ERROR
                 LogLevel.Warning -> Diagnostic.Kind.WARNING
-            }, message
+            },
+            message
         )
     }
-
-
-
 }

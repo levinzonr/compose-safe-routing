@@ -3,12 +3,16 @@ package cz.levinzonr.saferoute.processor.ksp
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.processing.SymbolProcessor
-import com.google.devtools.ksp.symbol.*
+import com.google.devtools.ksp.symbol.KSAnnotated
+import com.google.devtools.ksp.symbol.KSClassDeclaration
+import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.levinzonr.saferoute.codegen.constants.Constants
-import com.levinzonr.saferoute.codegen.core.*
+import com.levinzonr.saferoute.codegen.core.Logger
+import com.levinzonr.saferoute.codegen.core.ProcessingComponent
+import com.levinzonr.saferoute.codegen.core.RoutesGenerationProcessor
+import com.levinzonr.saferoute.codegen.core.TypeHelper
 import com.squareup.kotlinpoet.ksp.KotlinPoetKspPreview
 import java.io.File
-import java.lang.IllegalArgumentException
 import kotlin.math.log
 
 @OptIn(KotlinPoetKspPreview::class)
@@ -27,7 +31,6 @@ internal class SafeRouteKspProcessor(
             }
         }
     }
-
 
     private val supportedAnnotations = listOf(
         Constants.ROUTE,
@@ -52,7 +55,6 @@ internal class SafeRouteKspProcessor(
             writer = KspWriter(codeGenerator, resolver)
         )
 
-
         try {
             RoutesGenerationProcessor(processingComponent)
                 .process()
@@ -60,9 +62,6 @@ internal class SafeRouteKspProcessor(
             logger.log("Error processing routes: ${e.stackTraceToString()}")
         }
 
-
-
         return emptyList()
     }
-
 }

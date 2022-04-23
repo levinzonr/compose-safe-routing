@@ -7,7 +7,6 @@ import cz.levinzonr.saferoute.data.Pokemon
 import cz.levinzonr.saferoute.data.pokemons
 import cz.levinzonr.saferoute.screens.details.args.PokemonDetailsRouteArgsFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,6 +28,5 @@ class PokemonDetailsViewModel @Inject constructor(
                 pokemon.emit(it)
             }
         }
-
     }
 }

@@ -1,12 +1,16 @@
 package com.levinzonr.saferoute.codegen.codegen
 
-import com.squareup.kotlinpoet.*
-import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.levinzonr.saferoute.codegen.core.FilesGen
 import com.levinzonr.saferoute.codegen.core.GeneratorUnit
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.NavGraphData
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.STAR
+import com.squareup.kotlinpoet.TypeSpec
 
 object NavGraphsCodegen : FilesGen {
 
@@ -19,8 +23,7 @@ object NavGraphsCodegen : FilesGen {
         }
     }
 
-
-    private fun NavGraphData.createSpecProperty() : TypeSpec{
+    private fun NavGraphData.createSpecProperty(): TypeSpec {
         return TypeSpec.objectBuilder(graphName)
             .addSuperinterface(ClassNames.RouteGraphSpec)
             .addProperty(
@@ -31,7 +34,7 @@ object NavGraphsCodegen : FilesGen {
             .addProperty(
                 PropertySpec.builder("start", ClassNames.RouteSpec.parameterizedBy(STAR), KModifier.OVERRIDE)
                     .initializer("%T", start.specClassName)
-                .build()
+                    .build()
             )
             .build()
     }

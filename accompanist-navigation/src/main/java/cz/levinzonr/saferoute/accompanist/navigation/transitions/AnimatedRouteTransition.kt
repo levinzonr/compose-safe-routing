@@ -35,7 +35,5 @@ abstract class AnimatedRouteTransition : RouteTransition {
         override val exit: RouteExitTransition = { fadeOut() }
         override val popEnter: RouteEnterTransition = enter
         override val popExit: RouteExitTransition = exit
-
     }
 }
-

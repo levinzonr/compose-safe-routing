@@ -1,15 +1,16 @@
 package com.levinzonr.saferoute.codegen.codegen
 
 import com.levinzonr.saferoute.codegen.codegen.extensions.ComposableFunction
-import com.squareup.kotlinpoet.*
 import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.levinzonr.saferoute.codegen.core.FilesGen
 import com.levinzonr.saferoute.codegen.core.GeneratorUnit
 import com.levinzonr.saferoute.codegen.core.TypeHelper
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.RouteData
-import java.io.File
-
+import com.squareup.kotlinpoet.CodeBlock
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.ParameterSpec
 
 class RoutesTransitionsCodegen(val typeHelper: TypeHelper) : FilesGen {
 
@@ -23,7 +24,6 @@ class RoutesTransitionsCodegen(val typeHelper: TypeHelper) : FilesGen {
             )
         )
     }
-
 
     private fun RouteData.createBuilderFun(): FunSpec {
 
@@ -49,7 +49,6 @@ class RoutesTransitionsCodegen(val typeHelper: TypeHelper) : FilesGen {
         return this
     }
 
-
     private fun FunSpec.Builder.addAnnotation(data: RouteData): FunSpec.Builder {
         val superTypes = typeHelper.superTypes(data.routeTransitionType)
 
@@ -63,7 +62,7 @@ class RoutesTransitionsCodegen(val typeHelper: TypeHelper) : FilesGen {
         )
 
         annotations.forEach {
-           addAnnotation(it)
+            addAnnotation(it)
         }
 
         return this

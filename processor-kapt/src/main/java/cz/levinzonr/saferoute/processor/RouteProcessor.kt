@@ -1,10 +1,10 @@
 package cz.levinzonr.saferoute.processor
 
-import cz.levinzonr.saferoute.annotations.Route
 import com.levinzonr.saferoute.codegen.constants.Constants
-import com.levinzonr.saferoute.codegen.core.RoutesGenerationProcessor
 import com.levinzonr.saferoute.codegen.core.LogLevel
 import com.levinzonr.saferoute.codegen.core.ProcessingComponent
+import com.levinzonr.saferoute.codegen.core.RoutesGenerationProcessor
+import cz.levinzonr.saferoute.annotations.Route
 import cz.levinzonr.saferoute.processor.logger.KaptLogger
 import cz.levinzonr.saferoute.processor.subprocessors.KaptDataProcessor
 import cz.levinzonr.saferoute.processor.typehelper.TypeHelperImpl
@@ -16,14 +16,12 @@ import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
 import kotlin.Exception
 
-
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 internal class RouteProcessor : AbstractProcessor() {
 
     companion object {
         const val KAPT_KOTLIN_GENERATED_OPTION_NAME = "kapt.kotlin.generated"
     }
-
 
     override fun getSupportedAnnotationTypes(): MutableSet<String> = mutableSetOf(
         Route::class.java.canonicalName,
@@ -52,7 +50,5 @@ internal class RouteProcessor : AbstractProcessor() {
             logger.log(e.stackTraceToString(), level = LogLevel.Error)
             false
         }
-
     }
-
 }

@@ -1,13 +1,15 @@
 package com.levinzonr.saferoute.codegen.codegen.extensions
 
-import com.squareup.kotlinpoet.*
-
+import com.squareup.kotlinpoet.AnnotationSpec
+import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.TypeSpec
 
 fun FunSpec.Builder.deprecate(
     message: String,
     replaceWithExpression: String? = null,
     vararg imports: ClassName = arrayOf()
-) : FunSpec.Builder {
+): FunSpec.Builder {
     addAnnotation(createDeprecateAnnotation(message, replaceWithExpression, *imports))
     return this
 }
@@ -37,7 +39,6 @@ private fun createDeprecateAnnotation(
             .build()
 
         annotation.addMember("replaceWith = %L", replaceWithAnnotation)
-
     }
     return annotation.build()
 }

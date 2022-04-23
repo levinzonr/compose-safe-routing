@@ -10,7 +10,7 @@ internal object ClassNames {
     val EmptyArgsFactory = ClassName("${Constants.PACKAGE_CORE}.util", "EmptyArgsFactory")
     val Bundle = ClassName("android.os", "Bundle")
     val SavedStateHandle = ClassName("androidx.lifecycle", "SavedStateHandle")
-    val NamedNavArgument =  ClassName(Constants.PACKAGE_NAVIGATION, "NamedNavArgument")
+    val NamedNavArgument = ClassName(Constants.PACKAGE_NAVIGATION, "NamedNavArgument")
     val navArgument = ClassName(Constants.PACKAGE_NAVIGATION, "navArgument")
     val NavType = ClassName(Constants.PACKAGE_NAVIGATION, "NavType")
     val NavController = ClassName(Constants.PACKAGE_NAVIGATION, "NavController")
@@ -28,4 +28,3 @@ internal object ClassNames {
     val ExperimentalAnimationApi = ClassName("androidx.compose.animation", "ExperimentalAnimationApi")
     val ExperimentalNavigationApi = ClassName("com.google.accompanist.navigation.material", "ExperimentalMaterialNavigationApi")
 }
-

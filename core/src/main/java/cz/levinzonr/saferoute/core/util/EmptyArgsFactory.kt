@@ -15,5 +15,5 @@ object EmptyArgsFactory : RouteArgsFactory<Unit> {
         // no op
     }
 
-    override val LocalArgs: ProvidableCompositionLocal<Unit> = compositionLocalOf {  }
+    override val LocalArgs: ProvidableCompositionLocal<Unit> = compositionLocalOf { }
 }

@@ -16,11 +16,11 @@ internal class PathBuilder(val args: List<ArgumentData>) {
     }
 }
 
-internal fun pathBuilder(args: List<ArgumentData>, builder: PathBuilder.() -> Unit) : String {
+internal fun pathBuilder(args: List<ArgumentData>, builder: PathBuilder.() -> Unit): String {
     return PathBuilder(args).apply(builder).build()
 }
 
-internal fun optionalPathBuilder(args: List<ArgumentData>, builder: ArgumentPathBuilder) : String {
+internal fun optionalPathBuilder(args: List<ArgumentData>, builder: ArgumentPathBuilder): String {
     return pathBuilder(args) {
         separator = "&"
         prefix = if (args.isEmpty()) "" else "?"
@@ -28,13 +28,13 @@ internal fun optionalPathBuilder(args: List<ArgumentData>, builder: ArgumentPath
     }
 }
 
-internal fun fullPathBuilder(args: List<ArgumentData>, navBuilder: ArgumentPathBuilder, optionalBuilder: ArgumentPathBuilder) : String {
+internal fun fullPathBuilder(args: List<ArgumentData>, navBuilder: ArgumentPathBuilder, optionalBuilder: ArgumentPathBuilder): String {
     val navPath = navPathBuilder(args.filter { it.optionalData == null }, navBuilder)
     val optionalPath = optionalPathBuilder(args.filter { it.optionalData != null }, optionalBuilder)
     return "$navPath$optionalPath"
 }
 
-internal fun navPathBuilder(args: List<ArgumentData>, builder: ArgumentPathBuilder) : String {
+internal fun navPathBuilder(args: List<ArgumentData>, builder: ArgumentPathBuilder): String {
     return pathBuilder(args) {
         separator = "/"
         prefix = if (args.isEmpty()) "" else "/"

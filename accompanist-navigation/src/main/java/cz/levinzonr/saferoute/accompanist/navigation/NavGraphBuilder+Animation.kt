@@ -1,7 +1,10 @@
 package cz.levinzonr.saferoute.accompanist.navigation
 
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
@@ -9,7 +12,6 @@ import com.google.accompanist.navigation.animation.composable
 import cz.levinzonr.saferoute.accompanist.navigation.transitions.AnimatedRouteTransition
 import cz.levinzonr.saferoute.core.ProvideRouteSpecArgs
 import cz.levinzonr.saferoute.core.RouteSpec
-
 
 @ExperimentalAnimationApi
 fun NavGraphBuilder.composable(
@@ -52,9 +54,9 @@ fun NavGraphBuilder.composable(
     message = "Use composable(Route) instead, args can be accessed using CompositionLocal APIs i.e LocalRouteArgs.current",
     replaceWith = ReplaceWith(
         "composable(spec, enterTransition, exitTransition, popEnterTransition, popExitTransition) {\n " +
-                "val args = spec.currentArgs\n" +
-                "content()\n " +
-                " }",
+            "val args = spec.currentArgs\n" +
+            "content()\n " +
+            " }",
         "cz.levinzonr.saferoute.accompanist.navigation", "cz.levinzonr.saferoute.core.currentArgs"
     )
 )
@@ -76,4 +78,3 @@ fun <A> NavGraphBuilder.composableWithArgs(
 ) {
     content.invoke(this, it, spec.argsFactory.LocalArgs.current)
 }
-

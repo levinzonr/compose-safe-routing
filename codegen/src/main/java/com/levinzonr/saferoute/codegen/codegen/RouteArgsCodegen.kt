@@ -3,7 +3,6 @@ package com.levinzonr.saferoute.codegen.codegen
 import com.levinzonr.saferoute.codegen.codegen.extensions.addArguments
 import com.levinzonr.saferoute.codegen.codegen.extensions.asList
 import com.levinzonr.saferoute.codegen.codegen.extensions.initConstructor
-import com.squareup.kotlinpoet.*
 import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.levinzonr.saferoute.codegen.constants.KDoc
 import com.levinzonr.saferoute.codegen.core.FilesGen
@@ -11,13 +10,19 @@ import com.levinzonr.saferoute.codegen.core.GeneratorUnit
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.OptionalArgData
 import com.levinzonr.saferoute.codegen.models.RouteData
+import com.squareup.kotlinpoet.CodeBlock
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.KModifier
+import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.TypeSpec
 
 object RouteArgsCodegen : FilesGen {
 
     override fun generate(data: ModelData): List<GeneratorUnit> {
-        return data.routes.filter { it.arguments.isNotEmpty() }.map{ route ->
+        return data.routes.filter { it.arguments.isNotEmpty() }.map { route ->
             val fileSpec = FileSpec.get(
-                route.argsPackageName, TypeSpec.classBuilder(route.argumentsName)
+                route.argsPackageName,
+                TypeSpec.classBuilder(route.argumentsName)
                     .initConstructor(route.arguments)
                     .addArguments(route.arguments)
                     .addKdoc(KDoc.ROUTE_ARG, route.name)
@@ -64,15 +69,13 @@ object RouteArgsCodegen : FilesGen {
             }
             code.unindent()
             code.addStatement("},\n")
-
         }
 
         code.unindent().addStatement(")")
 
         return PropertySpec.builder("navArgs", ClassNames.NamedNavArgument.asList())
             .initializer(code.build())
-            .addKdoc("NamedNavArgs representation for ${argumentsName}")
+            .addKdoc("NamedNavArgs representation for $argumentsName")
             .build()
-
     }
 }

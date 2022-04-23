@@ -1,14 +1,17 @@
 package com.levinzonr.saferoute.codegen.codegen
 
-import com.squareup.kotlinpoet.*
-import com.levinzonr.saferoute.codegen.codegen.extensions.*
+import com.levinzonr.saferoute.codegen.codegen.extensions.deprecate
+import com.levinzonr.saferoute.codegen.codegen.extensions.toRouteProperty
 import com.levinzonr.saferoute.codegen.constants.Constants
 import com.levinzonr.saferoute.codegen.constants.KDoc
 import com.levinzonr.saferoute.codegen.core.FilesGen
 import com.levinzonr.saferoute.codegen.core.GeneratorUnit
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.NavGraphData
-
+import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.PropertySpec
+import com.squareup.kotlinpoet.TypeSpec
 
 object RoutesCodegen : FilesGen {
 
@@ -45,5 +48,4 @@ object RoutesCodegen : FilesGen {
             .initializer("%T", className)
             .build()
     }
-
 }

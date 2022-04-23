@@ -1,11 +1,11 @@
 package com.levinzonr.saferoute.codegen.codegen.extensions
 
 import com.levinzonr.saferoute.codegen.codegen.pathbuilder.fullPathBuilder
+import com.levinzonr.saferoute.codegen.models.RouteData
 import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.PropertySpec
-import com.levinzonr.saferoute.codegen.models.RouteData
 
-internal fun RouteData.createRouteAction() : PropertySpec {
+internal fun RouteData.createRouteAction(): PropertySpec {
     val path = fullPathBuilder(
         args = arguments,
         navBuilder = { "$${it.name}" },

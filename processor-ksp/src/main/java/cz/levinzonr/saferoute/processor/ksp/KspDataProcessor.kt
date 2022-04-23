@@ -9,7 +9,13 @@ import com.google.devtools.ksp.symbol.KSType
 import com.levinzonr.saferoute.codegen.codegen.extensions.checkNullable
 import com.levinzonr.saferoute.codegen.core.DataProcessor
 import com.levinzonr.saferoute.codegen.core.Source
-import com.levinzonr.saferoute.codegen.models.*
+import com.levinzonr.saferoute.codegen.models.ArgumentData
+import com.levinzonr.saferoute.codegen.models.ArgumentType
+import com.levinzonr.saferoute.codegen.models.DeeplinkData
+import com.levinzonr.saferoute.codegen.models.ModelData
+import com.levinzonr.saferoute.codegen.models.NavGraphData
+import com.levinzonr.saferoute.codegen.models.OptionalArgData
+import com.levinzonr.saferoute.codegen.models.RouteData
 import java.lang.IllegalArgumentException
 
 @OptIn(KspExperimental::class)
@@ -20,14 +26,12 @@ internal class KspDataProcessor(
 
     private val packageName = elements.first().packageName.asString()
 
-
     override fun process(): ModelData? {
         val routes = elements.map { element ->
             val annotation =
                 element.annotations.filter { it.shortName.asString().contains("Route") }
             annotation.map { it.process(element) }.toList()
         }.flatten()
-
 
         val graphs = routes.groupBy { it.navGraphName }.map {
             NavGraphData(
@@ -42,7 +46,6 @@ internal class KspDataProcessor(
             navGraphs = graphs
         )
     }
-
 
     private fun KSAnnotation.process(element: KSFunctionDeclaration): RouteData {
         return RouteData(
@@ -101,7 +104,6 @@ internal class KspDataProcessor(
         }
     }
 
-
     private fun KSType.asArgumentType(): ArgumentType {
         val builtIns = resolver.builtIns
         return when (this) {
@@ -113,7 +115,6 @@ internal class KspDataProcessor(
             else -> throw IllegalArgumentException("Type ${toString()} not supported")
         }
     }
-
 }
 
 fun <T> KSAnnotation.fieldByName(name: String): T {

@@ -34,8 +34,8 @@ internal class KspWriter(
         return mapNotNull { source ->
             resolver.getAllFiles().find { ksFile ->
                 ksFile.filePath == source.filepath &&
-                        ksFile.fileName == source.filename &&
-                        ksFile.packageName.asString() == source.packageName
+                    ksFile.fileName == source.filename &&
+                    ksFile.packageName.asString() == source.packageName
             }
         }
     }

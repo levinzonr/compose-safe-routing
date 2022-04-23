@@ -1,10 +1,13 @@
 package cz.levinzonr.saferoute.screens
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import cz.levinzonr.saferoute.core.annotations.Route
-import cz.levinzonr.saferoute.core.transitions.DialogRouteTransition
 import cz.levinzonr.saferoute.data.Pokemon
 import cz.levinzonr.saferoute.data.color
 import cz.levinzonr.saferoute.data.pokemons
@@ -34,7 +36,6 @@ fun PokemonSelector(onSelected: (Pokemon) -> Unit) {
             .fillMaxHeight(0.8f),
         shape = RoundedCornerShape(16.dp)
     ) {
-
 
         Column(
             modifier = Modifier.padding(32.dp),
@@ -59,7 +60,5 @@ fun PokemonSelector(onSelected: (Pokemon) -> Unit) {
                 }
             }
         }
-
     }
-
 }

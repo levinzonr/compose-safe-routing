@@ -20,14 +20,13 @@ class RouterImpl(private val navController: NavController) : Router {
         navController.navigateTo(direction, navOptions, navigationExtras)
     }
 
-    override fun navigateUp() : Boolean {
+    override fun navigateUp(): Boolean {
         return navController.navigateUp()
     }
 
-    override fun popBackStack() : Boolean {
+    override fun popBackStack(): Boolean {
         return navController.popBackStack()
     }
-
 
     override fun popBackStack(
         route: RouteSpec<*>,
@@ -40,7 +39,4 @@ class RouterImpl(private val navController: NavController) : Router {
     override fun clearBackStack(route: RouteSpec<*>): Boolean {
         return navController.clearBackStack(route.route)
     }
-
 }
-
-

@@ -12,7 +12,7 @@ internal class KspLogger(
     }
 
     override fun log(message: String, level: LogLevel) {
-        when(level) {
+        when (level) {
             LogLevel.Error -> kspLogger.error(message)
             LogLevel.Debug -> kspLogger.info(message)
         }

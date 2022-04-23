@@ -24,6 +24,3 @@ object Constants {
     const val ROUTE = "cz.levinzonr.saferoute.core.annotations.Route"
     const val ROUTES = "cz.levinzonr.saferoute.core.annotations.Routes"
 }
-
-
-

@@ -34,15 +34,15 @@ import cz.levinzonr.saferoute.screens.statssheet.args.LocalPokemonStatsRouteArgs
     navGraph = RouteNavGraph("pokedex", start = false)
 )
 fun PokemonStatsSheet() {
-   val args = LocalPokemonStatsRouteArgs.current
-   Column(
-       modifier = Modifier.padding(64.dp).fillMaxWidth(),
-       horizontalAlignment = Alignment.CenterHorizontally,
-       verticalArrangement = Arrangement.spacedBy(16.dp)
-   ) {
-       Image(painter = painterResource(id = args.imageRes), contentDescription = "")
-       Text(text = args.name, style = MaterialTheme.typography.h6)
-       Text(text = "Category: ${args.category}")
-       Text(text = "HP: ${args.hp}")
-   } 
+    val args = LocalPokemonStatsRouteArgs.current
+    Column(
+        modifier = Modifier.padding(64.dp).fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Image(painter = painterResource(id = args.imageRes), contentDescription = "")
+        Text(text = args.name, style = MaterialTheme.typography.h6)
+        Text(text = "Category: ${args.category}")
+        Text(text = "HP: ${args.hp}")
+    }
 }

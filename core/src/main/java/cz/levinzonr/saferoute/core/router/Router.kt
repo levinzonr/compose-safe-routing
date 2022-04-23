@@ -17,9 +17,9 @@ interface Router {
         navigationExtras: Navigator.Extras? = null
     )
 
-    fun navigateUp() : Boolean
+    fun navigateUp(): Boolean
 
-    fun popBackStack() : Boolean
+    fun popBackStack(): Boolean
 
     fun popBackStack(
         route: RouteSpec<*>,
@@ -28,5 +28,4 @@ interface Router {
     ): Boolean
 
     fun clearBackStack(route: RouteSpec<*>): Boolean
-    
 }

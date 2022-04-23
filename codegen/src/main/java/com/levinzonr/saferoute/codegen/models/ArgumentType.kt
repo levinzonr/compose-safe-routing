@@ -24,7 +24,6 @@ enum class ArgumentType(val clazz: KClass<*>, val navType: String) {
                         if (clazz == String::class) return StringType else throw IllegalArgumentException(
                             "Type not supported ${toString()}"
                         )
-
                     } catch (e: Exception) {
                         throw IllegalArgumentException("Type not supported $e")
                     }
@@ -34,5 +33,3 @@ enum class ArgumentType(val clazz: KClass<*>, val navType: String) {
         }
     }
 }
-
-

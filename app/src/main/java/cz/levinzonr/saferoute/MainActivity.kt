@@ -15,15 +15,19 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
-import cz.levinzonr.saferoute.accompanist.navigation.AnimatedSafeRouteNavHost
-import cz.levinzonr.saferoute.core.navigateTo
+import cz.levinzonr.saferoute.accompanist.navigation.SafeRouteAnimatedNavHost
 import cz.levinzonr.saferoute.core.navigation
-import cz.levinzonr.saferoute.screens.*
+import cz.levinzonr.saferoute.screens.MainGraphRoutes
+import cz.levinzonr.saferoute.screens.PokedexGraph
+import cz.levinzonr.saferoute.screens.PokedexGraphRoutes
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsScreen
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsViewModel
 import cz.levinzonr.saferoute.screens.home.HomeScreen
+import cz.levinzonr.saferoute.screens.homeScreen
 import cz.levinzonr.saferoute.screens.list.PokemonListScreen
-import cz.levinzonr.saferoute.screens.statssheet.*
+import cz.levinzonr.saferoute.screens.pokemonDetails
+import cz.levinzonr.saferoute.screens.pokemonList
+import cz.levinzonr.saferoute.screens.pokemonStats
 import cz.levinzonr.saferoute.ui.theme.RouterTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,7 +44,7 @@ class MainActivity : ComponentActivity() {
                     val bottomSheetNavigator = rememberBottomSheetNavigator()
                     val navComposable = rememberAnimatedNavController()
                     ModalBottomSheetLayout(bottomSheetNavigator) {
-                        AnimatedSafeRouteNavHost(
+                        SafeRouteAnimatedNavHost(
                             startRouteSpec = MainGraphRoutes.HomeScreen,
                             navController = rememberAnimatedNavController(bottomSheetNavigator)
                         ) { router ->
@@ -54,7 +58,7 @@ class MainActivity : ComponentActivity() {
                             navigation(PokedexGraph) {
                                 pokemonList {
                                     PokemonListScreen(
-                                       onPokemonClick = { router.navigate(PokedexGraphRoutes.PokemonDetails(it.id))}
+                                        onPokemonClick = { router.navigate(PokedexGraphRoutes.PokemonDetails(it.id)) }
                                     )
                                 }
 
@@ -64,11 +68,13 @@ class MainActivity : ComponentActivity() {
                                     val viewModel = hiltViewModel<PokemonDetailsViewModel>()
                                     val poke = viewModel.pokemon.collectAsState().value
                                     PokemonDetailsScreen(pokemon = poke, onShowStatsClick = {
-                                        router.navigate(PokedexGraphRoutes.PokemonStats(
-                                            name = it.name ?: "",
-                                            category = null,
-                                            hp = it.hp ?: 0,
-                                        ))
+                                        router.navigate(
+                                            PokedexGraphRoutes.PokemonStats(
+                                                name = it.name ?: "",
+                                                category = null,
+                                                hp = it.hp ?: 0,
+                                            )
+                                        )
                                     })
                                 }
                             }
@@ -77,7 +83,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-
     }
 }
 

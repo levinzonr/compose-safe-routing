@@ -6,7 +6,6 @@ import com.levinzonr.saferoute.codegen.core.Source
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.TypeName
-import javax.lang.model.type.TypeMirror
 
 data class RouteData(
     val name: String,
@@ -59,9 +58,7 @@ data class RouteData(
 
     val argumentsConstructor: String get() = "$argumentsName(${arguments.joinToString { it.name }})"
 
-
     val builderName: String = "${name.decapitalize()}"
-
 
     fun getArgsFactoryName(): String {
         return "$argumentsName${Constants.FILE_ROUTE_ARG_FACTORY}"

@@ -8,6 +8,6 @@ internal class SafeRouteKspProvider : SymbolProcessorProvider {
     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor {
         val logger = KspLogger(environment.logger)
         logger.log(environment.options.toString())
-        return SafeRouteKspProcessor(logger,  environment.codeGenerator)
+        return SafeRouteKspProcessor(logger, environment.codeGenerator)
     }
 }

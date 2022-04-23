@@ -1,12 +1,13 @@
 package com.levinzonr.saferoute.codegen.codegen
 
-import com.squareup.kotlinpoet.*
-import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.levinzonr.saferoute.codegen.core.FilesGen
 import com.levinzonr.saferoute.codegen.core.GeneratorUnit
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.RouteData
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.PropertySpec
 
 object RouteArgsProviderCodegen : FilesGen {
 
@@ -25,7 +26,7 @@ object RouteArgsProviderCodegen : FilesGen {
 
     private fun RouteData.createLocalArgsProperty(): PropertySpec {
         return PropertySpec.builder(
-            name = "Local${argumentsName}",
+            name = "Local$argumentsName",
             type = ClassNames.ProvidableCompositionLocal.parameterizedBy(argsTypeClassName)
         ).initializer(
             InitTemplate,
@@ -36,6 +37,6 @@ object RouteArgsProviderCodegen : FilesGen {
     }
 
     private val InitTemplate = "%T<%T> {\n" +
-            "    error(%S)\n" +
-            "}"
+        "    error(%S)\n" +
+        "}"
 }

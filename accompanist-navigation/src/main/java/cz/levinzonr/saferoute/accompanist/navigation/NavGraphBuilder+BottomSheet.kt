@@ -9,7 +9,6 @@ import com.google.accompanist.navigation.material.bottomSheet
 import cz.levinzonr.saferoute.core.ProvideRouteSpecArgs
 import cz.levinzonr.saferoute.core.RouteSpec
 
-
 @ExperimentalMaterialNavigationApi
 fun NavGraphBuilder.bottomSheet(
     routeSpec: RouteSpec<*>,
@@ -20,15 +19,14 @@ fun NavGraphBuilder.bottomSheet(
     }
 }
 
-
 @ExperimentalMaterialNavigationApi
 @Deprecated(
     message = "Use bottomSheet(Route) instead, args can be accessed using CompositionLocal APIs i.e LocalRouteArgs.current",
     replaceWith = ReplaceWith(
         "bottomSheet(spec) {\n " +
-                "val args = spec.currentArgs\n" +
-                "content()\n " +
-                "}",
+            "val args = spec.currentArgs\n" +
+            "content()\n " +
+            "}",
         "cz.levinzonr.saferoute.accompanist.navigation", "cz.levinzonr.saferoute.core.currentArgs"
     )
 )

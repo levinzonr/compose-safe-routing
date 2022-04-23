@@ -26,4 +26,3 @@ annotation class Route(
 )
 
 internal annotation class Routes(val value: Array<Route>)
-

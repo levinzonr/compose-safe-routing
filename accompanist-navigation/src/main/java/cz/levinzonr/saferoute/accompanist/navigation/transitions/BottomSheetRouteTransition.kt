@@ -9,7 +9,7 @@ import cz.levinzonr.saferoute.core.RouteSpec
 import cz.levinzonr.saferoute.core.transitions.RouteTransition
 
 @ExperimentalMaterialNavigationApi
-object BottomSheetRouteTransition: RouteTransition {
+object BottomSheetRouteTransition : RouteTransition {
 
     override fun route(
         builder: NavGraphBuilder,

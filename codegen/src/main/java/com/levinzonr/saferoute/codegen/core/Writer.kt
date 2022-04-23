@@ -9,7 +9,6 @@ interface Writer {
         directory: File,
         sources: List<Source> = emptyList()
     )
-
 }
 
 class DefaultWriter : Writer {

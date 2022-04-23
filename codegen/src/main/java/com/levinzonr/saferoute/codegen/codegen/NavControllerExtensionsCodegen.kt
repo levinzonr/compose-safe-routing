@@ -1,15 +1,14 @@
 package com.levinzonr.saferoute.codegen.codegen
 
 import com.levinzonr.saferoute.codegen.codegen.extensions.deprecate
-import com.squareup.kotlinpoet.FileSpec
-import com.squareup.kotlinpoet.FunSpec
 import com.levinzonr.saferoute.codegen.codegen.extensions.toParamSpec
 import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.levinzonr.saferoute.codegen.core.FilesGen
 import com.levinzonr.saferoute.codegen.core.GeneratorUnit
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.RouteData
-
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.FunSpec
 
 object NavControllerExtensionsCodegen : FilesGen {
 

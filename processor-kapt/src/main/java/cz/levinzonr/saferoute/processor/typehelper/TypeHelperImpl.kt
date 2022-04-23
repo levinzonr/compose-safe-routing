@@ -8,7 +8,6 @@ class TypeHelperImpl(
     private val typeUtils: Types
 ) : TypeHelper {
 
-
     override fun superTypes(value: Any?): List<String> {
         if (value == null) return emptyList()
         return if (value is TypeMirror) {
