@@ -43,11 +43,12 @@ internal class SafeRouteKspProcessor(
 
         if (elements.isEmpty()) return emptyList()
 
+        val packageName = elements.first().packageName.asString()
         val processingComponent = ProcessingComponent(
             logger = logger,
             typeHelper = KspTypeHelper(logger),
             dataProcessor = KspDataProcessor(elements, resolver),
-            directory = File(resolver.getAllFiles().first().packageName.getQualifier()),
+            directory = File(packageName),
             writer = KspWriter(codeGenerator, resolver)
         )
 
