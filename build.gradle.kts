@@ -16,6 +16,22 @@ buildscript {
     }
 }
 
+
+plugins {
+    id("com.diffplug.spotless") version "6.1.0"
+}
+
+subprojects {
+    apply(plugin="com.diffplug.spotless")
+
+    spotless {
+        kotlin {
+            target("**/*.kt")
+            ktlint("0.44.0")
+        }
+    }
+
+}
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
