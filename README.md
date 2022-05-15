@@ -57,9 +57,6 @@ dependencies {
 
 if you are using `KSP`, make sure you are also added KSP build folder
 
-<details open>
-  <summary>groovy - build.gradle(:module-name)</summary>
-
 ```gradle
 applicationVariants.all { variant ->
     kotlin.sourceSets {
@@ -69,8 +66,6 @@ applicationVariants.all { variant ->
     }
 }
 ```
-<details>
-  <summary>kotlin - build.gradle.kts(:module-name)</summary>  
 
 ```gradle
 applicationVariants.all {
