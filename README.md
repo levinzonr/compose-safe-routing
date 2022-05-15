@@ -42,63 +42,32 @@ allprojects {
 }
 ```
 And then in you app level `build.gradle`
+
 ```kotlin
 dependencies { 
-<<<<<<< HEAD
-   
   // add either KAPT or KSP processor
   ksp("com.github.levinzonr.compose-safe-routing:processor-ksp:2.5.0")
   kapt("com.github.levinzonr.compose-safe-routing:processor-kapt:2.5.0")
 
   implementation("com.github.levinzonr.compose-safe-routing:core:2.5.0")
-=======
-  kapt("com.github.levinzonr.compose-safe-routing:compiler:2.4.0")
-  // for KSP support use 2.5.0 version
-  ksp("com.github.levinzonr.compose-safe-routing:compiler:2.5.0-beta02")
-
-  implementation("com.github.levinzonr.compose-safe-routing:core:2.4.0")
->>>>>>> origin/master
   // or in case you are using animation/material routes from accompanist
   implementation("com.github.levinzonr.compose-safe-routing:accompanist-navigation:2.5.0")
   
 }
 ```
 
-<<<<<<< HEAD
 
+If you are using `KSP`, make sure you are also added KSP build folder
 
-if you are using `KSP`, make sure you are also added KSP build folder
-
-```gradle
+```groovy
 applicationVariants.all { variant ->
     kotlin.sourceSets {
         getByName(variant.name) {
             kotlin.srcDir("build/generated/ksp/${variant.name}/kotlin")
         }
     }
-=======
-```groovy
-dependencies {
-  kapt 'com.github.levinzonr.compose-safe-routing:compiler:2.4.0'
-  // for KSP support use 2.5.0 version
-  ksp("com.github.levinzonr.compose-safe-routing:compiler:2.5.0-beta02")
-  implementation 'com.github.levinzonr.compose-safe-routing:core:2.4.0'
-  // or in case you are using animation/material routes from accompanist
-  implementation 'com.github.levinzonr.compose-safe-routing:accompanist-navigation:2.4.0'
->>>>>>> origin/master
 }
 ```
-
-```gradle
-applicationVariants.all {
-    kotlin.sourceSets {
-        getByName(name) {
-            kotlin.srcDir("build/generated/ksp/$name/kotlin")
-        }
-    }
-}
-```
-
 
 ## Basic Usage
 
