@@ -16,6 +16,7 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import cz.levinzonr.saferoute.accompanist.navigation.SafeRouteAnimatedNavHost
+import cz.levinzonr.saferoute.core.composable
 import cz.levinzonr.saferoute.core.navigation
 import cz.levinzonr.saferoute.screens.MainGraphRoutes
 import cz.levinzonr.saferoute.screens.PokedexGraph
@@ -23,6 +24,7 @@ import cz.levinzonr.saferoute.screens.PokedexGraphRoutes
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsScreen
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsViewModel
 import cz.levinzonr.saferoute.screens.home.HomeScreen
+import cz.levinzonr.saferoute.screens.home.HomeScreenRoute
 import cz.levinzonr.saferoute.screens.homeScreen
 import cz.levinzonr.saferoute.screens.list.PokemonListScreen
 import cz.levinzonr.saferoute.screens.pokemonDetails
@@ -55,6 +57,9 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
 
+                            composable(HomeScreenRoute) {
+
+                            }
                             navigation(PokedexGraph) {
                                 pokemonList {
                                     PokemonListScreen(

@@ -1,1 +1,1 @@
-/Users/romanlevinzon/Development/Projects/Router/buildSrc/build/classes/kotlin/main/Deps.class
+/Users/romanlevinzon/Development/Personal/compose-safe-routing/buildSrc/build/classes/kotlin/main/Deps.class
