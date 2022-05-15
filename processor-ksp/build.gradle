@@ -1,0 +1,22 @@
+apply plugin: "kotlin"
+apply plugin: "maven-publish"
+
+
+dependencies {
+    implementation(project(":codegen"))
+    implementation("com.google.devtools.ksp:symbol-processing-api:1.6.10-1.0.3")
+    implementation("com.squareup:kotlinpoet-ksp:1.11.0")
+
+}
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            version = "1.0.1"
+            groupId = 'cz.levinzonr.safe-routing'
+            artifactId = 'processor-ksp'
+            from components.java
+        }
+    }
+}

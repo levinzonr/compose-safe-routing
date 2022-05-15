@@ -17,8 +17,10 @@ import cz.levinzonr.saferoute.R
 import cz.levinzonr.saferoute.accompanist.navigation.transitions.BottomSheetRouteTransition
 import cz.levinzonr.saferoute.core.annotations.Route
 import cz.levinzonr.saferoute.core.annotations.RouteArg
+import cz.levinzonr.saferoute.core.annotations.RouteNavGraph
 import cz.levinzonr.saferoute.screens.statssheet.args.LocalPokemonStatsRouteArgs
 
+@OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
 @Route(
     name = "PokemonStats",
@@ -28,18 +30,19 @@ import cz.levinzonr.saferoute.screens.statssheet.args.LocalPokemonStatsRouteArgs
         RouteArg("category", type = String::class, isNullable = true),
         RouteArg("hp", type = Int::class),
         RouteArg("imageRes", type = Int::class, isOptional = true, defaultValue = R.drawable.poke001.toString())
-    ]
+    ],
+    navGraph = RouteNavGraph("pokedex", start = false)
 )
 fun PokemonStatsSheet() {
-   val args = LocalPokemonStatsRouteArgs.current
-   Column(
-       modifier = Modifier.padding(64.dp).fillMaxWidth(),
-       horizontalAlignment = Alignment.CenterHorizontally,
-       verticalArrangement = Arrangement.spacedBy(16.dp)
-   ) {
-       Image(painter = painterResource(id = args.imageRes), contentDescription = "")
-       Text(text = args.name, style = MaterialTheme.typography.h6)
-       Text(text = "Category: ${args.category}")
-       Text(text = "HP: ${args.hp}")
-   } 
+    val args = LocalPokemonStatsRouteArgs.current
+    Column(
+        modifier = Modifier.padding(64.dp).fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Image(painter = painterResource(id = args.imageRes), contentDescription = "")
+        Text(text = args.name, style = MaterialTheme.typography.h6)
+        Text(text = "Category: ${args.category}")
+        Text(text = "HP: ${args.hp}")
+    }
 }

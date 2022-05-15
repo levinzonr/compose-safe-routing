@@ -10,16 +10,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cz.levinzonr.saferoute.core.annotations.Route
+import cz.levinzonr.saferoute.core.annotations.RouteNavGraph
 import cz.levinzonr.saferoute.data.Pokemon
 import cz.levinzonr.saferoute.data.pokemons
 import cz.levinzonr.saferoute.screens.list.components.PokemonItem
 import cz.levinzonr.saferoute.transitions.FadeInFadeOutTransition
 
-
 @Composable
 @Route(
     name = "PokemonList",
-    transition = FadeInFadeOutTransition::class
+    transition = FadeInFadeOutTransition::class,
+    navGraph = RouteNavGraph("pokedex", start = true)
 )
 fun PokemonListScreen(
     onPokemonClick: (Pokemon) -> Unit,
@@ -38,7 +39,4 @@ fun PokemonListScreen(
             }
         }
     }
-
-
-
 }

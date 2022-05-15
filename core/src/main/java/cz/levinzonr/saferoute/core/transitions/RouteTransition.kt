@@ -23,4 +23,3 @@ interface RouteTransition {
         content: @Composable (NavBackStackEntry) -> Unit
     )
 }
-

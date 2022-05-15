@@ -2,7 +2,14 @@ package cz.levinzonr.saferoute.screens.home
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -16,11 +23,18 @@ import androidx.compose.ui.unit.dp
 import cz.levinzonr.saferoute.R
 import cz.levinzonr.saferoute.accompanist.navigation.transitions.AnimatedRouteTransition
 import cz.levinzonr.saferoute.core.annotations.Route
+import cz.levinzonr.saferoute.core.annotations.RouteNavGraph
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 @Route(
-    transition = AnimatedRouteTransition.Default::class
+    transition = AnimatedRouteTransition.Default::class,
+    navGraph = RouteNavGraph(start = true)
+)
+@Route(
+    name = "homeTest",
+    transition = AnimatedRouteTransition.Default::class,
+    navGraph = RouteNavGraph("test", start = true)
 )
 fun HomeScreen(
     onShowPokedex: () -> Unit,
@@ -29,7 +43,8 @@ fun HomeScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp), verticalArrangement = Arrangement.spacedBy(32.dp)
+            .padding(24.dp),
+        verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
         Text(text = "SafeRoute Navigation Home", style = MaterialTheme.typography.h3)
         Row(
@@ -44,8 +59,6 @@ fun HomeScreen(
             }
         }
     }
-
-
 }
 
 @Composable
@@ -72,6 +85,5 @@ private fun RowScope.HomeButton(
                 modifier = Modifier.align(Alignment.CenterStart)
             )
         }
-
     }
 }

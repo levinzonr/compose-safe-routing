@@ -5,7 +5,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.navigation.NavBackStackEntry
 
 @Composable
-fun<A> ProvideRouteSpecArgs(
+fun <A> ProvideRouteSpecArgs(
     spec: RouteSpec<A>,
     entry: NavBackStackEntry,
     content: ComposableFun

@@ -1,6 +1,5 @@
 package cz.levinzonr.saferoute.annotations
 
-
 /**
  * An annotation to describe the argument of the route
  * @param name - the name of the argument
@@ -23,4 +22,3 @@ package cz.levinzonr.saferoute.annotations
         const val VALUE_NULL = "@null"
     }
 }
-

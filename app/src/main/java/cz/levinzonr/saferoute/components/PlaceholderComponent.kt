@@ -9,7 +9,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
-
 @Composable
 fun Placeholder(color: Color, title: String, onClick: () -> Unit = {}) {
     Box(modifier = Modifier.fillMaxSize().clickable { onClick.invoke() }, contentAlignment = Alignment.Center) {

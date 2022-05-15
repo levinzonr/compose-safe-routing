@@ -2,7 +2,6 @@ package cz.levinzonr.saferoute.data
 
 import cz.levinzonr.saferoute.R
 
-
 data class Pokemon(
     val id: String,
     val name: String? = null,
