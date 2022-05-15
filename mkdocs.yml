@@ -9,5 +9,5 @@ theme:
   font:
     text: 'Roboto'
     code: 'JetBrains Mono'
-  logo: /assets/icon.svg
+  logo: docs/assets/icon.svg
     
