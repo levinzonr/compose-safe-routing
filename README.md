@@ -7,8 +7,9 @@
 ![logo](docs/assets/logo.svg)
 
 
-
-# Compose Safe Route
+<h1 align="center"> 
+   <a href="https://levinzonr.github.io/compose-safe-routing/">Compose SafeRoute</a>
+</h1>
 
 A small code generating library, inspired by SafeArgs for Android, that generates boilerplate code for defining your Navigation Graphs in Jetpack Compose in a type safe way.
 
