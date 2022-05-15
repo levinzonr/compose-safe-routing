@@ -1,3 +1,13 @@
 site_name: Safe Route
+repo_url: https://github.com/levinzonr/compose-safe-routing
+repo_name: Safe Route on GitHub
 theme:
   name: material
+  palette:
+    primary: 'black'
+    accent: 'deep orange'
+  font:
+    text: 'Roboto'
+    code: 'JetBrains Mono'
+  logo: /assets/icon.svg
+    
