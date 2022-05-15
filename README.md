@@ -4,7 +4,7 @@
 
 [Monstar Blogpost](https://engineering.monstar-lab.com/2021/08/30/Safe-Navigation-With-Jetpack-Compose)
 
-![logo](assets/Group 48.svg)
+![logo](assets/logo.svg)
 
 
 
