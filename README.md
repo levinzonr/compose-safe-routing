@@ -13,6 +13,8 @@
 
 A small code generating library, inspired by SafeArgs for Android, that generates boilerplate code for defining your Navigation Graphs in Jetpack Compose in a type safe way.
 
+## Release Notes
+ - [Version 2.5.0](RELEASE_NOTES.md/#250-release-notes-beta)
  - [Version 2.4.0](RELEASE_NOTES.md/#240-release-notes)
  - [Version 2.3.0](RELEASE_NOTES.md/#230-release-notes)
  - [Version 2.2.0](RELEASE_NOTES.md/#220-release-notes)
@@ -42,18 +44,27 @@ allprojects {
 And then in you app level `build.gradle`
 ```kotlin
 dependencies { 
+<<<<<<< HEAD
    
   // add either KAPT or KSP processor
   ksp("com.github.levinzonr.compose-safe-routing:processor-ksp:2.5.0")
   kapt("com.github.levinzonr.compose-safe-routing:processor-kapt:2.5.0")
 
   implementation("com.github.levinzonr.compose-safe-routing:core:2.5.0")
+=======
+  kapt("com.github.levinzonr.compose-safe-routing:compiler:2.4.0")
+  // for KSP support use 2.5.0 version
+  ksp("com.github.levinzonr.compose-safe-routing:compiler:2.5.0-beta02")
+
+  implementation("com.github.levinzonr.compose-safe-routing:core:2.4.0")
+>>>>>>> origin/master
   // or in case you are using animation/material routes from accompanist
   implementation("com.github.levinzonr.compose-safe-routing:accompanist-navigation:2.5.0")
   
 }
 ```
 
+<<<<<<< HEAD
 
 
 if you are using `KSP`, make sure you are also added KSP build folder
@@ -65,6 +76,16 @@ applicationVariants.all { variant ->
             kotlin.srcDir("build/generated/ksp/${variant.name}/kotlin")
         }
     }
+=======
+```groovy
+dependencies {
+  kapt 'com.github.levinzonr.compose-safe-routing:compiler:2.4.0'
+  // for KSP support use 2.5.0 version
+  ksp("com.github.levinzonr.compose-safe-routing:compiler:2.5.0-beta02")
+  implementation 'com.github.levinzonr.compose-safe-routing:core:2.4.0'
+  // or in case you are using animation/material routes from accompanist
+  implementation 'com.github.levinzonr.compose-safe-routing:accompanist-navigation:2.4.0'
+>>>>>>> origin/master
 }
 ```
 

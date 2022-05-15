@@ -1,4 +1,4 @@
-# 2.5.0 Release Notes (BETA)
+# 2.5.0 Release Notes
 
 ## Disclaimer ⚠️
 This update is quite big in terms of introducing new logic and deprecating the logic that was here since the beginning. Thus, I'd like to gather as much feedback as possible and encourage you to open issues in case you have any suggestions regarding newly introduced stuff. I'm also making this update as `beta` as there are things I would like to make it in full 2.5.0 and so there is somewhat of a breathing room in case of any feedback :)
