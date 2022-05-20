@@ -4,18 +4,21 @@ repo_name: Safe Route on GitHub
 theme:
   name: material
   palette:
-    primary: 'black'
-    accent: 'deep orange'
+    primary: "black"
+    accent: "deep orange"
   font:
-    text: 'Roboto'
-    code: 'JetBrains Mono'
+    text: "Roboto"
+    code: "JetBrains Mono"
   logo: assets/icon.svg
   features:
-    - content.code.annotate 
+    - content.code.annotate
 markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
-    
+nav:
+  - "Overview": index.md
+  - route.md
+  - arguments.md

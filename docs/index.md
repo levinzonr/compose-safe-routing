@@ -4,7 +4,7 @@
 
 
 
-# Introduction
+# Overview
 
 A code generating library, inspired by SafeArgs for Android. Entrily based on the Jetpack Compose Navigation Component, SafeRoute uses its apis to ensure type-safety during navigation and allows you to define your navigation graphs without boilerplate code, hardcoded strings and more.
 
