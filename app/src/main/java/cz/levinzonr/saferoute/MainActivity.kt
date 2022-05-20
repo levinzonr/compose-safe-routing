@@ -44,7 +44,6 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     val bottomSheetNavigator = rememberBottomSheetNavigator()
-                    val navComposable = rememberAnimatedNavController()
                     ModalBottomSheetLayout(bottomSheetNavigator) {
                         SafeRouteAnimatedNavHost(
                             startRouteSpec = MainGraphRoutes.HomeScreen,
@@ -57,9 +56,6 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
 
-                            composable(HomeScreenRoute) {
-
-                            }
                             navigation(PokedexGraph) {
                                 pokemonList {
                                     PokemonListScreen(
