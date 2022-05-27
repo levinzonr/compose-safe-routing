@@ -11,6 +11,9 @@
       <module name="router.codegen.main" target="11" />
       <module name="router.codegen.test" target="11" />
       <module name="router.core" target="11" />
+      <module name="router.processor-kapt" target="11" />
+      <module name="router.processor-kapt.main" target="11" />
+      <module name="router.processor-kapt.test" target="11" />
       <module name="router.processor-ksp" target="11" />
       <module name="router.processor-ksp.main" target="11" />
       <module name="router.processor-ksp.test" target="11" />
