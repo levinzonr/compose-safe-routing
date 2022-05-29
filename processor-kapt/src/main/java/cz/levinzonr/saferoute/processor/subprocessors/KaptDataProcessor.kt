@@ -24,14 +24,10 @@ internal class KaptDataProcessor(
 
     override fun process(): ModelData? {
         try {
-
-            var packageName = ""
+            val packageName = processingEnv.options[Constants.ARG_PACKAGE_NAME]
             val elements = requireNotNull(environment?.getElementsAnnotatedWithAny(supported())) { "eror " }
             val routes = elements
-                .map {
-                    packageName = processingEnv.elementUtils.getPackageOf(it).toString()
-                    processingEnv.processAnnotations(it)
-                }
+                .map { processingEnv.processAnnotations(it) }
                 .flatten()
                 .takeIf { it.isNotEmpty() } ?: return null
 
@@ -44,7 +40,7 @@ internal class KaptDataProcessor(
                 )
             }
 
-            return ModelData(packageName, graphs)
+            return ModelData(packageName ?: routes.first().packageName, graphs)
         } catch (e: Exception) {
             throw Exception("Error while processing annotations: ${e.stackTraceToString()}")
         }

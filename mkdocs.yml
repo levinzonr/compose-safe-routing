@@ -22,3 +22,4 @@ nav:
   - "Overview": index.md
   - route.md
   - arguments.md
+  - configuration.md

@@ -24,7 +24,7 @@ By default every described by the annotation is considered **not nullable** and 
 ```
 
 ### Optional Arguments
-Optional arguments can defined using is `isOptional` flag. When set to true, it is also **required** to provide the default value using the `defaultValue` parameter.
+Optional arguments can be defined using `isOptional` flag. When set to true, it is also **required** to provide the default value using the `defaultValue` parameter.
 
 Note, Due to the limitatoins of the Annotations classes, the default value must be `String`. Later on, it will be casted back to the apporpriate type.
 ```kotlin

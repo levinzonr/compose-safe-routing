@@ -23,4 +23,6 @@ object Constants {
     const val PACKAGE_COMPOSE_RUNTIME = "androidx.compose.runtime"
     const val ROUTE = "cz.levinzonr.saferoute.core.annotations.Route"
     const val ROUTES = "cz.levinzonr.saferoute.core.annotations.Routes"
+
+    const val ARG_PACKAGE_NAME = "safeRoute.defaultPackageName"
 }
