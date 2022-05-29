@@ -7,6 +7,7 @@ import com.google.devtools.ksp.symbol.KSDeclaration
 import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.google.devtools.ksp.symbol.KSType
 import com.levinzonr.saferoute.codegen.codegen.extensions.checkNullable
+import com.levinzonr.saferoute.codegen.constants.Constants
 import com.levinzonr.saferoute.codegen.core.DataProcessor
 import com.levinzonr.saferoute.codegen.core.Source
 import com.levinzonr.saferoute.codegen.models.ArgumentData
@@ -21,10 +22,10 @@ import java.lang.IllegalArgumentException
 @OptIn(KspExperimental::class)
 internal class KspDataProcessor(
     private val elements: List<KSFunctionDeclaration>,
-    private val resolver: Resolver
+    private val resolver: Resolver,
+    private val packageName: String
 ) : DataProcessor {
 
-    private val packageName = elements.first().packageName.asString()
 
     override fun process(): ModelData? {
         val routes = elements.map { element ->

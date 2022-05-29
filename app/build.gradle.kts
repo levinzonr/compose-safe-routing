@@ -56,6 +56,16 @@ android {
 
 }
 
+kapt {
+    arguments {
+        arg("safeRoute.defaultPackageName", "cz.levinzonr.saferoute.navigation")
+    }
+}
+
+ksp {
+    arg("safeRoute.defaultPackageName", "cz.levinzonr.saferoute.navigation")
+}
+
 
 dependencies {
     val hilt_version = "2.37"

@@ -18,6 +18,7 @@ import kotlin.math.log
 @OptIn(KotlinPoetKspPreview::class)
 internal class SafeRouteKspProcessor(
     private val logger: Logger,
+    private val options: Map<String,String>,
     private val codeGenerator: CodeGenerator,
 ) : SymbolProcessor {
 
@@ -46,11 +47,11 @@ internal class SafeRouteKspProcessor(
 
         if (elements.isEmpty()) return emptyList()
 
-        val packageName = elements.first().packageName.asString()
+        val packageName = options[Constants.ARG_PACKAGE_NAME] ?: elements.first().packageName.asString()
         val processingComponent = ProcessingComponent(
             logger = logger,
             typeHelper = KspTypeHelper(logger),
-            dataProcessor = KspDataProcessor(elements, resolver),
+            dataProcessor = KspDataProcessor(elements, resolver, packageName),
             directory = File(packageName),
             writer = KspWriter(codeGenerator, resolver)
         )
