@@ -21,5 +21,6 @@ markdown_extensions:
 nav:
   - "Overview": index.md
   - route.md
+  - transitions.md
   - arguments.md
   - configuration.md

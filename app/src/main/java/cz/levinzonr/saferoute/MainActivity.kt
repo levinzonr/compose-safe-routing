@@ -4,19 +4,28 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkOut
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.SecureFlagPolicy
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import cz.levinzonr.saferoute.accompanist.navigation.SafeRouteAnimatedNavHost
+import cz.levinzonr.saferoute.accompanist.navigation.bottomSheet
+import cz.levinzonr.saferoute.accompanist.navigation.composable
 import cz.levinzonr.saferoute.core.composable
+import cz.levinzonr.saferoute.core.dialog
 import cz.levinzonr.saferoute.core.navigation
 import cz.levinzonr.saferoute.screens.MainGraphRoutes
 import cz.levinzonr.saferoute.screens.PokedexGraph
@@ -56,10 +65,31 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
 
+                            dialog(
+                                properties = DialogProperties(
+                                    dismissOnBackPress = true,
+                                    dismissOnClickOutside = true,
+                                    securePolicy = SecureFlagPolicy.Inherit
+                                )
+                            )
+
+
+                            composable(
+                                enterTransition = fadeIn() + expandIn(),
+                                exitTransition = fadeOut() + shrinkOut(),
+
+                            )
+
                             navigation(PokedexGraph) {
                                 pokemonList {
                                     PokemonListScreen(
-                                        onPokemonClick = { router.navigate(PokedexGraphRoutes.PokemonDetails(it.id)) }
+                                        onPokemonClick = {
+                                            router.navigate(
+                                                PokedexGraphRoutes.PokemonDetails(
+                                                    it.id
+                                                )
+                                            )
+                                        }
                                     )
                                 }
 
