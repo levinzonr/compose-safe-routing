@@ -7,7 +7,6 @@ import com.google.devtools.ksp.symbol.KSDeclaration
 import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.google.devtools.ksp.symbol.KSType
 import com.levinzonr.saferoute.codegen.codegen.extensions.checkNullable
-import com.levinzonr.saferoute.codegen.constants.Constants
 import com.levinzonr.saferoute.codegen.core.DataProcessor
 import com.levinzonr.saferoute.codegen.core.Source
 import com.levinzonr.saferoute.codegen.models.ArgumentData
@@ -25,7 +24,6 @@ internal class KspDataProcessor(
     private val resolver: Resolver,
     private val packageName: String
 ) : DataProcessor {
-
 
     override fun process(): ModelData? {
         val routes = elements.map { element ->

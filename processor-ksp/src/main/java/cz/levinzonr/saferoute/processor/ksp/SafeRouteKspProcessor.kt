@@ -18,7 +18,7 @@ import kotlin.math.log
 @OptIn(KotlinPoetKspPreview::class)
 internal class SafeRouteKspProcessor(
     private val logger: Logger,
-    private val options: Map<String,String>,
+    private val options: Map<String, String>,
     private val codeGenerator: CodeGenerator,
 ) : SymbolProcessor {
 
