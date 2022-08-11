@@ -11,7 +11,7 @@ import cz.levinzonr.saferoute.accompanist.navigation.RouteExitTransition
 import cz.levinzonr.saferoute.accompanist.navigation.transitions.AnimatedRouteTransition
 
 @OptIn(ExperimentalAnimationApi::class)
-object CustomAnimatedTransition : AnimatedRouteTransition() {
+object FadeInFadeOutTransition : AnimatedRouteTransition() {
     override val enter: RouteEnterTransition = { expandIn() }
     override val exit: RouteExitTransition = { shrinkOut() }
     override val popEnter: RouteEnterTransition = enter
