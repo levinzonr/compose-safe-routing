@@ -8,13 +8,11 @@ internal class KspLogger(
     private val kspLogger: KSPLogger
 ) : Logger {
 
-    init {
-    }
-
     override fun log(message: String, level: LogLevel) {
         when (level) {
             LogLevel.Error -> kspLogger.error(message)
             LogLevel.Debug -> kspLogger.info(message)
+            LogLevel.Warning -> kspLogger.warn(message)
         }
     }
 }

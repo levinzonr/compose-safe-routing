@@ -6,11 +6,11 @@ plugins {
 
 
 android {
-    compileSdk = 31
+    compileSdk = 33
 
     defaultConfig {
         minSdk = 21
-        targetSdk = 31
+        targetSdk = 33
         version  = 1
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -35,8 +35,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = rootProject.extra["compose_version"] as String
-        kotlinCompilerVersion = "1.4.32"
+        kotlinCompilerExtensionVersion = "1.3.0"
     }
 
 
@@ -50,7 +49,7 @@ mavenPublish {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.7.0")
+    implementation("androidx.core:core-ktx:1.8.0")
     implementation("androidx.navigation:navigation-compose:${Deps.composeNavigation}")
     implementation("androidx.compose.ui:ui:${Deps.compose}")
     implementation("androidx.compose.material:material:${Deps.compose}")
