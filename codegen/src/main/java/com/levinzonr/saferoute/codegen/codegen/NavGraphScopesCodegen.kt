@@ -1,6 +1,7 @@
 package com.levinzonr.saferoute.codegen.codegen
 
 import com.levinzonr.saferoute.codegen.codegen.extensions.ComposableFunction
+import com.levinzonr.saferoute.codegen.codegen.extensions.buildComposableFunction
 import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.levinzonr.saferoute.codegen.core.FilesGen
 import com.levinzonr.saferoute.codegen.core.GeneratorUnit
@@ -60,7 +61,8 @@ object NavGraphScopesCodegen : FilesGen {
                 FunSpec.constructorBuilder()
                     .addParameter(
                         name = "navGraphBuilder", ClassNames.NavGraphBuilder
-                    ).build())
+                    ).build()
+            )
             .addProperty(property.build())
 
 
@@ -82,7 +84,12 @@ object NavGraphScopesCodegen : FilesGen {
     }
 
     private fun RouteData.toFunSpecBuilder(): FunSpec.Builder {
-        val parameterSpec = ParameterSpec.builder("content", ComposableFunction).build()
+        val function = buildComposableFunction(
+            params = listOf(
+                ParameterSpec.builder("entry", ClassNames.NavBackStackEntry).build()
+            )
+        )
+        val parameterSpec = ParameterSpec.builder("content", function).build()
         return FunSpec
             .builder(name.replaceFirstChar { it.lowercase() })
             .addParameter(parameterSpec)

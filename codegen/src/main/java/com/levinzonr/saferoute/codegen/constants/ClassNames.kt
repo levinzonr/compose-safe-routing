@@ -20,6 +20,7 @@ internal object ClassNames {
     val NavDeepLink = ClassName(Constants.PACKAGE_NAVIGATION, "NavDeepLink")
     val NavDeepLinkDSL = ClassName(Constants.PACKAGE_NAVIGATION, "navDeepLink")
     val NavGraphBuilder = ClassName(Constants.PACKAGE_NAVIGATION, "NavGraphBuilder")
+    val NavBackStackEntry = ClassName(Constants.PACKAGE_NAVIGATION, "NavBackStackEntry")
     val route = ClassName(Constants.PACKAGE_CORE, "route")
     val navigateTo = ClassName(Constants.PACKAGE_CORE, "navigateTo")
     val navigation = ClassName(Constants.PACKAGE_CORE, "navigation")
