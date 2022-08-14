@@ -41,7 +41,7 @@ object LoginGraph : Spec<LoginScope> {
 
             }
 
-            override fun signup(content: () -> Unit) {
+            override fun signup(content: @Composable () -> Unit) {
             }
         }
     }

@@ -2,6 +2,7 @@ package com.levinzonr.saferoute.codegen.core
 
 import com.levinzonr.saferoute.codegen.codegen.NavControllerExtensionsCodegen
 import com.levinzonr.saferoute.codegen.codegen.NavGraphRoutesCodegen
+import com.levinzonr.saferoute.codegen.codegen.NavGraphScopesCodegen
 import com.levinzonr.saferoute.codegen.codegen.NavGraphsCodegen
 import com.levinzonr.saferoute.codegen.codegen.RouteArgsCodegen
 import com.levinzonr.saferoute.codegen.codegen.RouteArgsFactoryCodegen
@@ -30,7 +31,8 @@ class RoutesGenerationProcessor(
         RoutesActionsCodegen,
         RoutesCodegen,
         RoutesSpecsCodegen,
-        RoutesTransitionsCodegen(component.typeHelper)
+        RoutesTransitionsCodegen(component.typeHelper),
+        NavGraphScopesCodegen
     )
 
     fun process() = try {
