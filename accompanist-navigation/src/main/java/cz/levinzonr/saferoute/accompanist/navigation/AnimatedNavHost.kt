@@ -12,10 +12,47 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import cz.levinzonr.saferoute.core.NavGraphSpec
 import cz.levinzonr.saferoute.core.RouteSpec
+import cz.levinzonr.saferoute.core.annotations.Route
 import cz.levinzonr.saferoute.core.router.LocalRouter
 import cz.levinzonr.saferoute.core.router.Router
 import cz.levinzonr.saferoute.core.router.RouterImpl
+
+
+@ExperimentalAnimationApi
+@Composable
+fun <Scope> SafeRouteAnimatedNavHost(
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberAnimatedNavController(),
+    graph: NavGraphSpec<Scope>,
+    contentAlignment: Alignment = Alignment.Center,
+    route: String? = null,
+    enterTransition: RouteEnterTransition = { fadeIn() },
+    exitTransition: RouteExitTransition = { fadeOut() },
+    popEnterTransition: RouteEnterTransition = enterTransition,
+    popExitTransition: RouteExitTransition = exitTransition,
+    builder: Scope.(Router) -> Unit
+) {
+    val router = remember(navController) { RouterImpl(navController) }
+    CompositionLocalProvider(LocalRouter provides router) {
+        AnimatedNavHost(
+            navController = navController,
+            modifier = modifier,
+            startDestination = graph.route,
+            contentAlignment = contentAlignment,
+            route = route,
+            enterTransition = enterTransition,
+            exitTransition = exitTransition,
+            popEnterTransition = popEnterTransition,
+            popExitTransition = popExitTransition,
+            builder = {
+                val scope = graph.provideGraphScope(this)
+                builder(scope, router)
+            }
+        )
+    }
+}
 
 @Composable
 @ExperimentalAnimationApi
