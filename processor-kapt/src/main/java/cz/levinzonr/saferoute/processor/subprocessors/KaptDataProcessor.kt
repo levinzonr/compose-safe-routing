@@ -24,23 +24,26 @@ internal class KaptDataProcessor(
 
     override fun process(): ModelData? {
         try {
-            val packageName = processingEnv.options[Constants.ARG_PACKAGE_NAME]
             val elements = requireNotNull(environment?.getElementsAnnotatedWithAny(supported())) { "eror " }
             val routes = elements
                 .map { processingEnv.processAnnotations(it) }
                 .flatten()
                 .takeIf { it.isNotEmpty() } ?: return null
 
+            val packageName = processingEnv.options[Constants.ARG_PACKAGE_NAME] ?: routes.first().packageName
+
+
             val graphs = routes.groupBy { it.navGraphName }.map { entry ->
                 val startDestination = entry.value.find { it.start }
                 NavGraphData(
                     name = entry.key,
                     routes = entry.value,
-                    start = requireNotNull(startDestination) { "NavGraph [${entry.key}] has no start route specified" }
+                    start = requireNotNull(startDestination) { "NavGraph [${entry.key}] has no start route specified" },
+                    packageName = packageName
                 )
             }
 
-            return ModelData(packageName ?: routes.first().packageName, graphs)
+            return ModelData(packageName, graphs)
         } catch (e: Exception) {
             throw Exception("Error while processing annotations: ${e.stackTraceToString()}")
         }

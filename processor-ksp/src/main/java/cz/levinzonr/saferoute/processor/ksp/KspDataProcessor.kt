@@ -36,7 +36,8 @@ internal class KspDataProcessor(
             NavGraphData(
                 name = it.key,
                 routes = it.value,
-                start = requireNotNull(it.value.find { it.start }) { "Graph ${it.key} has no start property defined" }
+                start = requireNotNull(it.value.find { it.start }) { "Graph ${it.key} has no start property defined" },
+                packageName = packageName
             )
         }
 
