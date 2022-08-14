@@ -2,6 +2,7 @@ package cz.levinzonr.saferoute.playground
 
 import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -21,12 +22,12 @@ interface Spec<T> {
 }
 
 interface LoginScope {
-    fun login(content: @Composable () -> Unit = {A()})
-    fun signup(content: @Composable () -> Unit)
+    fun login(content: @Composable (NavBackStackEntry) -> Unit = {A()})
+    fun signup(content: @Composable (NavBackStackEntry) -> Unit)
 }
 
 interface MainScope {
-    fun home(content: @Composable () -> Unit)
+    fun home(content: @Composable (NavBackStackEntry) -> Unit)
     fun loginGraph(scope: LoginScope.() -> Unit)
 }
 object LoginGraph : Spec<LoginScope> {
@@ -37,11 +38,11 @@ object LoginGraph : Spec<LoginScope> {
 
     override fun buildScope(builder: NavGraphBuilder): LoginScope {
         return object : LoginScope {
-            override fun login(content: @Composable () -> Unit) {
+            override fun login(content: @Composable (NavBackStackEntry) -> Unit) {
 
             }
 
-            override fun signup(content: @Composable () -> Unit) {
+            override fun signup(content: @Composable (NavBackStackEntry) -> Unit) {
             }
         }
     }
@@ -51,7 +52,8 @@ class MainScopeImpl(val navGraphBuilder: NavGraphBuilder) : MainScope {
 
 
 
-    override fun home(content: @Composable () -> Unit) {
+
+    override fun home(content: @Composable (NavBackStackEntry) -> Unit) {
         navGraphBuilder.route(HomeScreenRoute, DefaultRouteTransition, content)
     }
 

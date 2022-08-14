@@ -17,6 +17,8 @@ import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import cz.levinzonr.saferoute.accompanist.navigation.SafeRouteAnimatedNavHost
 import cz.levinzonr.saferoute.core.navigation
+import cz.levinzonr.saferoute.core.router.LocalRouter
+import cz.levinzonr.saferoute.navigation.MainGraph
 import cz.levinzonr.saferoute.navigation.MainGraphRoutes
 import cz.levinzonr.saferoute.navigation.PokedexGraph
 import cz.levinzonr.saferoute.navigation.PokedexGraphRoutes
@@ -24,6 +26,7 @@ import cz.levinzonr.saferoute.navigation.homeScreen
 import cz.levinzonr.saferoute.navigation.pokemonDetails
 import cz.levinzonr.saferoute.navigation.pokemonList
 import cz.levinzonr.saferoute.navigation.pokemonStats
+import cz.levinzonr.saferoute.screens.PokemonSelector
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsScreen
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsViewModel
 import cz.levinzonr.saferoute.screens.home.HomeScreen
@@ -44,51 +47,28 @@ class MainActivity : ComponentActivity() {
                     val bottomSheetNavigator = rememberBottomSheetNavigator()
                     ModalBottomSheetLayout(bottomSheetNavigator) {
                         SafeRouteAnimatedNavHost(
-                            startRouteSpec = MainGraphRoutes.HomeScreen,
-                            navController = rememberAnimatedNavController(bottomSheetNavigator)
-                        ) { router ->
+                            navController = rememberAnimatedNavController(bottomSheetNavigator),
+                            graph = MainGraph
+                        ) {
                             homeScreen {
+                                val router = LocalRouter.current
                                 HomeScreen(
                                     onShowPokedex = { router.navigate(PokedexGraph) },
                                     onDeeplink = { router.navigate(MainGraphRoutes.HomeScreen()) }
                                 )
                             }
-
-                            navigation(PokedexGraph) {
-                                pokemonList {
-                                    PokemonListScreen(
-                                        onPokemonClick = {
-                                            router.navigate(
-                                                PokedexGraphRoutes.PokemonDetails(
-                                                    it.id
-                                                )
-                                            )
-                                        }
-                                    )
-                                }
-
-                                pokemonStats()
-
-                                pokemonDetails {
-                                    val viewModel = hiltViewModel<PokemonDetailsViewModel>()
-                                    val poke = viewModel.pokemon.collectAsState().value
-                                    PokemonDetailsScreen(pokemon = poke, onShowStatsClick = {
-                                        router.navigate(
-                                            PokedexGraphRoutes.PokemonStats(
-                                                name = it.name ?: "",
-                                                category = null,
-                                                hp = it.hp ?: 0,
-                                            )
-                                        )
-                                    })
-                                }
+                            pokemonSelector {
+                                PokemonSelector(onSelected = {})
                             }
+
+
                         }
                     }
                 }
             }
         }
     }
+
 }
 
 @Composable

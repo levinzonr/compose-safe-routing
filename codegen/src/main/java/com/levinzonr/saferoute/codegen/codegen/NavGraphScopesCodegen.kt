@@ -2,11 +2,13 @@ package com.levinzonr.saferoute.codegen.codegen
 
 import com.levinzonr.saferoute.codegen.codegen.extensions.buildComposableFunction
 import com.levinzonr.saferoute.codegen.constants.ClassNames
+import com.levinzonr.saferoute.codegen.core.AnnotationsResolver
 import com.levinzonr.saferoute.codegen.core.FilesGen
 import com.levinzonr.saferoute.codegen.core.GeneratorUnit
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.NavGraphData
 import com.levinzonr.saferoute.codegen.models.RouteData
+import com.squareup.kotlinpoet.AnnotationSpec
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
@@ -15,7 +17,9 @@ import com.squareup.kotlinpoet.ParameterSpec
 import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.TypeSpec
 
-object NavGraphScopesCodegen : FilesGen {
+class NavGraphScopesCodegen(
+    private val annotationsResolver: AnnotationsResolver
+) : FilesGen {
 
     override fun generate(data: ModelData): List<GeneratorUnit> {
         return data.navGraphs.map {
@@ -82,6 +86,7 @@ object NavGraphScopesCodegen : FilesGen {
     }
 
     private fun RouteData.toFunSpecBuilder(): FunSpec.Builder {
+        val annotations = annotationsResolver.resolve(this)
         val function = buildComposableFunction(
             params = listOf(
                 ParameterSpec.builder("entry", ClassNames.NavBackStackEntry).build()
@@ -91,5 +96,6 @@ object NavGraphScopesCodegen : FilesGen {
         return FunSpec
             .builder(name.replaceFirstChar { it.lowercase() })
             .addParameter(parameterSpec)
+            .apply { annotations.forEach { addAnnotation(it) } }
     }
 }

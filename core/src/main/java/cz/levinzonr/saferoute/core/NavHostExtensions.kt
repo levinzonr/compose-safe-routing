@@ -19,16 +19,13 @@ fun<Scope> SafeRouteNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(navigators = emptyArray()),
     graph: NavGraphSpec<Scope>,
-    builder: Scope.(Router) -> Unit
+    builder: Scope.() -> Unit
 ) {
     SafeRouteNavHost(
         modifier = modifier,
         navController = navController,
         startDestination = graph.route,
-        builder = { router ->
-            val scope = graph.provideGraphScope(this)
-            builder(scope, router)
-        }
+        builder = { navigation(graph, builder) }
     )
 }
 

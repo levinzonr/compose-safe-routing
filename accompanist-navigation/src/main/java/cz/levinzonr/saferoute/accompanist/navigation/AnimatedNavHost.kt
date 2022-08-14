@@ -15,6 +15,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import cz.levinzonr.saferoute.core.NavGraphSpec
 import cz.levinzonr.saferoute.core.RouteSpec
 import cz.levinzonr.saferoute.core.annotations.Route
+import cz.levinzonr.saferoute.core.navigation
 import cz.levinzonr.saferoute.core.router.LocalRouter
 import cz.levinzonr.saferoute.core.router.Router
 import cz.levinzonr.saferoute.core.router.RouterImpl
@@ -32,7 +33,7 @@ fun <Scope> SafeRouteAnimatedNavHost(
     exitTransition: RouteExitTransition = { fadeOut() },
     popEnterTransition: RouteEnterTransition = enterTransition,
     popExitTransition: RouteExitTransition = exitTransition,
-    builder: Scope.(Router) -> Unit
+    builder: Scope.() -> Unit
 ) {
     val router = remember(navController) { RouterImpl(navController) }
     CompositionLocalProvider(LocalRouter provides router) {
@@ -46,10 +47,7 @@ fun <Scope> SafeRouteAnimatedNavHost(
             exitTransition = exitTransition,
             popEnterTransition = popEnterTransition,
             popExitTransition = popExitTransition,
-            builder = {
-                val scope = graph.provideGraphScope(this)
-                builder(scope, router)
-            }
+            builder = { navigation(spec = graph, builder) }
         )
     }
 }

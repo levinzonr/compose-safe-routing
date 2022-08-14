@@ -21,6 +21,8 @@ class RoutesGenerationProcessor(
     private val directory = component.directory
     private val writer = component.writer
 
+    private val annotationsResolver = AnnotationsResolver(component.typeHelper)
+
     private val generators: List<FilesGen> = listOf(
         NavControllerExtensionsCodegen,
         NavGraphRoutesCodegen,
@@ -31,8 +33,8 @@ class RoutesGenerationProcessor(
         RoutesActionsCodegen,
         RoutesCodegen,
         RoutesSpecsCodegen,
-        RoutesTransitionsCodegen(component.typeHelper),
-        NavGraphScopesCodegen
+        RoutesTransitionsCodegen(annotationsResolver),
+        NavGraphScopesCodegen(annotationsResolver)
     )
 
     fun process() = try {
