@@ -35,21 +35,18 @@ fun <Scope> SafeRouteAnimatedNavHost(
     popExitTransition: RouteExitTransition = exitTransition,
     builder: Scope.() -> Unit
 ) {
-    val router = remember(navController) { RouterImpl(navController) }
-    CompositionLocalProvider(LocalRouter provides router) {
-        AnimatedNavHost(
-            navController = navController,
-            modifier = modifier,
-            startDestination = graph.route,
-            contentAlignment = contentAlignment,
-            route = route,
-            enterTransition = enterTransition,
-            exitTransition = exitTransition,
-            popEnterTransition = popEnterTransition,
-            popExitTransition = popExitTransition,
-            builder = { navigation(spec = graph, builder) }
-        )
-    }
+    SafeRouteAnimatedNavHost(
+        modifier = modifier,
+        navController = navController,
+        startRouteSpec = graph.start,
+        contentAlignment = contentAlignment,
+        route = route,
+        enterTransition =enterTransition,
+        exitTransition = exitTransition,
+        popEnterTransition = popEnterTransition,
+        popExitTransition =popExitTransition,
+        builder = { navigation(graph, builder) }
+    )
 }
 
 @Composable
