@@ -16,12 +16,11 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import cz.levinzonr.saferoute.accompanist.navigation.SafeRouteAnimatedNavHost
+import cz.levinzonr.saferoute.core.annotations.NavGraph
 import cz.levinzonr.saferoute.core.navigation
 import cz.levinzonr.saferoute.core.router.LocalRouter
-import cz.levinzonr.saferoute.navigation.MainGraph
-import cz.levinzonr.saferoute.navigation.MainGraphRoutes
-import cz.levinzonr.saferoute.navigation.PokedexGraph
-import cz.levinzonr.saferoute.navigation.PokedexGraphRoutes
+import cz.levinzonr.saferoute.navigation.Main
+import cz.levinzonr.saferoute.navigation.MainRoutes
 import cz.levinzonr.saferoute.navigation.homeScreen
 import cz.levinzonr.saferoute.navigation.pokemonDetails
 import cz.levinzonr.saferoute.navigation.pokemonList
@@ -48,20 +47,15 @@ class MainActivity : ComponentActivity() {
                     ModalBottomSheetLayout(bottomSheetNavigator) {
                         SafeRouteAnimatedNavHost(
                             navController = rememberAnimatedNavController(bottomSheetNavigator),
-                            graph = MainGraph
+                            graph = Main
                         ) {
                             homeScreen {
                                 val router = LocalRouter.current
                                 HomeScreen(
-                                    onShowPokedex = { router.navigate(PokedexGraph) },
-                                    onDeeplink = { router.navigate(MainGraphRoutes.HomeScreen()) }
+                                    onShowPokedex = {},
+                                    onDeeplink = { router.navigate(MainRoutes.HomeScreen()) }
                                 )
                             }
-                            pokemonSelector {
-                                PokemonSelector(onSelected = {})
-                            }
-
-
                         }
                     }
                 }

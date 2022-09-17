@@ -3,6 +3,8 @@ package com.levinzonr.saferoute.codegen.codegen
 import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.levinzonr.saferoute.codegen.core.FilesGen
 import com.levinzonr.saferoute.codegen.core.GeneratorUnit
+import com.levinzonr.saferoute.codegen.core.LogLevel
+import com.levinzonr.saferoute.codegen.core.Logger
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.NavGraphData
 import com.squareup.kotlinpoet.FileSpec
@@ -13,12 +15,17 @@ import com.squareup.kotlinpoet.PropertySpec
 import com.squareup.kotlinpoet.STAR
 import com.squareup.kotlinpoet.TypeSpec
 
-object NavGraphsCodegen : FilesGen {
+class NavGraphsCodegen(
+    private val logger: Logger
+) : FilesGen {
 
     override fun generate(data: ModelData): List<GeneratorUnit> {
         return data.navGraphs.map {
+            logger.log("generate graph $data", level = LogLevel.Warning)
             GeneratorUnit(
-                FileSpec.get(data.packageName, it.createSpecProperty()),
+                FileSpec.get(it.packageName, it.createSpecProperty().also {
+                    logger.log("Done gen $it", LogLevel.Warning)
+                }),
                 it.sources
             )
         }
@@ -33,7 +40,11 @@ object NavGraphsCodegen : FilesGen {
                     .build()
             )
             .addProperty(
-                PropertySpec.builder("start", ClassNames.RouteSpec.parameterizedBy(STAR), KModifier.OVERRIDE)
+                PropertySpec.builder(
+                    "start",
+                    ClassNames.RouteSpec.parameterizedBy(STAR),
+                    KModifier.OVERRIDE
+                )
                     .initializer("%T", start.specClassName)
                     .build()
             )

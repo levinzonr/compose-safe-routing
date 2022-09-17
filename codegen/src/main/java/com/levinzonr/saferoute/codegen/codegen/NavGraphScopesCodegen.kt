@@ -24,15 +24,15 @@ class NavGraphScopesCodegen(
     override fun generate(data: ModelData): List<GeneratorUnit> {
         return data.navGraphs.map {
             listOf(
-                generateNavScope(data.packageName, it),
-                generateNavScopeImplementation(data.packageName, it)
+                generateNavScope(it),
+                generateNavScopeImplementation(it)
             )
         }.flatten()
     }
 
-    private fun generateNavScope(packageName: String, graphData: NavGraphData): GeneratorUnit {
+    private fun generateNavScope(graphData: NavGraphData): GeneratorUnit {
         val fileSpecBuilder = FileSpec.get(
-            packageName, TypeSpec.interfaceBuilder(graphData.scopeClassName)
+            graphData.packageName, TypeSpec.interfaceBuilder(graphData.scopeClassName)
                 .apply {
                     graphData.routes.forEach {
                         addFunction(it.toFunSpecBuilder().addModifiers(KModifier.ABSTRACT).build())
@@ -48,7 +48,6 @@ class NavGraphScopesCodegen(
 
 
     private fun generateNavScopeImplementation(
-        packageName: String,
         graphData: NavGraphData
     ): GeneratorUnit {
 
@@ -82,7 +81,7 @@ class NavGraphScopesCodegen(
             typeBuilder.addFunction(funSpecBuilder.build())
         }
 
-        return GeneratorUnit(FileSpec.get(packageName, typeBuilder.build()), graphData.sources)
+        return GeneratorUnit(FileSpec.get(graphData.packageName, typeBuilder.build()), graphData.sources)
     }
 
     private fun RouteData.toFunSpecBuilder(): FunSpec.Builder {

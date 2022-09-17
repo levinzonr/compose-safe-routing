@@ -13,7 +13,7 @@ object NavGraphRoutesCodegen : FilesGen {
     override fun generate(data: ModelData): List<GeneratorUnit> {
         return data.navGraphs.map { navGraphData ->
             GeneratorUnit(
-                fileSpec = FileSpec.get(data.packageName, createGraph(navGraphData)),
+                fileSpec = FileSpec.get(navGraphData.packageName, createGraph(navGraphData)),
                 sources = navGraphData.routes.map { it.source }
             )
         }

@@ -16,8 +16,6 @@ data class RouteData(
     private val routeTransitionClassName: String?,
     val contentName: String,
     val params: List<String>,
-    val navGraphName: String,
-    val start: Boolean,
     val source: Source
 ) {
 

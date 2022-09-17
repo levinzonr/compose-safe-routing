@@ -2,49 +2,78 @@ package cz.levinzonr.saferoute.processor.ksp
 
 import com.google.devtools.ksp.KspExperimental
 import com.google.devtools.ksp.processing.Resolver
+import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSAnnotation
 import com.google.devtools.ksp.symbol.KSDeclaration
 import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.google.devtools.ksp.symbol.KSType
 import com.levinzonr.saferoute.codegen.codegen.extensions.checkNullable
 import com.levinzonr.saferoute.codegen.core.DataProcessor
+import com.levinzonr.saferoute.codegen.core.LogLevel
+import com.levinzonr.saferoute.codegen.core.Logger
 import com.levinzonr.saferoute.codegen.core.Source
 import com.levinzonr.saferoute.codegen.models.ArgumentData
 import com.levinzonr.saferoute.codegen.models.ArgumentType
 import com.levinzonr.saferoute.codegen.models.DeeplinkData
 import com.levinzonr.saferoute.codegen.models.ModelData
+import com.levinzonr.saferoute.codegen.models.ModelDataBuilder
 import com.levinzonr.saferoute.codegen.models.NavGraphData
+import com.levinzonr.saferoute.codegen.models.NavGraphInfo
 import com.levinzonr.saferoute.codegen.models.OptionalArgData
 import com.levinzonr.saferoute.codegen.models.RouteData
 import java.lang.IllegalArgumentException
 
-@OptIn(KspExperimental::class)
 internal class KspDataProcessor(
+    private val graphs: List<KSAnnotated>,
     private val elements: List<KSFunctionDeclaration>,
     private val resolver: Resolver,
-    private val packageName: String
+    private val packageName: String,
+    private val logger: Logger
 ) : DataProcessor {
 
     override fun process(): ModelData? {
-        val routes = elements.map { element ->
-            val annotation =
-                element.annotations.filter { it.shortName.asString().contains("Route") }
-            annotation.map { it.process(element) }.toList()
-        }.flatten()
 
-        val graphs = routes.groupBy { it.navGraphName }.map {
-            NavGraphData(
-                name = it.key,
-                routes = it.value,
-                start = requireNotNull(it.value.find { it.start }) { "Graph ${it.key} has no start property defined" },
-                packageName = packageName
+        val dataBuilder = ModelDataBuilder()
+        graphs.map { it as KSDeclaration }.map {
+            dataBuilder.addGraph(
+                it.simpleName.asString(),
+                it.packageName.asString(),
+                it.getSource()
             )
         }
 
-        return ModelData(
-            packageName = packageName,
-            navGraphs = graphs
-        )
+        logger.log(dataBuilder.availableGraphs().toString(), LogLevel.Warning)
+
+        elements.forEach { element ->
+            val routeAnnotation = element.annotations.first { it.shortName.asString() == "Route" }
+            val route = routeAnnotation.process(element)
+            element.annotations.findGraphs(dataBuilder.availableGraphs()).forEach {
+                dataBuilder.addRoute(route, it.name, it.start)
+            }
+        }
+
+        return dataBuilder.build(packageName)
+    }
+
+    private fun Sequence<KSAnnotation>.findGraphs(graphs: List<ModelDataBuilder.Graph>): List<RouteGraph> {
+        val graphs =
+            filter { ksAnnotation -> graphs.any { ksAnnotation.shortName.asString() == it.name } }.toList()
+
+        return graphs.map {
+            RouteGraph(
+                name = it.shortName.asString(),
+                start = it.fieldByName("start")
+            )
+        }
+    }
+
+    data class RouteGraph(
+        val name: String,
+        val start: Boolean
+    ) {
+        companion object {
+            val Root = RouteGraph(ModelDataBuilder.defaultGraph.name, false)
+        }
     }
 
     private fun KSAnnotation.process(element: KSFunctionDeclaration): RouteData {
@@ -58,8 +87,6 @@ internal class KspDataProcessor(
             routeTransitionClassName = fieldByName<KSType>("transition").declaration.qualifiedName?.asString(),
             contentName = element.toString(),
             params = element.parameters.mapNotNull { it.name?.asString() },
-            navGraphName = fieldByName<KSAnnotation>("navGraph").fieldByName("name") ?: "main",
-            start = fieldByName<KSAnnotation>("navGraph").fieldByName("start") ?: false,
             source = element.getSource()
         )
     }

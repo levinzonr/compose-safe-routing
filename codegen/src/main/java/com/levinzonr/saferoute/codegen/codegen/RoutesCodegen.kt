@@ -25,8 +25,8 @@ object RoutesCodegen : FilesGen {
     }
 
     fun ModelData.build(): TypeSpec {
-        val mainGraph = navGraphs.firstOrNull() { it.name == "main" }
-        val graphs = navGraphs.filterNot { it.name == "main" }
+        val mainGraph = navGraphs.firstOrNull() { it.name == "mainGraph" }
+        val graphs = navGraphs.filterNot { it.name == "mainGraph" }
         return TypeSpec.objectBuilder(Constants.FILE_ROUTES)
             .addProperties(mainGraph?.routes.orEmpty().map { it.toRouteProperty() })
             .addProperties(graphs.map { it.toRoutesProperty(packageName) })

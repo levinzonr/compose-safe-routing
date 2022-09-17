@@ -18,10 +18,12 @@ import cz.levinzonr.saferoute.accompanist.navigation.transitions.BottomSheetRout
 import cz.levinzonr.saferoute.core.annotations.Route
 import cz.levinzonr.saferoute.core.annotations.RouteArg
 import cz.levinzonr.saferoute.core.annotations.RouteNavGraph
+import cz.levinzonr.saferoute.screens.PokedexxGraph
 import cz.levinzonr.saferoute.screens.statssheet.args.LocalPokemonStatsRouteArgs
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
+@PokedexxGraph
 @Route(
     name = "PokemonStats",
     transition = BottomSheetRouteTransition::class,

@@ -11,6 +11,7 @@ import com.levinzonr.saferoute.codegen.codegen.RoutesActionsCodegen
 import com.levinzonr.saferoute.codegen.codegen.RoutesCodegen
 import com.levinzonr.saferoute.codegen.codegen.RoutesSpecsCodegen
 import com.levinzonr.saferoute.codegen.codegen.RoutesTransitionsCodegen
+import kotlin.math.log
 
 class RoutesGenerationProcessor(
     component: ProcessingComponent
@@ -24,14 +25,11 @@ class RoutesGenerationProcessor(
     private val annotationsResolver = AnnotationsResolver(component.typeHelper)
 
     private val generators: List<FilesGen> = listOf(
-        NavControllerExtensionsCodegen,
         NavGraphRoutesCodegen,
-        NavGraphsCodegen,
+        NavGraphsCodegen(logger),
         RouteArgsCodegen,
         RouteArgsFactoryCodegen,
         RouteArgsProviderCodegen,
-        RoutesActionsCodegen,
-        RoutesCodegen,
         RoutesSpecsCodegen,
         RoutesTransitionsCodegen(annotationsResolver),
         NavGraphScopesCodegen(annotationsResolver)
@@ -39,15 +37,22 @@ class RoutesGenerationProcessor(
 
     fun process() = try {
         dataProcessor.process()?.let { data ->
+            val navData = data.navGraphs.joinToString("\n") { "${it.graphName}: [${it.routes.map { it.name }}]" }
+            logger.log("Navigation Data: \n$navData", level = LogLevel.Warning)
             generators.forEach { gens ->
-                val generationUnits = gens.generate(data)
-                generationUnits.forEach {
-                    writer.write(it.fileSpec, directory, it.sources)
+                try {
+                    val generationUnits = gens.generate(data)
+                    generationUnits.forEach {
+                        writer.write(it.fileSpec, directory, it.sources)
+                    }
+                } catch (e: Throwable) {
+                    logger.log("Error ${e.stackTraceToString()}", level = LogLevel.Warning)
                 }
+
             }
         }
     } catch (e: Throwable) {
-        logger.log(e.stackTraceToString(), level = LogLevel.Error)
+        logger.log(e.stackTraceToString(), level = LogLevel.Warning)
         throw e
     }
 }

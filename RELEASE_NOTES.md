@@ -6,7 +6,7 @@ Thanls!
 
 
 ## NavGraph Support
-Version 2.5.0 introduces support to the Navigation Graphs so you can structure your routes in a more concise way. By default, all your current routes will be a part of the "Main" Graph - the default graph all route annotations have, and, since all NavGraphs need to have a starting point, you need to declare of your routes to be a "start", otherwise  the build may fail
+Version 2.5.0 introduces support to the Navigation Graphs so you can structure your routes in a more concise way. By default, all your current routes will be a part of the "mainGraph" Graph - the default graph all route annotations have, and, since all NavGraphs need to have a starting point, you need to declare of your routes to be a "start", otherwise  the build may fail
 ```kotlin
 @Route(
     transition = AnimatedRouteTransition.Default::class,

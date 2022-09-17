@@ -7,6 +7,7 @@ import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.levinzonr.saferoute.codegen.constants.Constants
+import com.levinzonr.saferoute.codegen.core.LogLevel
 import com.levinzonr.saferoute.codegen.core.Logger
 import com.levinzonr.saferoute.codegen.core.ProcessingComponent
 import com.levinzonr.saferoute.codegen.core.RoutesGenerationProcessor
@@ -35,32 +36,40 @@ internal class SafeRouteKspProcessor(
 
     private val supportedAnnotations = listOf(
         Constants.ROUTE,
-        Constants.ROUTES
+        Constants.ROUTES,
+        Constants.NAV_GRAPH
     )
 
     override fun process(resolver: Resolver): List<KSAnnotated> {
+        val graphs = resolver.getSymbolsWithAnnotation(supportedAnnotations[2]).toList()
         val routeAnnotations = resolver.getSymbolsWithAnnotation(supportedAnnotations.first())
         val routesAnnotations = resolver.getSymbolsWithAnnotation(supportedAnnotations[1])
 
-        val elements = listOf(routeAnnotations.toList(), routesAnnotations.toList()).flatten()
+        val elements = listOf(routeAnnotations.toList(), routesAnnotations.toList())
+            .flatten()
             .filterIsInstance<KSFunctionDeclaration>()
 
-        if (elements.isEmpty()) return emptyList()
+        logger.log("Graphs: $graphs", level = LogLevel.Warning)
 
-        val packageName = options[Constants.ARG_PACKAGE_NAME] ?: elements.first().packageName.asString()
+        if (elements.isEmpty() && graphs.isEmpty()) return emptyList()
+
+        val packageName =
+            options[Constants.ARG_PACKAGE_NAME] ?: elements.first().packageName.asString()
         val processingComponent = ProcessingComponent(
             logger = logger,
             typeHelper = KspTypeHelper(logger),
-            dataProcessor = KspDataProcessor(elements, resolver, packageName),
+            dataProcessor = KspDataProcessor(graphs, elements, resolver, packageName, logger),
             directory = File(packageName),
-            writer = KspWriter(codeGenerator, resolver)
+            writer = KspWriter(codeGenerator, resolver),
         )
+
+        logger.log("Log", level = LogLevel.Warning)
 
         try {
             RoutesGenerationProcessor(processingComponent)
                 .process()
         } catch (e: Throwable) {
-            logger.log("Error processing routes: ${e.stackTraceToString()}")
+            logger.log("Error processing routes: ${e.stackTraceToString()}", level = LogLevel.Error)
         }
 
         return emptyList()

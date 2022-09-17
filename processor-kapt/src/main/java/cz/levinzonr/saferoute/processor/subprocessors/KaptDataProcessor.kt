@@ -3,6 +3,7 @@ package cz.levinzonr.saferoute.processor.subprocessors
 import com.levinzonr.saferoute.codegen.constants.Constants
 import com.levinzonr.saferoute.codegen.core.DataProcessor
 import com.levinzonr.saferoute.codegen.models.ModelData
+import com.levinzonr.saferoute.codegen.models.ModelDataBuilder
 import com.levinzonr.saferoute.codegen.models.NavGraphData
 import com.levinzonr.saferoute.codegen.models.RouteData
 import cz.levinzonr.saferoute.annotations.Route
@@ -33,17 +34,7 @@ internal class KaptDataProcessor(
             val packageName = processingEnv.options[Constants.ARG_PACKAGE_NAME] ?: routes.first().packageName
 
 
-            val graphs = routes.groupBy { it.navGraphName }.map { entry ->
-                val startDestination = entry.value.find { it.start }
-                NavGraphData(
-                    name = entry.key,
-                    routes = entry.value,
-                    start = requireNotNull(startDestination) { "NavGraph [${entry.key}] has no start route specified" },
-                    packageName = packageName
-                )
-            }
-
-            return ModelData(packageName, graphs)
+            return ModelData(packageName, emptyList())
         } catch (e: Exception) {
             throw Exception("Error while processing annotations: ${e.stackTraceToString()}")
         }
