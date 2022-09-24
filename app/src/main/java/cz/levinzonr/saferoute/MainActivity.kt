@@ -22,16 +22,13 @@ import cz.levinzonr.saferoute.core.RouteSpec
 import cz.levinzonr.saferoute.core.annotations.NavGraph
 import cz.levinzonr.saferoute.core.navigation
 import cz.levinzonr.saferoute.core.router.LocalRouter
-import cz.levinzonr.saferoute.navigation.homeScreen
-import cz.levinzonr.saferoute.navigation.pokemonDetails
-import cz.levinzonr.saferoute.navigation.pokemonList
-import cz.levinzonr.saferoute.navigation.pokemonStats
 import cz.levinzonr.saferoute.screens.Pokedex
 import cz.levinzonr.saferoute.screens.PokedexScope
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsRoute
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsScreen
 import cz.levinzonr.saferoute.screens.home.HomeScreen
 import cz.levinzonr.saferoute.screens.home.HomeScreenRoute
+import cz.levinzonr.saferoute.screens.home.homeScreen
 import cz.levinzonr.saferoute.screens.list.PokemonListScreen
 import cz.levinzonr.saferoute.screens.statssheet.PokemonStatsRoute
 import cz.levinzonr.saferoute.screens.statssheet.PokemonStatsSheet

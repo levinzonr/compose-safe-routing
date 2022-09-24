@@ -18,14 +18,14 @@ class RoutesTransitionsCodegen(
 ) : FilesGen {
 
     override fun generate(data: ModelData): List<GeneratorUnit> {
-        val fileSpec = FileSpec.builder(data.packageName, "NavGraphBuilder+Routes")
-        data.routes.forEach { fileSpec.addFunction(it.createBuilderFun()) }
-        return listOf(
+        return data.routes.map {
             GeneratorUnit(
-                fileSpec = fileSpec.build(),
-                sources = data.sources
+                sources = listOf(it.source),
+                fileSpec = FileSpec.builder(it.packageName, "NavGraphBuilder+${it.name}")
+                    .addFunction(it.createBuilderFun())
+                    .build()
             )
-        )
+        }
     }
 
     private fun RouteData.createBuilderFun(): FunSpec {
