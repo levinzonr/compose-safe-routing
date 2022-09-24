@@ -30,7 +30,7 @@ fun PreviewPokemonListScreen() {
 @Composable
 fun PreviewPokemonDetailsScreen() {
     RouterTheme {
-        PokemonDetailsScreen(onShowStatsClick = {}, pokemon = pokemons.first())
+        PokemonDetailsScreen(onShowStatsClick = {})
     }
 }
 

@@ -34,7 +34,7 @@ internal class KaptDataProcessor(
             val packageName = processingEnv.options[Constants.ARG_PACKAGE_NAME] ?: routes.first().packageName
 
 
-            return ModelData(packageName, emptyList())
+            return ModelData(packageName, emptyList(), emptyList())
         } catch (e: Exception) {
             throw Exception("Error while processing annotations: ${e.stackTraceToString()}")
         }

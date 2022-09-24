@@ -5,20 +5,11 @@ import com.levinzonr.saferoute.codegen.core.Source
 class ModelDataBuilder {
 
     data class Graph(val name: String, val packageName: String?, val source: Source?)
-    data class Route(val routeData: RouteData, val graph: Graph, val start: Boolean)
+    data class Route(val routeData: RouteData, val graph: Graph?, val start: Boolean)
 
-    companion object {
-        val defaultGraph: Graph = Graph(
-            "MainNavGraph",
-            null,
-            null
-        )
-    }
-
-    private val graphs = mutableListOf(defaultGraph)
+    val graphs = mutableListOf<Graph>()
     private val routes = mutableListOf<Route>()
 
-    fun availableGraphs(): List<Graph> = graphs.toList()
 
     fun addGraph(name: String, packageName: String, source: Source?) {
         val graph = Graph(name, packageName, source)
@@ -26,7 +17,7 @@ class ModelDataBuilder {
     }
 
     fun addRoute(routeData: RouteData, graphName: String?, start: Boolean?) {
-        val graph = graphs.find { graph -> graph.name == graphName } ?: defaultGraph
+        val graph = graphs.find { graph -> graph.name == graphName }
         routes.add(Route(routeData, graph, start ?: false))
     }
 
@@ -34,13 +25,14 @@ class ModelDataBuilder {
     fun build(packageName: String): ModelData {
         return ModelData(
             packageName = packageName,
-            navGraphs = buildNavGraphData(packageName)
+            navGraphs = buildNavGraphData(packageName),
+            routesWithoutGraph = routes.filter { it.graph == null }.map { it.routeData }
         )
     }
 
     private fun buildNavGraphData(packageName: String): List<NavGraphData> {
         return graphs.map { graph ->
-            val routes = routes.filter { it.graph.name == graph.name }
+            val routes = routes.filter { it.graph?.name == graph.name }
             val start =
                 requireNotNull(routes.find { it.start }) { "NavGraph ${graph.name} doesn't have a start route" }
             NavGraphData(

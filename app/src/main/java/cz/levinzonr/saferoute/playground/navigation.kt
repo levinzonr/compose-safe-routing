@@ -88,13 +88,19 @@ fun NavGraphBuilder.loginGraph(scope: LoginScope.() -> Unit) {
     }
 }
 
+fun LoginScope.loginGraph() {
+    login {  }
+    signup {  }
+}
+
+fun MainScope.loginGraph() {
+    loginGraph {  }
+}
+
 @Composable
 fun A() {
    ScopedNavHost(graph = MainNavGraph) {
-       loginGraph {
-           login {  }
-           signup {  }
-       }
+       loginGraph { loginGraph() }
        home {
 
        }

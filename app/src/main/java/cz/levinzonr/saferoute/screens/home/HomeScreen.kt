@@ -22,13 +22,11 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import cz.levinzonr.saferoute.R
 import cz.levinzonr.saferoute.accompanist.navigation.transitions.AnimatedRouteTransition
-import cz.levinzonr.saferoute.core.annotations.MainNavGraph
 import cz.levinzonr.saferoute.core.annotations.Route
 import cz.levinzonr.saferoute.core.annotations.RouteNavGraph
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-@MainNavGraph(true)
 @Route(
     transition = AnimatedRouteTransition.Default::class,
     navGraph = RouteNavGraph(start = true)

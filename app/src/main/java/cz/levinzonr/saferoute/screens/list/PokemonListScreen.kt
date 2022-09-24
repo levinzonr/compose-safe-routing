@@ -13,12 +13,12 @@ import cz.levinzonr.saferoute.core.annotations.Route
 import cz.levinzonr.saferoute.core.annotations.RouteNavGraph
 import cz.levinzonr.saferoute.data.Pokemon
 import cz.levinzonr.saferoute.data.pokemons
-import cz.levinzonr.saferoute.screens.PokedexxGraph
+import cz.levinzonr.saferoute.screens.PokedexGraph
 import cz.levinzonr.saferoute.screens.list.components.PokemonItem
 import cz.levinzonr.saferoute.transitions.FadeInFadeOutTransition
 
 @Composable
-@PokedexxGraph(start = true)
+@PokedexGraph(start = true)
 @Route(
     name = "PokemonList",
     transition = FadeInFadeOutTransition::class,

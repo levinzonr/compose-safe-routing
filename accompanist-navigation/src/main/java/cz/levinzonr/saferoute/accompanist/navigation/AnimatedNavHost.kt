@@ -33,7 +33,7 @@ fun <Scope> SafeRouteAnimatedNavHost(
     exitTransition: RouteExitTransition = { fadeOut() },
     popEnterTransition: RouteEnterTransition = enterTransition,
     popExitTransition: RouteExitTransition = exitTransition,
-    builder: Scope.() -> Unit
+    builder: Scope.(Router) -> Unit
 ) {
     SafeRouteAnimatedNavHost(
         modifier = modifier,
@@ -45,7 +45,11 @@ fun <Scope> SafeRouteAnimatedNavHost(
         exitTransition = exitTransition,
         popEnterTransition = popEnterTransition,
         popExitTransition =popExitTransition,
-        builder = { navigation(graph, builder) }
+        builder = {
+            graph.provideGraphScope(this).apply {
+                builder.invoke(this, it)
+            }
+        }
     )
 }
 

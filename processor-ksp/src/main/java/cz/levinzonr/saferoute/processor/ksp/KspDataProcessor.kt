@@ -22,6 +22,7 @@ import com.levinzonr.saferoute.codegen.models.NavGraphInfo
 import com.levinzonr.saferoute.codegen.models.OptionalArgData
 import com.levinzonr.saferoute.codegen.models.RouteData
 import java.lang.IllegalArgumentException
+import kotlin.math.log
 
 internal class KspDataProcessor(
     private val graphs: List<KSAnnotated>,
@@ -42,17 +43,24 @@ internal class KspDataProcessor(
             )
         }
 
-        logger.log(dataBuilder.availableGraphs().toString(), LogLevel.Warning)
 
         elements.forEach { element ->
             val routeAnnotation = element.annotations.first { it.shortName.asString() == "Route" }
             val route = routeAnnotation.process(element)
-            element.annotations.findGraphs(dataBuilder.availableGraphs()).forEach {
-                dataBuilder.addRoute(route, it.name, it.start)
+
+            val graphs = element.annotations.findGraphs(dataBuilder.graphs)
+            if (graphs.isEmpty()) {
+                dataBuilder.addRoute(route, null, false)
+            } else {
+                graphs.forEach {
+                    dataBuilder.addRoute(route, it.name, it.start)
+                }
             }
         }
 
-        return dataBuilder.build(packageName)
+        return dataBuilder.build(packageName).also {
+            logger.log("Data: $it", level = LogLevel.Warning)
+        }
     }
 
     private fun Sequence<KSAnnotation>.findGraphs(graphs: List<ModelDataBuilder.Graph>): List<RouteGraph> {
@@ -70,11 +78,7 @@ internal class KspDataProcessor(
     data class RouteGraph(
         val name: String,
         val start: Boolean
-    ) {
-        companion object {
-            val Root = RouteGraph(ModelDataBuilder.defaultGraph.name, false)
-        }
-    }
+    )
 
     private fun KSAnnotation.process(element: KSFunctionDeclaration): RouteData {
         return RouteData(
