@@ -16,6 +16,7 @@ import cz.levinzonr.saferoute.core.NavGraphSpec
 import cz.levinzonr.saferoute.core.RouteSpec
 import cz.levinzonr.saferoute.core.annotations.Route
 import cz.levinzonr.saferoute.core.navigation
+import cz.levinzonr.saferoute.core.router.Direction
 import cz.levinzonr.saferoute.core.router.LocalRouter
 import cz.levinzonr.saferoute.core.router.Router
 import cz.levinzonr.saferoute.core.router.RouterImpl

@@ -32,6 +32,7 @@ object RoutesSpecsCodegen : FilesGen {
     private fun RouteData.createRouteTypeSpec(): TypeSpec {
         return TypeSpec.objectBuilder(routeClassName.simpleName)
             .addSuperinterface(routeSpecClassName)
+            .addDirectionInterface(this)
             .addProperty(toNamePropertySpec())
             .addFunction(toDirectionProperty())
             .addProperty(toArgsFactoryPropertySpec())
@@ -45,6 +46,13 @@ object RoutesSpecsCodegen : FilesGen {
             .addModifiers(KModifier.OVERRIDE)
             .initializer(if (arguments.isEmpty()) "listOf()" else "$argumentsName.navArgs")
             .build()
+    }
+
+    private fun TypeSpec.Builder.addDirectionInterface(data: RouteData) : TypeSpec.Builder {
+        if (data.arguments.isEmpty()) {
+            addSuperinterface(ClassNames.Direction)
+        }
+        return this
     }
 
     private fun RouteData.toNamePropertySpec(): PropertySpec {
@@ -83,6 +91,8 @@ object RoutesSpecsCodegen : FilesGen {
             .addParameters(arguments.map { it.toParamSpec() })
             .addCode("return %L", impl)
             .build()
+
+
     }
 
     private fun RouteData.toDeeplinksProperty(): PropertySpec {
