@@ -10,18 +10,22 @@ import androidx.navigation.compose.dialog
 import androidx.navigation.navigation
 import cz.levinzonr.saferoute.core.transitions.RouteTransition
 
-fun NavGraphBuilder.navigation(
-    spec: NavGraphSpec,
-    content: NavGraphBuilder.() -> Unit
-) = navigation(spec.start.route, spec.name, content)
+fun<Scope> NavGraphBuilder.navigation(
+    spec: NavGraphSpec<Scope>,
+    content: Scope.() -> Unit
+) = navigation(
+    startDestination = spec.start.route,
+    route = spec.name,
+    builder = { spec.provideGraphScope(this).apply(content) }
+)
 
 fun NavGraphBuilder.route(
     spec: RouteSpec<*>,
     transition: RouteTransition,
-    content: @Composable () -> Unit
+    content: @Composable (NavBackStackEntry) -> Unit
 ) {
     transition.route(this, spec) {
-        content()
+        content(it)
     }
 }
 

@@ -12,6 +12,23 @@ import cz.levinzonr.saferoute.core.router.LocalRouter
 import cz.levinzonr.saferoute.core.router.Router
 import cz.levinzonr.saferoute.core.router.RouterImpl
 
+
+
+@Composable
+fun<Scope> SafeRouteNavHost(
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController(navigators = emptyArray()),
+    graph: NavGraphSpec<Scope>,
+    builder: Scope.() -> Unit
+) {
+    SafeRouteNavHost(
+        modifier = modifier,
+        navController = navController,
+        startDestination = graph.route,
+        builder = { navigation(graph, builder) }
+    )
+}
+
 @Composable
 fun SafeRouteNavHost(
     modifier: Modifier = Modifier,
@@ -46,3 +63,5 @@ fun SafeRouteNavHost(
         )
     }
 }
+
+

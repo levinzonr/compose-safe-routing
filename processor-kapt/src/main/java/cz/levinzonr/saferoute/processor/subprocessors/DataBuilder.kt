@@ -40,12 +40,9 @@ internal class RouteDataBuilder(val packageName: String) {
                 routeTransitionClassName = null,
                 contentName = annotatedElement.simpleName.toString(),
                 params = params,
-                navGraphName = annotation.name,
-                start = annotation.start,
                 source = annotatedElement.getSource()
             )
         } else {
-            val navGraph = annotation.fieldByName<Annotation>("navGraph")
             val argsData = annotation.fieldByName<Array<Annotation>>("args")
             val deeplinksData = annotation.fieldByName<Array<Annotation>>("deepLinks")
             val routeName = annotation.fieldByName<String>("name").takeIf { it != "@null" }
@@ -59,8 +56,6 @@ internal class RouteDataBuilder(val packageName: String) {
                 routeTransitionClassName = transition.toString(),
                 contentName = annotatedElement.simpleName.toString(),
                 params = params,
-                navGraphName = navGraph.fieldByName("name"),
-                start = navGraph.fieldByName("start"),
                 source = annotatedElement.getSource()
             )
         }

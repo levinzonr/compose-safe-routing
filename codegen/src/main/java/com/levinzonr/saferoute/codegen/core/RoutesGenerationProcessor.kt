@@ -2,6 +2,7 @@ package com.levinzonr.saferoute.codegen.core
 
 import com.levinzonr.saferoute.codegen.codegen.NavControllerExtensionsCodegen
 import com.levinzonr.saferoute.codegen.codegen.NavGraphRoutesCodegen
+import com.levinzonr.saferoute.codegen.codegen.NavGraphScopesCodegen
 import com.levinzonr.saferoute.codegen.codegen.NavGraphsCodegen
 import com.levinzonr.saferoute.codegen.codegen.RouteArgsCodegen
 import com.levinzonr.saferoute.codegen.codegen.RouteArgsFactoryCodegen
@@ -10,6 +11,7 @@ import com.levinzonr.saferoute.codegen.codegen.RoutesActionsCodegen
 import com.levinzonr.saferoute.codegen.codegen.RoutesCodegen
 import com.levinzonr.saferoute.codegen.codegen.RoutesSpecsCodegen
 import com.levinzonr.saferoute.codegen.codegen.RoutesTransitionsCodegen
+import kotlin.math.log
 
 class RoutesGenerationProcessor(
     component: ProcessingComponent
@@ -20,26 +22,34 @@ class RoutesGenerationProcessor(
     private val directory = component.directory
     private val writer = component.writer
 
+    private val annotationsResolver = AnnotationsResolver(component.typeHelper)
+
     private val generators: List<FilesGen> = listOf(
-        NavControllerExtensionsCodegen,
         NavGraphRoutesCodegen,
-        NavGraphsCodegen,
+        NavGraphsCodegen(logger),
         RouteArgsCodegen,
         RouteArgsFactoryCodegen,
         RouteArgsProviderCodegen,
-        RoutesActionsCodegen,
-        RoutesCodegen,
         RoutesSpecsCodegen,
-        RoutesTransitionsCodegen(component.typeHelper)
+        RoutesTransitionsCodegen(annotationsResolver),
+        NavGraphScopesCodegen(annotationsResolver)
     )
 
     fun process() = try {
         dataProcessor.process()?.let { data ->
+            val navData = data.navGraphs.joinToString("\n") { "${it.graphName}: [${it.routes.map { it.name }}]" }
+            logger.log("NavData: $navData", level = LogLevel.Warning)
+            logger.log("NavData: ${data.routesWithoutGraph.joinToString { it.name }}", level = LogLevel.Warning)
             generators.forEach { gens ->
-                val generationUnits = gens.generate(data)
-                generationUnits.forEach {
-                    writer.write(it.fileSpec, directory, it.sources)
+                try {
+                    val generationUnits = gens.generate(data)
+                    generationUnits.forEach {
+                        writer.write(it.fileSpec, directory, it.sources)
+                    }
+                } catch (e: Throwable) {
+                    logger.log("Error ${e.stackTraceToString()}", level = LogLevel.Error)
                 }
+
             }
         }
     } catch (e: Throwable) {

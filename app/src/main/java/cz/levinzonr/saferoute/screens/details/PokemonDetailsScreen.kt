@@ -20,6 +20,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,27 +28,31 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import cz.levinzonr.saferoute.core.annotations.Route
 import cz.levinzonr.saferoute.core.annotations.RouteArg
 import cz.levinzonr.saferoute.core.annotations.RouteDeeplink
-import cz.levinzonr.saferoute.core.annotations.RouteNavGraph
 import cz.levinzonr.saferoute.core.transitions.DialogRouteTransition
 import cz.levinzonr.saferoute.data.Pokemon
 import cz.levinzonr.saferoute.data.color
+import cz.levinzonr.saferoute.screens.PokedexGraph
 
 @ExperimentalAnimationApi
 @Composable
+@PokedexGraph
 @Route(
     name = "PokemonDetails",
     args = [RouteArg(name = "id", type = String::class)],
     deepLinks = [RouteDeeplink("app://deeplink/{id}")],
     transition = DialogRouteTransition.Default::class,
-    navGraph = RouteNavGraph("pokedex", start = false)
 )
 fun PokemonDetailsScreen(
-    pokemon: Pokemon?,
+    viewModel: PokemonDetailsViewModel = hiltViewModel(),
     onShowStatsClick: (Pokemon) -> Unit,
 ) {
+
+    val pokemon = viewModel.pokemon.collectAsState().value
+
     val color =
         animateColorAsState(targetValue = if (pokemon != null) colorResource(id = pokemon.color()) else Color.White)
     AnimatedVisibility(visible = pokemon != null) {
