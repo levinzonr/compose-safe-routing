@@ -7,7 +7,6 @@ import com.google.devtools.ksp.processing.SymbolProcessorProvider
 internal class SafeRouteKspProvider : SymbolProcessorProvider {
     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor {
         val logger = KspLogger(environment.logger)
-        logger.log(environment.options.toString())
         return SafeRouteKspProcessor(logger, environment.options, environment.codeGenerator)
     }
 }

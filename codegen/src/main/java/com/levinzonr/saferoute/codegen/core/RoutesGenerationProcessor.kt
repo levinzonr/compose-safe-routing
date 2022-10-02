@@ -38,7 +38,6 @@ class RoutesGenerationProcessor(
     fun process() = try {
         dataProcessor.process()?.let { data ->
             val navData = data.navGraphs.joinToString("\n") { "${it.graphName}: [${it.routes.map { it.name }}]" }
-            logger.log("Navigation Data: \n$navData", level = LogLevel.Warning)
             generators.forEach { gens ->
                 try {
                     val generationUnits = gens.generate(data)
@@ -46,13 +45,13 @@ class RoutesGenerationProcessor(
                         writer.write(it.fileSpec, directory, it.sources)
                     }
                 } catch (e: Throwable) {
-                    logger.log("Error ${e.stackTraceToString()}", level = LogLevel.Warning)
+                    logger.log("Error ${e.stackTraceToString()}", level = LogLevel.Error)
                 }
 
             }
         }
     } catch (e: Throwable) {
-        logger.log(e.stackTraceToString(), level = LogLevel.Warning)
+        logger.log(e.stackTraceToString(), level = LogLevel.Error)
         throw e
     }
 }

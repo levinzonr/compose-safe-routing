@@ -49,7 +49,6 @@ internal class SafeRouteKspProcessor(
             .flatten()
             .filterIsInstance<KSFunctionDeclaration>()
 
-        logger.log("Graphs: $graphs", level = LogLevel.Warning)
 
         if (elements.isEmpty() && graphs.isEmpty()) return emptyList()
 
@@ -62,8 +61,6 @@ internal class SafeRouteKspProcessor(
             directory = File(packageName),
             writer = KspWriter(codeGenerator, resolver),
         )
-
-        logger.log("Log", level = LogLevel.Warning)
 
         try {
             RoutesGenerationProcessor(processingComponent)

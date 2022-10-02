@@ -21,11 +21,8 @@ class NavGraphsCodegen(
 
     override fun generate(data: ModelData): List<GeneratorUnit> {
         return data.navGraphs.map {
-            logger.log("generate graph $data", level = LogLevel.Warning)
             GeneratorUnit(
-                FileSpec.get(it.packageName, it.createSpecProperty().also {
-                    logger.log("Done gen $it", LogLevel.Warning)
-                }),
+                FileSpec.get(it.packageName, it.createSpecProperty()),
                 it.sources
             )
         }
