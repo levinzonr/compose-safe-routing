@@ -49,13 +49,7 @@ internal class KspDataProcessor(
             val route = routeAnnotation.process(element)
 
             val graphs = element.annotations.findGraphs(dataBuilder.graphs)
-            if (graphs.isEmpty()) {
-                dataBuilder.addRoute(route, null, false)
-            } else {
-                graphs.forEach {
-                    dataBuilder.addRoute(route, it.name, it.start)
-                }
-            }
+            dataBuilder.addRoute(route, graphs)
         }
 
         return dataBuilder.build(packageName).also {
@@ -63,22 +57,16 @@ internal class KspDataProcessor(
         }
     }
 
-    private fun Sequence<KSAnnotation>.findGraphs(graphs: List<ModelDataBuilder.Graph>): List<RouteGraph> {
+    private fun Sequence<KSAnnotation>.findGraphs(graphs: List<ModelDataBuilder.Graph>): List<ModelDataBuilder.RouteGraph> {
         val graphs =
             filter { ksAnnotation -> graphs.any { ksAnnotation.shortName.asString() == it.name } }.toList()
-
         return graphs.map {
-            RouteGraph(
+            ModelDataBuilder.RouteGraph(
                 name = it.shortName.asString(),
                 start = it.fieldByName("start")
             )
         }
     }
-
-    data class RouteGraph(
-        val name: String,
-        val start: Boolean
-    )
 
     private fun KSAnnotation.process(element: KSFunctionDeclaration): RouteData {
         return RouteData(

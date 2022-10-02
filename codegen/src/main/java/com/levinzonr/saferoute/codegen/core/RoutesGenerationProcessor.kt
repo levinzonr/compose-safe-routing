@@ -38,6 +38,8 @@ class RoutesGenerationProcessor(
     fun process() = try {
         dataProcessor.process()?.let { data ->
             val navData = data.navGraphs.joinToString("\n") { "${it.graphName}: [${it.routes.map { it.name }}]" }
+            logger.log("NavData: $navData", level = LogLevel.Warning)
+            logger.log("NavData: ${data.routesWithoutGraph.joinToString { it.name }}", level = LogLevel.Warning)
             generators.forEach { gens ->
                 try {
                     val generationUnits = gens.generate(data)

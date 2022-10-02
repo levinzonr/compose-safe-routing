@@ -6,6 +6,10 @@ class ModelDataBuilder {
 
     data class Graph(val name: String, val packageName: String?, val source: Source?)
     data class Route(val routeData: RouteData, val graph: Graph?, val start: Boolean)
+    data class RouteGraph(
+        val name: String,
+        val start: Boolean
+    )
 
     val graphs = mutableListOf<Graph>()
     private val routes = mutableListOf<Route>()
@@ -21,6 +25,17 @@ class ModelDataBuilder {
         routes.add(Route(routeData, graph, start ?: false))
     }
 
+
+    fun addRoute(routeData: RouteData, graphs: List<RouteGraph>) : ModelDataBuilder {
+        if (graphs.isEmpty()) {
+            addRoute(routeData, null, false)
+        } else {
+            graphs.forEach {
+                addRoute(routeData, it.name, it.start)
+            }
+        }
+        return this
+    }
 
     fun build(packageName: String): ModelData {
         return ModelData(

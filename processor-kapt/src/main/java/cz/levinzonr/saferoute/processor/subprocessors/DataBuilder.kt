@@ -43,7 +43,6 @@ internal class RouteDataBuilder(val packageName: String) {
                 source = annotatedElement.getSource()
             )
         } else {
-            val navGraph = annotation.fieldByName<Annotation>("navGraph")
             val argsData = annotation.fieldByName<Array<Annotation>>("args")
             val deeplinksData = annotation.fieldByName<Array<Annotation>>("deepLinks")
             val routeName = annotation.fieldByName<String>("name").takeIf { it != "@null" }
