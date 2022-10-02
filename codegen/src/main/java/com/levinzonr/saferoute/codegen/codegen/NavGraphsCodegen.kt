@@ -1,5 +1,6 @@
 package com.levinzonr.saferoute.codegen.codegen
 
+import com.levinzonr.saferoute.codegen.codegen.extensions.toRouteProperty
 import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.levinzonr.saferoute.codegen.core.FilesGen
 import com.levinzonr.saferoute.codegen.core.GeneratorUnit
@@ -53,6 +54,18 @@ class NavGraphsCodegen(
                     .addCode("return %T(graphBuilder)", scopeBuilderClassName)
                     .build()
             )
+            .apply {
+                routes.forEach {
+                    addProperty(it.toRouteProperty())
+                }
+            }
             .build()
+    }
+
+    private fun createGraph(graphData: NavGraphData): TypeSpec {
+        val builder = TypeSpec.objectBuilder("${graphData.graphName}Routes")
+        val routeProperties = graphData.routes.map { it.toRouteProperty() }
+        builder.addProperties(routeProperties)
+        return builder.build()
     }
 }
