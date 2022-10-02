@@ -24,13 +24,13 @@ import cz.levinzonr.saferoute.core.navigation
 import cz.levinzonr.saferoute.core.router.LocalRouter
 import cz.levinzonr.saferoute.screens.Pokedex
 import cz.levinzonr.saferoute.screens.PokedexScope
-import cz.levinzonr.saferoute.screens.details.PokemonDetailsRoute
+import cz.levinzonr.saferoute.screens.details.PokemonDetailsDirection
 import cz.levinzonr.saferoute.screens.details.PokemonDetailsScreen
 import cz.levinzonr.saferoute.screens.home.HomeScreen
-import cz.levinzonr.saferoute.screens.home.HomeScreenRoute
+import cz.levinzonr.saferoute.screens.home.HomeScreenDirection
 import cz.levinzonr.saferoute.screens.home.homeScreen
 import cz.levinzonr.saferoute.screens.list.PokemonListScreen
-import cz.levinzonr.saferoute.screens.statssheet.PokemonStatsRoute
+import cz.levinzonr.saferoute.screens.statssheet.PokemonStatsDirection
 import cz.levinzonr.saferoute.screens.statssheet.PokemonStatsSheet
 import cz.levinzonr.saferoute.ui.theme.RouterTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -65,7 +65,7 @@ class MainActivity : ComponentActivity() {
                                     PokemonDetailsScreen(
                                         onShowStatsClick = {
                                             router.navigate(
-                                                PokemonStatsRoute(
+                                                PokemonStatsDirection(
                                                     it.name ?: "",
                                                     it.category,
                                                     it.hp ?: 0
@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity() {
                                     val router = LocalRouter.current
                                     PokemonListScreen(onPokemonClick = {
                                         router.navigate(
-                                            PokemonDetailsRoute(it.id)
+                                            PokemonDetailsDirection(it.id)
                                         )
                                     })
                                 }
@@ -108,7 +108,7 @@ class MainGraphScope(val navGraphBuilder: NavGraphBuilder) {
 
 object MainGraph : NavGraphSpec<MainGraphScope> {
     override val name: String = "main"
-    override val start: RouteSpec<*> = HomeScreenRoute
+    override val start: RouteSpec<*> = HomeScreenDirection
 
     override fun provideGraphScope(graphBuilder: NavGraphBuilder): MainGraphScope {
         return MainGraphScope(graphBuilder)

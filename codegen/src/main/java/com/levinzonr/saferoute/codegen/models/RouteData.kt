@@ -27,7 +27,7 @@ data class RouteData(
             )
         }
     val argsPackageName = packageName + "." + Constants.FILE_ARGS_DIR
-    val specName: String get() = "${name.capitalize()}Route"
+    val specName: String get() = "${name.capitalize()}Direction"
     val specClassName = ClassName(packageName, specName)
 
     val argumentsName: String get() = "${name.capitalize()}${Constants.FILE_ARGS_POSTFIX}"
@@ -46,7 +46,7 @@ data class RouteData(
     val contentClassName = ClassName(packageName, contentName)
 
     val routeClassName = ClassName(
-        packageName, "${name.capitalize()}Route"
+        packageName, "${name.capitalize()}Direction"
     )
 
     val routeSpecClassName: TypeName

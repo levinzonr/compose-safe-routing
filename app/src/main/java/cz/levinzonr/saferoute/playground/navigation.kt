@@ -11,7 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import cz.levinzonr.saferoute.core.route
 import cz.levinzonr.saferoute.core.transitions.DefaultRouteTransition
-import cz.levinzonr.saferoute.screens.home.HomeScreenRoute
+import cz.levinzonr.saferoute.screens.home.HomeScreenDirection
 
 
 interface Spec<T> {
@@ -54,7 +54,7 @@ class MainScopeImpl(val navGraphBuilder: NavGraphBuilder) : MainScope {
 
 
     override fun home(content: @Composable (NavBackStackEntry) -> Unit) {
-        navGraphBuilder.route(HomeScreenRoute, DefaultRouteTransition, content)
+        navGraphBuilder.route(HomeScreenDirection, DefaultRouteTransition, content)
     }
 
     override fun loginGraph(scope: LoginScope.() -> Unit) {
