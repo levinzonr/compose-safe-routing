@@ -8,7 +8,6 @@ import com.levinzonr.saferoute.codegen.core.GeneratorUnit
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.NavGraphData
 import com.levinzonr.saferoute.codegen.models.RouteData
-import com.squareup.kotlinpoet.AnnotationSpec
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
@@ -32,7 +31,8 @@ class NavGraphScopesCodegen(
 
     private fun generateNavScope(graphData: NavGraphData): GeneratorUnit {
         val fileSpecBuilder = FileSpec.get(
-            graphData.packageName, TypeSpec.interfaceBuilder(graphData.scopeClassName)
+            graphData.packageName,
+            TypeSpec.interfaceBuilder(graphData.scopeClassName)
                 .apply {
                     graphData.routes.forEach {
                         addFunction(it.toFunSpecBuilder().addModifiers(KModifier.ABSTRACT).build())
@@ -45,7 +45,6 @@ class NavGraphScopesCodegen(
             sources = graphData.sources
         )
     }
-
 
     private fun generateNavScopeImplementation(
         graphData: NavGraphData
@@ -65,8 +64,6 @@ class NavGraphScopesCodegen(
                     ).build()
             )
             .addProperty(property.build())
-
-
 
         graphData.routes.forEach {
             val funSpecBuilder = it.toFunSpecBuilder().addModifiers(KModifier.OVERRIDE)

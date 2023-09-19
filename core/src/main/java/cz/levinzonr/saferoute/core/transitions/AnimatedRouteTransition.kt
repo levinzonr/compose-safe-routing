@@ -1,18 +1,13 @@
-package cz.levinzonr.saferoute.accompanist.navigation.transitions
+package cz.levinzonr.saferoute.core.transitions
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
-import cz.levinzonr.saferoute.accompanist.navigation.RouteEnterTransition
-import cz.levinzonr.saferoute.accompanist.navigation.RouteExitTransition
-import cz.levinzonr.saferoute.accompanist.navigation.composable
 import cz.levinzonr.saferoute.core.RouteSpec
-import cz.levinzonr.saferoute.core.transitions.RouteTransition
+import cz.levinzonr.saferoute.core.composable
 
-@ExperimentalAnimationApi
 abstract class AnimatedRouteTransition : RouteTransition {
 
     abstract val enter: RouteEnterTransition
@@ -25,9 +20,14 @@ abstract class AnimatedRouteTransition : RouteTransition {
         spec: RouteSpec<*>,
         content: @Composable (NavBackStackEntry) -> Unit
     ) {
-        builder.composable(spec, this) {
-            content(it)
-        }
+        builder.composable(
+            spec,
+            enterTransition = enter,
+            exitTransition = exit,
+            popEnterTransition = popEnter,
+            popExitTransition = popExit,
+            content = content
+        )
     }
 
     object Default : AnimatedRouteTransition() {

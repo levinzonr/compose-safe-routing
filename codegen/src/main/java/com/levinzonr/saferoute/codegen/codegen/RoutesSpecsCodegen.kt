@@ -48,7 +48,7 @@ object RoutesSpecsCodegen : FilesGen {
             .build()
     }
 
-    private fun TypeSpec.Builder.addDirectionInterface(data: RouteData) : TypeSpec.Builder {
+    private fun TypeSpec.Builder.addDirectionInterface(data: RouteData): TypeSpec.Builder {
         if (data.arguments.isEmpty()) {
             addSuperinterface(ClassNames.Direction)
         }
@@ -91,8 +91,6 @@ object RoutesSpecsCodegen : FilesGen {
             .addParameters(arguments.map { it.toParamSpec() })
             .addCode("return %L", impl)
             .build()
-
-
     }
 
     private fun RouteData.toDeeplinksProperty(): PropertySpec {

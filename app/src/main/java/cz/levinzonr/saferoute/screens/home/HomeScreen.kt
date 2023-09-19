@@ -21,9 +21,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import cz.levinzonr.saferoute.R
-import cz.levinzonr.saferoute.accompanist.navigation.transitions.AnimatedRouteTransition
 import cz.levinzonr.saferoute.core.annotations.Route
 import cz.levinzonr.saferoute.core.annotations.RouteNavGraph
+import cz.levinzonr.saferoute.core.transitions.AnimatedRouteTransition
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable

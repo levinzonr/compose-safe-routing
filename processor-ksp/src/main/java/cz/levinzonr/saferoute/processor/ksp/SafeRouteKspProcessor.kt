@@ -49,7 +49,6 @@ internal class SafeRouteKspProcessor(
             .flatten()
             .filterIsInstance<KSFunctionDeclaration>()
 
-
         if (elements.isEmpty() && graphs.isEmpty()) return emptyList()
 
         val packageName =

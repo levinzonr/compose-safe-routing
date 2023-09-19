@@ -1,5 +1,6 @@
 package cz.levinzonr.saferoute.screens.list
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,6 +18,7 @@ import cz.levinzonr.saferoute.screens.PokedexGraph
 import cz.levinzonr.saferoute.screens.list.components.PokemonItem
 import cz.levinzonr.saferoute.transitions.FadeInFadeOutTransition
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 @PokedexGraph(start = true)
 @Route(

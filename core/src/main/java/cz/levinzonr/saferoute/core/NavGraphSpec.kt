@@ -9,5 +9,5 @@ interface NavGraphSpec<Scope> : Direction {
 
     override val route: String get() = name
 
-    fun provideGraphScope(graphBuilder: NavGraphBuilder) : Scope
+    fun provideGraphScope(graphBuilder: NavGraphBuilder): Scope
 }

@@ -2,7 +2,6 @@ package com.levinzonr.saferoute.codegen.codegen.extensions
 
 import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.squareup.kotlinpoet.AnnotationSpec
-import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.LambdaTypeName
 import com.squareup.kotlinpoet.ParameterSpec
 import com.squareup.kotlinpoet.TypeName

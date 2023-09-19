@@ -14,7 +14,6 @@ class ModelDataBuilder {
     val graphs = mutableListOf<Graph>()
     private val routes = mutableListOf<Route>()
 
-
     fun addGraph(name: String, packageName: String, source: Source?) {
         val graph = Graph(name, packageName, source)
         graphs.add(graph)
@@ -25,8 +24,7 @@ class ModelDataBuilder {
         routes.add(Route(routeData, graph, start ?: false))
     }
 
-
-    fun addRoute(routeData: RouteData, graphs: List<RouteGraph>) : ModelDataBuilder {
+    fun addRoute(routeData: RouteData, graphs: List<RouteGraph>): ModelDataBuilder {
         if (graphs.isEmpty()) {
             addRoute(routeData, null, false)
         } else {

@@ -1,9 +1,7 @@
 package cz.levinzonr.saferoute.playground
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -13,16 +11,15 @@ import cz.levinzonr.saferoute.core.route
 import cz.levinzonr.saferoute.core.transitions.DefaultRouteTransition
 import cz.levinzonr.saferoute.screens.home.HomeScreenDirection
 
-
 interface Spec<T> {
     val route: String
     val name: String
 
-    fun buildScope(builder: NavGraphBuilder) : T
+    fun buildScope(builder: NavGraphBuilder): T
 }
 
 interface LoginScope {
-    fun login(content: @Composable (NavBackStackEntry) -> Unit = {A()})
+    fun login(content: @Composable (NavBackStackEntry) -> Unit = { A() })
     fun signup(content: @Composable (NavBackStackEntry) -> Unit)
 }
 
@@ -39,7 +36,6 @@ object LoginGraph : Spec<LoginScope> {
     override fun buildScope(builder: NavGraphBuilder): LoginScope {
         return object : LoginScope {
             override fun login(content: @Composable (NavBackStackEntry) -> Unit) {
-
             }
 
             override fun signup(content: @Composable (NavBackStackEntry) -> Unit) {
@@ -50,9 +46,6 @@ object LoginGraph : Spec<LoginScope> {
 
 class MainScopeImpl(val navGraphBuilder: NavGraphBuilder) : MainScope {
 
-
-
-
     override fun home(content: @Composable (NavBackStackEntry) -> Unit) {
         navGraphBuilder.route(HomeScreenDirection, DefaultRouteTransition, content)
     }
@@ -60,11 +53,9 @@ class MainScopeImpl(val navGraphBuilder: NavGraphBuilder) : MainScope {
     override fun loginGraph(scope: LoginScope.() -> Unit) {
         navGraphBuilder.navigation(LoginGraph, scope)
     }
-
-
 }
 
-object MainNavGraph: Spec<MainScope> {
+object MainNavGraph : Spec<MainScope> {
     override val route: String
         get() = "name"
     override val name: String
@@ -75,7 +66,7 @@ object MainNavGraph: Spec<MainScope> {
     }
 }
 
-fun<T> NavGraphBuilder.navigation(
+fun <T> NavGraphBuilder.navigation(
     spec: Spec<T>,
     content: T.() -> Unit
 ) = navigation(startDestination = spec.route, route = spec.name) {
@@ -89,26 +80,25 @@ fun NavGraphBuilder.loginGraph(scope: LoginScope.() -> Unit) {
 }
 
 fun LoginScope.loginGraph() {
-    login {  }
-    signup {  }
+    login { }
+    signup { }
 }
 
 fun MainScope.loginGraph() {
-    loginGraph {  }
+    loginGraph { }
 }
 
 @Composable
 fun A() {
-   ScopedNavHost(graph = MainNavGraph) {
-       loginGraph { loginGraph() }
-       home {
-
-       }
-   }
+    ScopedNavHost(graph = MainNavGraph) {
+        loginGraph { loginGraph() }
+        home {
+        }
+    }
 }
 
 @Composable
-fun<T> ScopedNavHost(
+fun <T> ScopedNavHost(
     navController: NavHostController = rememberNavController(),
     graph: Spec<T>,
     scope: T.() -> Unit

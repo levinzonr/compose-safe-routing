@@ -13,6 +13,9 @@ object DefaultRouteTransition : RouteTransition {
         spec: RouteSpec<*>,
         content: @Composable (NavBackStackEntry) -> Unit
     ) {
-        builder.composable(spec, content)
+        builder.composable(
+            spec = spec,
+            content = content
+        )
     }
 }

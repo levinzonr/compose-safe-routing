@@ -4,7 +4,6 @@ import com.levinzonr.saferoute.codegen.codegen.extensions.toRouteProperty
 import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.levinzonr.saferoute.codegen.core.FilesGen
 import com.levinzonr.saferoute.codegen.core.GeneratorUnit
-import com.levinzonr.saferoute.codegen.core.LogLevel
 import com.levinzonr.saferoute.codegen.core.Logger
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.NavGraphData

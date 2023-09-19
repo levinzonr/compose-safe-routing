@@ -3,17 +3,16 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
-    id("com.google.devtools.ksp") version "1.7.10-1.0.6"
+    id("com.google.devtools.ksp") version "1.8.10-1.0.9"
 }
 
 android {
-    compileSdk = 33
-    buildToolsVersion = "33.0.0"
-
+    compileSdk = 34
+    namespace = "cz.levinzonr.saferoute"
     defaultConfig {
         applicationId = "cz.levinzonr.router"
         minSdk = 23
-        targetSdk = 32
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -32,18 +31,14 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
+    kotlin {
+        jvmToolchain(17)
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion =  "1.3.0"
+        kotlinCompilerExtensionVersion =  "1.4.4"
     }
 
     applicationVariants.all {
@@ -68,7 +63,7 @@ ksp {
 
 
 dependencies {
-    val hilt_version = "2.37"
+    val hilt_version = "2.48"
     implementation(project(":accompanist-navigation"))
     ksp(project(":processor-ksp"))
     //ksp("cz.levinzonr.safe-routing:ksp-processor:2.5.0-beta02")
@@ -84,13 +79,13 @@ dependencies {
 
     implementation("com.google.dagger:hilt-android:$hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
-    implementation("androidx.core:core-ktx:1.5.0")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("com.google.accompanist:accompanist-navigation-animation:${Deps.accompanist}")
     implementation("com.google.accompanist:accompanist-navigation-material:${Deps.accompanist}")
 
 
 
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("com.google.android.material:material:1.3.0")
-    implementation("androidx.activity:activity-compose:1.3.0-alpha07")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.9.0")
+    implementation("androidx.activity:activity-compose:1.8.0-beta01")
 }

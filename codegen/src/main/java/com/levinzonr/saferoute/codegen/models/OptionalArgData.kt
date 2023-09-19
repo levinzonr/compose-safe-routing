@@ -35,7 +35,7 @@ sealed class OptionalArgData<T>(val value: T) {
 
                 ArgumentType.IntType -> {
                     val intValue =
-                        requireNotNull(value.toIntOrNull()) { "Provided arg value ($value) is not matching type $type" }
+                        requireNotNull(value.toIntOrNull()) { "Provided arg ($name) value ($value) is not matching type $type" }
                     return OptionalInt(intValue)
                 }
                 ArgumentType.FloatType -> {

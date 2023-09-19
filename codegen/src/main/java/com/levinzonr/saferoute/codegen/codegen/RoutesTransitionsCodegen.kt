@@ -5,7 +5,6 @@ import com.levinzonr.saferoute.codegen.constants.ClassNames
 import com.levinzonr.saferoute.codegen.core.AnnotationsResolver
 import com.levinzonr.saferoute.codegen.core.FilesGen
 import com.levinzonr.saferoute.codegen.core.GeneratorUnit
-import com.levinzonr.saferoute.codegen.core.TypeHelper
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.RouteData
 import com.squareup.kotlinpoet.CodeBlock

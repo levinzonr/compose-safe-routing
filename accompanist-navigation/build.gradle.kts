@@ -6,11 +6,11 @@ plugins {
 
 
 android {
-    compileSdk = 33
-
+    compileSdk = 34
+    namespace = "cz.levinzonr.saferoute.accompanist.navigation"
     defaultConfig {
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 34
         version  = 1
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -23,19 +23,15 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
+    kotlin {
+        jvmToolchain(17)
     }
 
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.0"
+        kotlinCompilerExtensionVersion = "1.4.4"
     }
 
 }
@@ -47,7 +43,7 @@ mavenPublish {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.7.0")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.navigation:navigation-compose:${Deps.composeNavigation}")
     implementation("androidx.compose.ui:ui:${Deps.compose}")
     api((project(":core")))

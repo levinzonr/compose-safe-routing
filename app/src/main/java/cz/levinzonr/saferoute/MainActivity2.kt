@@ -8,18 +8,15 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
-import cz.levinzonr.saferoute.accompanist.navigation.SafeRouteAnimatedNavHost
 import cz.levinzonr.saferoute.core.NavGraphSpec
 import cz.levinzonr.saferoute.core.RouteSpec
-import cz.levinzonr.saferoute.core.annotations.NavGraph
+import cz.levinzonr.saferoute.core.SafeRouteNavHost
 import cz.levinzonr.saferoute.core.navigation
 import cz.levinzonr.saferoute.core.router.LocalRouter
 import cz.levinzonr.saferoute.screens.Pokedex
@@ -38,7 +35,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @ExperimentalAnimationApi
 @ExperimentalMaterialNavigationApi
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity2 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -47,8 +44,8 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     val bottomSheetNavigator = rememberBottomSheetNavigator()
                     ModalBottomSheetLayout(bottomSheetNavigator) {
-                        SafeRouteAnimatedNavHost(
-                            navController = rememberAnimatedNavController(bottomSheetNavigator),
+                        SafeRouteNavHost(
+                            navController = rememberNavController(bottomSheetNavigator),
                             graph = MainGraph
                         ) {
                             home {

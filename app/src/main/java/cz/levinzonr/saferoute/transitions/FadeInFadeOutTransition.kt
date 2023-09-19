@@ -1,13 +1,11 @@
 package cz.levinzonr.saferoute.transitions
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.shrinkOut
-import cz.levinzonr.saferoute.accompanist.navigation.RouteEnterTransition
-import cz.levinzonr.saferoute.accompanist.navigation.RouteExitTransition
-import cz.levinzonr.saferoute.accompanist.navigation.transitions.AnimatedRouteTransition
+import cz.levinzonr.saferoute.core.transitions.AnimatedRouteTransition
+import cz.levinzonr.saferoute.core.transitions.RouteEnterTransition
+import cz.levinzonr.saferoute.core.transitions.RouteExitTransition
 
-@OptIn(ExperimentalAnimationApi::class)
 object FadeInFadeOutTransition : AnimatedRouteTransition() {
     override val enter: RouteEnterTransition = { expandIn() }
     override val exit: RouteExitTransition = { shrinkOut() }

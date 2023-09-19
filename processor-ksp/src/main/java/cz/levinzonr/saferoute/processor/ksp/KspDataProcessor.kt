@@ -1,6 +1,5 @@
 package cz.levinzonr.saferoute.processor.ksp
 
-import com.google.devtools.ksp.KspExperimental
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSAnnotation
@@ -17,8 +16,6 @@ import com.levinzonr.saferoute.codegen.models.ArgumentType
 import com.levinzonr.saferoute.codegen.models.DeeplinkData
 import com.levinzonr.saferoute.codegen.models.ModelData
 import com.levinzonr.saferoute.codegen.models.ModelDataBuilder
-import com.levinzonr.saferoute.codegen.models.NavGraphData
-import com.levinzonr.saferoute.codegen.models.NavGraphInfo
 import com.levinzonr.saferoute.codegen.models.OptionalArgData
 import com.levinzonr.saferoute.codegen.models.RouteData
 import java.lang.IllegalArgumentException
@@ -42,7 +39,6 @@ internal class KspDataProcessor(
                 it.getSource()
             )
         }
-
 
         elements.forEach { element ->
             val routeAnnotation = element.annotations.first { it.shortName.asString() == "Route" }
