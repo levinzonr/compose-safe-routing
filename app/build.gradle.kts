@@ -72,16 +72,16 @@ dependencies {
      implementation("router:core:1")*/
 
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-    implementation("androidx.navigation:navigation-compose:${Deps.composeNavigation}")
-    implementation("androidx.compose.ui:ui:${Deps.compose}")
-    implementation("androidx.compose.material:material:${Deps.compose}")
-    implementation("androidx.compose.ui:ui-tooling:${Deps.compose}")
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.ui.tooling)
 
     implementation("com.google.dagger:hilt-android:$hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
     implementation("androidx.core:core-ktx:1.12.0")
-    implementation("com.google.accompanist:accompanist-navigation-animation:${Deps.accompanist}")
-    implementation("com.google.accompanist:accompanist-navigation-material:${Deps.accompanist}")
+    implementation(libs.accompanist.navigation.animation)
+    implementation(libs.accompanist.navigation.material)
 
 
 

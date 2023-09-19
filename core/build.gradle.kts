@@ -48,10 +48,10 @@ mavenPublish {
 dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.navigation:navigation-compose:${Deps.composeNavigation}")
-    implementation("androidx.compose.ui:ui:${Deps.compose}")
-    implementation("androidx.compose.material:material:${Deps.compose}")
-    implementation("androidx.compose.ui:ui-tooling:${Deps.compose}")
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.ui.tooling)
     api(project(":annotations"))
 
     testImplementation("junit:junit:4.+")

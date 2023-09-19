@@ -44,12 +44,12 @@ mavenPublish {
 dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.navigation:navigation-compose:${Deps.composeNavigation}")
-    implementation("androidx.compose.ui:ui:${Deps.compose}")
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.ui)
     api((project(":core")))
 
-    implementation("com.google.accompanist:accompanist-navigation-animation:${Deps.accompanist}")
-    implementation("com.google.accompanist:accompanist-navigation-material:${Deps.accompanist}")
+    implementation(libs.accompanist.navigation.animation)
+    implementation(libs.accompanist.navigation.material)
 
 
     testImplementation("junit:junit:4.+")
